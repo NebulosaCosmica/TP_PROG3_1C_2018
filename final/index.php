@@ -53,15 +53,18 @@ hay metodos que resuelven esta forma de llamar al metodo
 (archivos o base de datos)*/
 
 
+// class slim app not found
+
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
+
+require_once 'vendor/autoload.php';
 
 require_once "entidades/guia/AccesoDatos.php";
 
 require_once "entidades/bartender.php";
 
-require_once 'vendor/autoload.php';
 
 $app = new \Slim\App([]);
 
@@ -71,12 +74,18 @@ $app = new \Slim\App([]);
 
 // hacerlo en la web y probalo con el postman
 
+// JWT
+
+
+
 $app->post('/login', function (Request $request, Response $response) {    
     $response->getBody()->write("POST => Bienvenido!!! ,a SlimFramework <br> Login de un Bartender, dni y contraseña");
 
     // manejar el login
 
-    Bartender::ManejarLogin($_POST['dni'],$_POST['contraseña']);
+    $toc = Bartender::ManejarLogin($_POST['dni'],$_POST['contraseña']);
+
+    //var_dump($toc);
 
     return $response;
 

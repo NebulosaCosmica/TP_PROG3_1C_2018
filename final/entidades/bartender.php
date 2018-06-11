@@ -1,6 +1,8 @@
 <?php
 
 
+
+
 // mucha rotación de personal
 
 
@@ -39,6 +41,9 @@
 // traer todos
 
 // guardar en base de datos
+
+use \Firebase\JWT\JWT;
+
 class Bartender {
 
 
@@ -188,9 +193,51 @@ class Bartender {
 
     public static function ManejarLogin($dni,$contraseña){
 
+        // revisar el moño
+
+    $key = "example_key";
+    $token = array(
+    "iss" => "http://example.org",
+    "aud" => "http://example.com",
+    "iat" => 1356999524,
+    "nbf" => 1357000000
+);
+
+/**
+ * IMPORTANT:
+ * You must specify supported algorithms for your application. See
+ * https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40
+ * for a list of spec-compliant algorithms.
+ */
+$jwt = JWT::encode($token, $key);
+$tok['token'] = $jwt;
+//print_r(json_encode($tok));
+return;
+$decoded = JWT::decode($jwt, $key, array('HS256'));
+
+//print_r($decoded);
+
+/*
+ NOTE: This will now be an object instead of an associative array. To get
+ an associative array, you will need to cast it as such:
+*/
+
+$decoded_array = (array) $decoded;
+
+/**
+ * You can add a leeway to account for when there is a clock skew times between
+ * the signing and verifying servers. It is recommended that this leeway should
+ * not be bigger than a few minutes.
+ *
+ * Source: http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#nbfDef
+ */
+JWT::$leeway = 60; // $leeway in seconds
+$decoded = JWT::decode($jwt, $key, array('HS256'));
 
         $losbares = Bartender::TraerTodosLosBartenders();
         $ok1 = "";
+
+        var_dump($token);
 
         $logger;
 
@@ -210,6 +257,9 @@ class Bartender {
 
         }
 
+
+        var_dump($ok1);
+
         if($ok1 == 1){
 
 
@@ -218,19 +268,22 @@ class Bartender {
 
                 echo "<br>Log in exitoso <br>";
 
-                return true;
+                return $token;
 
             }else{
 
                 echo "<br> La contraseña no coincide <br>";
-                return false;
+                $token = "";
+                return $decoded_array;
 
             }
 
         } else{
 
             echo "<br>El Bartender no está registrado <br>";
-            return false;
+            $token = "";
+            return $token;
+            
         }
 
         }
