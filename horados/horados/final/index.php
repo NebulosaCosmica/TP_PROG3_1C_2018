@@ -79,13 +79,14 @@ $app = new \Slim\App([]);
 
 
 $app->post('/login', function (Request $request, Response $response) {    
-    $response->getBody()->write("POST => Bienvenido!!! ,a SlimFramework <br> Login de un Bartender, dni y contraseña");
+    $response->getBody()->write("POST <br> Login de un Bartender, dni y contrasena");
 
+    
     // manejar el login
 
     $toc = Bartender::ManejarLogin($_POST['dni'],$_POST['contraseña']);
 
-    //var_dump($toc);
+    var_dump($toc);
 
     return $response;
 
