@@ -1,0 +1,454 @@
+{
+	"info": {
+		"_postman_id": "4f433a31-43cf-4d44-8cf1-95c47302f9dd",
+		"name": "JulioPHP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost/prog/julio/api.php/medias/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "color",
+							"value": "negro",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "marca",
+							"value": "jerek",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "precio",
+							"value": "350",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "talle",
+							"value": "s",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "foto",
+							"description": "",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/julio/medias/alta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"julio",
+						"medias",
+						"alta",
+						""
+					]
+				},
+				"description": "Segundo parcial API REST"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/julio/api.php/medias/listado/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/julio/medias/listado/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"julio",
+						"medias",
+						"listado",
+						""
+					]
+				},
+				"description": "listado por get, casi listo"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/julio/api.php/usuarios/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Juan Pablo",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "perfil",
+							"value": "Empleado",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "contrasena",
+							"value": "Juan Pablo",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/julio/usuarios/alta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"julio",
+						"usuarios",
+						"alta",
+						""
+					]
+				},
+				"description": "alta usuarios "
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/julio/usuarios/listado/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "tokenmedias",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzA1NTM0NTIsImV4cCI6MTIxNTMwNTUzNDUyLCJkYXRhIjoiRW1wbGVhZG8iLCJhcHAiOiJNZWRpYXMgTWVkaWFzIn0.w14GZTU2PMO9PpfPXwjqDadauOR72L8VR-ilXDod6yE"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/julio/usuarios/listado/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"julio",
+						"usuarios",
+						"listado",
+						""
+					]
+				},
+				"description": "listado de users"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/julio/login/?usuario=Patricio&contrasena=Patricio&perfil=Empleado",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/julio/login/?usuario=Ernesto&contrasena=Ernesto",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"julio",
+						"login",
+						""
+					],
+					"query": [
+						{
+							"key": "usuario",
+							"value": "Ernesto"
+						},
+						{
+							"key": "contrasena",
+							"value": "Ernesto"
+						}
+					]
+				},
+				"description": "inicio de login maltrecho"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/julio/medias/traer/?id=3",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/julio/medias/traer/?id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"julio",
+						"medias",
+						"traer",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				},
+				"description": "traer una media, no anda del todo"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/julio/medias/borrar/",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenmedias",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzA1NTM2NDcsImV4cCI6MTIxNTMwNTUzNjQ3LCJkYXRhIjoiRHVlXHUwMGYxbyIsImFwcCI6Ik1lZGlhcyBNZWRpYXMifQ.au0sJRGRXOqKn_J0rKag9HVQNIGs2u36DsQ8pRcnyXk"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "4",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/julio/medias/borrar/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"julio",
+						"medias",
+						"borrar",
+						""
+					]
+				},
+				"description": "borra medias ;)"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/julio/medias/modificar/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenmedias",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzA1NTQ5NDEsImV4cCI6MTIxNTMwNTU0OTQxLCJkYXRhIjoiRW1wbGVhZG8iLCJhcHAiOiJNZWRpYXMgTWVkaWFzIn0.h5_5fH3HNSDcfsg0b-SttcqShoL71wvtSEwPXG-q8eA"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "idmedias",
+							"value": "5",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "nombreC",
+							"value": "Jorge_Luis",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "fecha",
+							"value": "16_05_2017",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "importe",
+							"value": "310",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "foto",
+							"description": "",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/julio/ventamedias/venta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"julio",
+						"ventamedias",
+						"venta",
+						""
+					]
+				},
+				"description": "era put pero no andaba"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/julio/ventamedias/borrar/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/julio/ventamedias/borrar/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"julio",
+						"ventamedias",
+						"borrar",
+						""
+					]
+				},
+				"description": "borrado completo con MW"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/julio/ventamedias/modificarv/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenmedias",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzA1NTY3OTcsImV4cCI6MTIxNTMwNTU2Nzk3LCJkYXRhIjoiRW5jYXJnYWRvIiwiYXBwIjoiTWVkaWFzIE1lZGlhcyJ9.LOmGBWLKmoxj0BIfDECF0tcSMDYrHhvP7WcPj8Od1r8"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "2",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "idmedias",
+							"value": "6",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "nombreC",
+							"value": "Francisca",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "fecha",
+							"value": "16_05_2017",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "importe",
+							"value": "400",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "foto",
+							"value": "",
+							"description": "",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/julio/ventamedias/modificarv/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"julio",
+						"ventamedias",
+						"modificarv",
+						""
+					]
+				},
+				"description": "modificar venta "
+			},
+			"response": []
+		}
+	]
+}
