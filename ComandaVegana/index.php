@@ -1,11 +1,5 @@
 <?php
 
-// pendientes:
-
-//(CONTINUAR) pensar como linkear el mozo que crea una comanda
-
-// creé una clase pedido, pero le falta un poquito aceitar el asunto
-
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Firebase\JWT\JWT;
@@ -18,6 +12,25 @@ A tener en cuenta
     
     4 - ABM - todas las entidades
     6 - LISTADO - todos los pedidos
+
+    // el pedido en preparacions tiene un tiempo estimado 
+
+
+// las mesas tambien tienen un codigo de mesa (por?)
+
+// el cliente puede entrar a la app y ver
+
+// la encuesta de la mesa y el mozo son ambiguas
+
+// 
+
+
+
+// puede haber más de un empleado en el mismo puesto
+
+// 2 bartenders
+
+// el bartender maneja comandas, tiene un atributo lista de comandas o algo asi
  */
 
 require "vendor/autoload.php";
@@ -78,6 +91,7 @@ $app->any('[/]',function($req,$resp){
     echo "</pre>";
     
 });
+//->add(\MWparaAutentificar::class.':ValidarToc');
 
 // sin este, no anda
 $app->run();

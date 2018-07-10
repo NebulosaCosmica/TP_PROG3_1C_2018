@@ -11,20 +11,27 @@ LISTADO - EMPLEADOS (fecha logueo - cant. Operaciones - suspensión - borrado)
 require_once "guia/IApiUsable.php";
 require_once "guia/AccesoDatos.php";
 
+require_once "entidades/Administra/ETipoUsuario.php";
+
+// todos los usuarios tienen tipo e id, herencia ni hablar
 class Mozo implements IApiUsable
 {
     private $nombre;
     private $pass;
-    private $idmozo;
+    private $tipo;
+    private $id;
     
     public function __construct(){}
 
     public static function OBJMozo($nombre,$pass,$id=-1){
 
+
+        
         $unmozo = new Mozo();
 
-        if($id!=-1){$unmozo->setidmozo($id);}
-
+        if($id!=-1){$unmozo->setid($id);}        
+        
+        $unmozo->settipo(ETipoUsuario::Mozo);        
         $unmozo->setnombre($nombre);
         $unmozo->setpass($pass);
 
@@ -39,16 +46,13 @@ class Mozo implements IApiUsable
 
     public function setpass($pass){$this->pass = $pass;}
     
-    public function getidmozo(){return $this->idmozo;}
+    public function getid(){return $this->id;}
 
-    public function setidmozo($idmozo){$this->idmozo = $idmozo;}
+    public function setid($idmozo){$this->id = $idmozo;}
 
-   /* public function GenerarComanda(){
+    public function gettipo(){return $this->tipo;}
 
-        $unacomanda = new Comanda();
-
-        return $unacomanda;
-    }*/
+    public function settipo($tipo){$this->tipo = $tipo;}
 
     public function CargarUno($request, $response, $args){
 
@@ -67,9 +71,10 @@ class Mozo implements IApiUsable
     public function InsertarElMozoParametros(){
 
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-        $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into mozos (nombre,pass)values(:nombre,:pass)");
+        $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into mozos (nombre,pass,tipo)values(:nombre,:pass,:tipo)");
         $consulta->bindValue(':nombre',$this->nombre, PDO::PARAM_STR);
         $consulta->bindValue(':pass', $this->pass, PDO::PARAM_STR);
+        $consulta->bindValue(':tipo', $this->pass, PDO::PARAM_INT);
         $consulta->execute();		
         return $objetoAccesoDato->RetornarUltimoIdInsertado();
 

@@ -30,8 +30,12 @@ class MWparaAutentificar
 	
 				$response->getBody()->write('Usuario ingresando correctamente<br><br>');
 				$response->getBody()->write("<h3>Bienvenido". $value->getnombre()." </h3>");
-	
-				$token= AutentificadorJWT::CrearToken($value); 
+				//var_dump($value);
+
+				$losda = ["tipo"=>$value->gettipo(),"id"=>$value->getid()];
+
+				$token= AutentificadorJWT::CrearToken($losda); 
+
 				$newResponse = $response->withJson($token,200);  
 				$newResponse = $next($request, $newResponse);
 				return $newResponse;
@@ -58,12 +62,17 @@ class MWparaAutentificar
 		
 	public function ValidarToc($request, $response, $next) {
 
-		//var_dump(AutentificadorJWT::ObtenerPayLoad($elt));
-		//var_dump($elt);
+		
 		try 
 		{
 			$elt = $request->getHeaderLine('tokenresto');
+
 			AutentificadorJWT::verificarToken($elt);
+
+			//var_dump(AutentificadorJWT::ObtenerPayLoad($elt));
+		
+			// el token
+			//var_dump($elt);
 			$esValido=true;      
 			}
 			catch (Exception $e) {      
