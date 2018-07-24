@@ -1,0 +1,662 @@
+{
+	"info": {
+		"_postman_id": "e9d1e62b-2b58-4440-a3a6-827f0b80c9a1",
+		"name": "ComandaVegana",
+		"description": "TP FINAL PROG III 2018 UTN-FRA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"_postman_id": "eb2e4116-59c1-417c-bbb2-5f28aa2ef042",
+			"name": "http://localhost/prog/ComandaVegana/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						""
+					]
+				},
+				"description": "inicio de la api"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "ec56a010-7512-4388-a157-477fa76726fa",
+			"name": "http://localhost/prog/ComandaVegana/login/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "usuario",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "contrasena",
+							"value": "admin",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/login/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "387033c2-575c-4176-a1f7-1a7ccc2ebab1",
+			"name": "http://localhost/prog/ComandaVegana/mozos/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzIzNjYzNTUsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.S8zxZSz8kEtIK753roIXKLHoNl01don4sk8Zox3XcBM"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Elipides",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "Elipides",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/mozos/alta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"mozos",
+						"alta",
+						""
+					]
+				},
+				"description": "alta de mozos"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "ae8b0224-fb5f-4bd8-b64d-7bbf2b3a9d34",
+			"name": "http://localhost/prog/ComandaVegana/comandas/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzIzNjY2OTYsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiTW96byIsImlkIjoyfSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.fKnRDUZ0D8Q-5aqNZsUa8hoNvineshp54plZvsnO0-Q"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombrecliente",
+							"value": "Anita",
+							"type": "text"
+						},
+						{
+							"key": "fotomesa",
+							"type": "file"
+						},
+						{
+							"key": "bartender",
+							"value": "Limonada con gengibre",
+							"type": "text"
+						},
+						{
+							"key": "cervecero",
+							"value": "Stout",
+							"type": "text"
+						},
+						{
+							"key": "cocinero",
+							"value": "Ensalada Cesar, Nori roll",
+							"type": "text"
+						},
+						{
+							"key": "pastelero",
+							"value": "Cheese cake",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/comandas/alta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"comandas",
+						"alta",
+						""
+					]
+				},
+				"description": "alta de comandas"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "9f503791-0d1b-46fc-b4cb-f0ee89a39e3b",
+			"name": "http://localhost/prog/ComandaVegana/bartenders/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzE5MzM0MTIsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiTW96byIsImlkIjoxfSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.1Wy2othPPIu7TV2b-TK2w7BVADIZV3JQFyCjHi611ps"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Javieres",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "Javieres",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/bartenders/alta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"bartenders",
+						"alta",
+						""
+					]
+				},
+				"description": "alta de bartenders"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "4d6a2657-1541-4674-934a-24b5ad502bc1",
+			"name": "http://localhost/prog/ComandaVegana/socios/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzIzODAzNzIsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.sTzqRD04EhqlaybbOo5oK4QbbvxF-TQJ-Xz_eYYYKeo"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Juanjo",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "Juanjo",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/socios/alta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"socios",
+						"alta",
+						""
+					]
+				},
+				"description": "alta de socios con token"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "b03c3370-24d1-4682-ad96-ef50d744d15b",
+			"name": "http://localhost/prog/ComandaVegana/bartenders/pendientes/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzE5MzM0MTIsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiTW96byIsImlkIjoxfSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.1Wy2othPPIu7TV2b-TK2w7BVADIZV3JQFyCjHi611ps"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/bartenders/pendientes/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"bartenders",
+						"pendientes",
+						""
+					]
+				},
+				"description": "pendientes bartenders"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "3fc6fa9d-a33b-4cb7-941c-205989ad810c",
+			"name": "http://localhost/prog/ComandaVegana/cerveceros/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzE5NDY1MjksImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.B8EIaqjzg-Y5XMEXF9ybGHn_Iv7m_vPyVDOlJsrJ56E"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Junior",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "Junior",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/cerveceros/alta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"cerveceros",
+						"alta",
+						""
+					]
+				},
+				"description": "cerveceros alta con token"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "80dca9a4-a0fc-4dfb-93e1-ef7a0f5377dd",
+			"name": "http://localhost/prog/ComandaVegana/cerveceros/pendientes/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzE5NDY3MTIsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiQ2VydmVjZXJvIiwiaWQiOjF9LCJhcHAiOiJSZXN0XHUwMGYzIENvbWFuZGEgVmVnYW5hIn0.CE4d7GW1zwET51I9BDjutVUEyx5Smw57LoujVPau6PU"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/cerveceros/pendientes/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"cerveceros",
+						"pendientes",
+						""
+					]
+				},
+				"description": "cerveceros pendientes"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "7f7b70e8-0663-4006-8c27-e80599103fa7",
+			"name": "http://localhost/prog/ComandaVegana/cocineros/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzE5NDc0MjcsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.mDbblPNCOxpn1ZfJz73pSzf5kE1MvLTWmdpKSZ5NH7Y"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Adriana",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "Adriana",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/cocineros/alta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"cocineros",
+						"alta",
+						""
+					]
+				},
+				"description": "cocinero alta"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "682e432a-7e50-43a0-bd82-96ebdda88937",
+			"name": "http://localhost/prog/ComandaVegana/pasteleros/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzE5NDc0MjcsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.mDbblPNCOxpn1ZfJz73pSzf5kE1MvLTWmdpKSZ5NH7Y"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Leopoldo",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "Leopoldo",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/pasteleros/alta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"pasteleros",
+						"alta",
+						""
+					]
+				},
+				"description": "pastelero alta"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "d948597d-e7b1-4dba-ac3b-f91425aeffa8",
+			"name": "http://localhost/prog/ComandaVegana/cocineros/pendientes/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzIzNjYzNTUsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.S8zxZSz8kEtIK753roIXKLHoNl01don4sk8Zox3XcBM"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/cocineros/pendientes/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"cocineros",
+						"pendientes",
+						""
+					]
+				},
+				"description": "cocinero listado de pendientes"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "5f09e65a-041b-4286-befe-bf881274451a",
+			"name": "http://localhost/prog/ComandaVegana/pasteleros/pendientes/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzE5NDc0MjcsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.mDbblPNCOxpn1ZfJz73pSzf5kE1MvLTWmdpKSZ5NH7Y"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/pasteleros/pendientes/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"pasteleros",
+						"pendientes",
+						""
+					]
+				},
+				"description": "pendiente pastelero"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "a6480ea7-3229-4bf9-95d7-690bbeb28e33",
+			"name": "http://localhost/prog/ComandaVegana/socios/baja/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzIzODA1NDEsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.WqGHM9i7-7QpMlQnHv5HMrcz3itb_teaTrmuYxTQgMk"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "4",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/socios/baja/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"socios",
+						"baja",
+						""
+					]
+				},
+				"description": "baja de socios, el delete no anda como debiera"
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "56b61a67-f171-43ae-a857-fef7cde0bcb3",
+			"name": "http://localhost/prog/ComandaVegana/socios/modifica/",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzIzODA1NDEsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.WqGHM9i7-7QpMlQnHv5HMrcz3itb_teaTrmuYxTQgMk"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "6",
+							"type": "text"
+						},
+						{
+							"key": "nombre",
+							"value": "Jose",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "Jose",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/socios/modifica/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"socios",
+						"modifica",
+						""
+					]
+				},
+				"description": "modifico socios"
+			},
+			"response": []
+		}
+	]
+}

@@ -6,10 +6,11 @@ require_once "guia/AccesoDatos.php";
 require_once "entidades/Ambulancia/Pedido.php";
 
 
-class Comanda implements IApiUsable{    
+// el idpedido en la comanda se puede reemplazar por el alfapedido?
 
-    /*
-    A tener en cuenta
+class Comanda implements IApiUsable{    
+    
+    /*A tener en cuenta
     
     7 - LISTADO - ( hora ini; hora fin; importe).
     
@@ -17,9 +18,7 @@ class Comanda implements IApiUsable{
 
     // información necesaria en la comanda
 
-    // vista por el empleado correspondiente
-
-    //ingresa al listado de pendientes
+    // vista por el empleado correspondiente    
 
     private $IdComanda;
     private $IdMozo;
@@ -30,8 +29,6 @@ class Comanda implements IApiUsable{
     
     private $FotoMesa;
 
-    // en la base de datos, el pedido lleva la id comanda
-    // pero cuando hago la comanda, el id no se cual es... .
     private $ElPedido;   
 
 
@@ -41,14 +38,12 @@ class Comanda implements IApiUsable{
 
         
         $lacomanda = new Comanda();        
-
-        // agregar idmozo
-
-        
+            
         $lacomanda->setIdMozo($idmozo);
 
         $lacomanda->setNC($nombrecliente);
         
+        // retocar esto que falla
         $lacomanda->setElPedido($elpedido->InsertarElPedidoParametros());
 
         if($importe != 0){ $lacomanda->setImporte($importe);}
@@ -100,18 +95,12 @@ class Comanda implements IApiUsable{
 
     // ver los datos del empleado que cargó la comanda
     $elt = $request->getHeaderLine('tokenresto');
-    
-    
-    /*echo "<pre>";
-    var_dump(AutentificadorJWT::ObtenerData($elt));
-        echo "</pre>";   */
 
     $responsable = AutentificadorJWT::ObtenerData($elt)->id;
         
     $params = $request->getParsedBody();          
 
     $unpedido = new Pedido();
-
 
     if(empty($params['bartender']) == false){
         $unpedido->setpbtv($params['bartender']);
@@ -157,7 +146,19 @@ class Comanda implements IApiUsable{
 
         $altaComanda = Comanda::OBJComanda($responsable,$params['nombrecliente'],$unpedido,0,"","",$ruta);
         $altaComanda->InsertarLaComandaParametros();
+
+        // mostrar codigo alfa OK
+        // que revise en la lista de codigos y que si es el mismo, que tire de nuevo... .
+        $characters = 'abcdefghijklmnñopqrstuvwxyz0123456789';
+
+        $string = '';
+        $max = strlen($characters) - 1;
+        for ($i = 0; $i < 5; $i++) {
+            $string .= $characters[mt_rand(0, $max)];
+            }
+
         echo "Comanda puesta en escena<br><br>";
+        echo "Código del pedido: $string";
         $newResponse = $response->withJson($altaComanda, 200);  
 
         return $newResponse;
@@ -186,8 +187,7 @@ class Comanda implements IApiUsable{
 
     public function InsertarLaComandaParametros()
     {        
-
-        //falta guardar el id del pedido en la tabla comanda
+        
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
         $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into comandas (idmozo,nombrecliente,idpedido,fotomesa,horaini,importe,horafin)values(:idmozo,:nombre,:idpedido,:foto,:horaini,:importe,:horafin)");
 
@@ -208,8 +208,34 @@ class Comanda implements IApiUsable{
         return $objetoAccesoDato->RetornarUltimoIdInsertado();
     }
 
-    public function TraerUno($request, $response, $args){}
-    public function TraerTodos($request, $response, $args){} 
+    public function TraerTodos($request, $response, $args){
+        
+        // listado de comandas/pedidos        
+        $lascomandas=socio::TraerTodasLasComandas();                             
+        $newResponse = $response->withJson($lascomandas, 200);         
+        return $newResponse;
+    } 
+
+    public static function TraerTodasLasComandas()
+	{
+			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+            $consulta =$objetoAccesoDato->RetornarConsulta("select idcomanda,idmozo as Mozo, nombrecliente as Nombre, idpedido as Pedido, fotomesa as Foto, horaini as Inicio, importe as Importe, horafin as Fin from comandas");
+			$consulta->execute();			
+            // transformar a objeto a uno que sirva ACÁ
+            // si no, da todo null en los atributos            
+            $salencomandas = $consulta->fetchAll(PDO::FETCH_CLASS, "Comanda");           
+
+        foreach ($salencomandas as $key => $value) {
+            
+
+
+            $savior[] = Comanda::OBJComanda($value->Mozo,$value->Nombre,Pedido::TraerPedido($value->Pedido),$value->Importe,$value->Inicio,$value->Fin,$value->Foto,$value->idcomanda);
+        }      
+       
+            return $savior;
+    }
+
+  //  public function TraerUno($request, $response, $args){}
     public function BorrarUno($request, $response, $args){}
     public function ModificarUno($request, $response, $args){}
     

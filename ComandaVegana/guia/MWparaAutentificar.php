@@ -20,11 +20,60 @@ class MWparaAutentificar
    */
 	public function VerificarUsuario($request, $response, $next) {
 	
+		// todes
+		$lossocios = Socio::TraerTodosLosSocios();
 		$losmohos = Mozo::TraerTodosLosMozos();
+		$losbares = Bartender::TraerTodosLosBartenders();		
+
+		$losveza = Cervecero::TraerTodosLosCerveceros();
+		$loscoca = Cocinero::TraerTodosLosCocineros();
+		$lospasta = Pastelero::TraerTodosLosPasteleros();
+		
+		$graciastotales = Array();
+
+		if(isset($losmohos)){
+
+			foreach ($losmohos as $key => $value) {
+				$graciastotales[] = $value;
+			}
+		}
+
+		if(isset($losbares)){
+		
+			foreach ($losbares as $key => $value) {
+				$graciastotales[] = $value;
+			}
+		}		
+
+		foreach ($lossocios as $key => $value) {
+			$graciastotales[] = $value;
+		}
+
+		if(isset($losveza)){
+		
+			foreach ($losveza as $key => $value) {
+				$graciastotales[] = $value;
+			}
+		}	
+		
+		if(isset($loscoca)){
+		
+			foreach ($loscoca as $key => $value) {
+				$graciastotales[] = $value;
+			}
+		}	
+
+		if(isset($lospasta)){
+		
+			foreach ($lospasta as $key => $value) {
+				$graciastotales[] = $value;
+			}
+		}	
+
 
 		$params = $request->getParsedBody(); 		
 
-		foreach ($losmohos as $key => $value) {
+		foreach ($graciastotales as $key => $value) {
 			
 			if($params['usuario'] === $value->getnombre() && $params['contrasena'] === $value->getpass()) {
 	
@@ -38,6 +87,33 @@ class MWparaAutentificar
 
 				$newResponse = $response->withJson($token,200);  
 				$newResponse = $next($request, $newResponse);
+
+				// atualizar deces
+				echo "<pre>";
+				echo "<body style='background: palegoldenrod;'>";
+				echo "<h1>Ver el gestor de comandas del Restó Vegano edición on line</h1>";
+				echo "<h2>Alta calidad</h2>";
+				echo "<br><br>";
+				//echo " Clientes /clientes/";
+				//echo "<br><br>";
+				//echo "usuario: Código de mesa. contrasena: Código de pedido";
+			   	echo "<br><br>";
+				echo " Mozos /mozos/";
+			   	echo "<br><br>";
+				echo " Comandas /comandas/";
+				echo "<br><br>";
+				echo " Socios /socios/";
+			   	echo "<br><br>";
+				echo " Bartenders/bartenders/";
+				echo "<br><br>";
+				echo " Cerveceros/cerveceros/";
+				echo "<br><br>";
+				echo " Cocineros/cocineros/";
+				echo "<br><br>";
+				echo " Pasteleros/pasteleros/";
+				echo "<br><br>";
+				echo "</pre>";
+
 				return $newResponse;
 			}
 		}
@@ -45,7 +121,7 @@ class MWparaAutentificar
 		// necesité otro foreach, que no andaba bien la balidaziom
 		//var_dump($params['usuario']);
 		//var_dump($value->getnombre());
-		foreach ($losmohos as $key => $value) {
+		foreach ($graciastotales as $key => $value) {
 		if($params['usuario'] === $value->getnombre()) {
 		
 			$response->getBody()->write('Contraseña inválida, please try again<br><br>');
@@ -89,26 +165,109 @@ class MWparaAutentificar
 
 	}
 
-	public function VerDuen($request, $response, $next) {
+	public function ValidarSocio($request, $response, $next) {
 
-		$elt = $request->getHeaderLine('tokenmedias');
-	//	var_dump(AutentificadorJWT::ObtenerPayLoad($elt));
+		$elt = $request->getHeaderLine('tokenresto');
+		
+		//var_dump(AutentificadorJWT::ObtenerPayLoad($elt));
 		
 
-	$profile = AutentificadorJWT::ObtenerPayLoad($elt);
-	//var_dump($profile);
-		if($profile->data == "Dueño")
+		$profile = AutentificadorJWT::ObtenerPayLoad($elt);
+
+		//var_dump($profile);
+
+		if($profile->data->tipo == "Socio")
 		{
-			echo "El dueño borra lo que quiere<br><br>";
+			echo "El Socio todo lo puede<br><br>";
 			$response = $next($request, $response); 
 		}else{
-			echo "Si no sos dueño, no podes borrar<br><br>";
+			echo "Si no soscio, no podes continuar<br><br>";
 		}
 
 		return $response;
 	}
 
-	public function ValidarVenta($request, $response, $next) {
+	public function ValidarMozo($request, $response, $next) {
+
+		$elt = $request->getHeaderLine('tokenresto');
+		$profile = AutentificadorJWT::ObtenerPayLoad($elt);		
+
+		if($profile->data->tipo == "Mozo")
+		{
+			echo "El Mozo puede<br><br>";
+			$response = $next($request, $response); 
+		}else{
+			echo "Si no sos Mozo, no podes continuar<br><br>";
+		}
+
+		return $response;
+	}
+
+	public function ValidarCer($request, $response, $next) {
+
+		$elt = $request->getHeaderLine('tokenresto');
+		$profile = AutentificadorJWT::ObtenerPayLoad($elt);		
+
+		if($profile->data->tipo == "Cervecero")
+		{
+			echo "El Cervecero puede<br><br>";
+			$response = $next($request, $response); 
+		}else{
+			echo "Si no sos Cervecero, no podes continuar<br><br>";
+		}
+
+		return $response;
+	}
+
+	public function ValidarBart($request, $response, $next) {
+
+		$elt = $request->getHeaderLine('tokenresto');
+		$profile = AutentificadorJWT::ObtenerPayLoad($elt);		
+
+		if($profile->data->tipo == "Bartender")
+		{
+			echo "El Bartender puede<br><br>";
+			$response = $next($request, $response); 
+		}else{
+			echo "Si no sos Bartender, no podes continuar<br><br>";
+		}
+
+		return $response;
+	}
+
+	public function ValidarCoci($request, $response, $next) {
+
+		$elt = $request->getHeaderLine('tokenresto');
+		$profile = AutentificadorJWT::ObtenerPayLoad($elt);		
+
+		if($profile->data->tipo == "Cocinero")
+		{
+			echo "El Cocinero puede<br><br>";
+			$response = $next($request, $response); 
+		}else{
+			echo "Si no sos Cocinero, no podes continuar<br><br>";
+		}
+
+		return $response;
+	}
+
+	public function ValidarPast($request, $response, $next) {
+
+		$elt = $request->getHeaderLine('tokenresto');
+		$profile = AutentificadorJWT::ObtenerPayLoad($elt);		
+
+		if($profile->data->tipo == "Pastelero")
+		{
+			echo "El Pastelero puede<br><br>";
+			$response = $next($request, $response); 
+		}else{
+			echo "Si no sos Pastelero, no podes continuar<br><br>";
+		}
+
+		return $response;
+	}
+
+	/*public function ValidarVenta($request, $response, $next) {
 
 		$elt = $request->getHeaderLine('tokenmedias');
 	//	var_dump(AutentificadorJWT::ObtenerPayLoad($elt));
@@ -125,24 +284,6 @@ class MWparaAutentificar
 		}
 
 		return $response;
-	}
-
-	public function ValidarEnc($request, $response, $next) {
-
-		$elt = $request->getHeaderLine('tokenmedias');
-	//	var_dump(AutentificadorJWT::ObtenerPayLoad($elt));
-		
-
-	$profile = AutentificadorJWT::ObtenerPayLoad($elt);
-	//var_dump($profile);
-		if($profile->data == "Encargado")
-		{
-			echo "$profile->data ha hecho una modificación a una venta<br><br>";
-			$response = $next($request, $response); 
-		}else{
-			echo "Si sos dueño o empleado, no entendés de modificar ventas<br><br>";
-		}
-
-		return $response;
-	}
-}//clase
+	}	
+	}*/
+}//clase MW para Aut

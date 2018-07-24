@@ -1,14 +1,9 @@
 <?php
 
-// alta de pedidos
-
-//Clase auxiliar
-
+// mas adelante veremos si nesito el abm
 class Pedido 
-{
+{   
 
-    
-    // en la base los guardo como un string de elementos diferenciados por comas
     private $pbtv;
     private $pbcca;
     private $ppc;
@@ -30,8 +25,9 @@ class Pedido
 
         if($ppc !=""){$elpedido->setppc($ppc);}
 
-        if($pbd !=""){$elpedido->setpbd($ppc);}
+        if($pbd !=""){$elpedido->setpbd($pbd);}
 
+        return $elpedido;
     }
 
     public function getpbtv(){return $this->pbtv;}
@@ -69,11 +65,36 @@ class Pedido
     }
 
 
-    public static function TraerTodosLosPedidos(){
+    public static function TraerTodosLosPedidos(){        
 
-        // hacer luego del alta
+        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+            $consulta =$objetoAccesoDato->RetornarConsulta("select idpedido,pbtv as PendienteBTV, pbcca as PendienteCCA,ppc as PendientePC,pbd as PendienteBD from pedidos");
+			$consulta->execute();			
+            // transformar a objeto a uno que sirva ACÁ
+            // si no, da todo null en los atributos            
+            $salenpedidos = $consulta->fetchAll(PDO::FETCH_CLASS, "Pedido");           
+       
+        foreach ($salenpedidos as $key => $value) {
+         
+            $savior[] = Pedido::OBJPedido($value->idpedido,$value->PendienteBTV,$value->PendienteCCA,$value->PendientePC,$value->PendienteBD);
+        }      
+       
+
+        if(isset($savior))
+            return $savior;
+
+        return null;
 
     }
+
+    public static function TraerPedido($id){
+        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+			$consulta =$objetoAccesoDato->RetornarConsulta("select idpedido,pbtv as Bartenders,pbcca as Cerveceros,ppc as Cocineros,pbd as Pasteleros from pedidos where idpedido = $id");
+			$consulta->execute();
+			$elpedido= $consulta->fetchObject('Pedido');
+			return $elpedido;	
+    }
+
     
 }// Pedido
 

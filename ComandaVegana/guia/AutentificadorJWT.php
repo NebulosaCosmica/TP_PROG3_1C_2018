@@ -7,7 +7,7 @@ class AutentificadorJWT
     
     private static $claveSecreta = "tokenresto";
     private static $tipoEncriptacion = ['HS256'];
-    private static $aud = null;
+   // private static $aud = null;
     
     public static function CrearToken($datos)
     {
@@ -19,7 +19,7 @@ class AutentificadorJWT
         */
         $payload = array(
         	'iat'=>$ahora,
-            'exp' => $ahora + (120000000000),
+            'exp' => $ahora + (120000000000000000000000000000000),
             //'aud' => self::Aud(),
             'data' => $datos,
             'app'=> "Restó Comanda Vegana"
@@ -42,7 +42,8 @@ class AutentificadorJWT
             self::$tipoEncriptacion
         );
         } catch (Exception $e) {
-            throw $e;
+             //echo $e.msgfmt_get_error_message();
+          //  throw $e;
         } 
         
         // si no da error,  verifico los datos de AUD que uso para saber de que lugar viene  

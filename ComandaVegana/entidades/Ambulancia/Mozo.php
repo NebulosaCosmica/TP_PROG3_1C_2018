@@ -8,12 +8,6 @@ A tener en cuenta
 LISTADO - EMPLEADOS (fecha logueo - cant. Operaciones - suspensión - borrado)
 */
 
-require_once "guia/IApiUsable.php";
-require_once "guia/AccesoDatos.php";
-
-require_once "entidades/Administra/ETipoUsuario.php";
-
-// todos los usuarios tienen tipo e id, herencia ni hablar
 class Mozo implements IApiUsable
 {
     private $nombre;
@@ -24,14 +18,12 @@ class Mozo implements IApiUsable
     public function __construct(){}
 
     public static function OBJMozo($nombre,$pass,$id=-1){
-
-
         
         $unmozo = new Mozo();
 
         if($id!=-1){$unmozo->setid($id);}        
         
-        $unmozo->settipo(ETipoUsuario::Mozo);        
+        $unmozo->settipo("Mozo");        
         $unmozo->setnombre($nombre);
         $unmozo->setpass($pass);
 
@@ -74,10 +66,9 @@ class Mozo implements IApiUsable
         $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into mozos (nombre,pass,tipo)values(:nombre,:pass,:tipo)");
         $consulta->bindValue(':nombre',$this->nombre, PDO::PARAM_STR);
         $consulta->bindValue(':pass', $this->pass, PDO::PARAM_STR);
-        $consulta->bindValue(':tipo', $this->pass, PDO::PARAM_INT);
+        $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
         $consulta->execute();		
         return $objetoAccesoDato->RetornarUltimoIdInsertado();
-
     }
 
     public function TraerTodos($request, $response, $args){
@@ -95,22 +86,93 @@ class Mozo implements IApiUsable
             // transformar a objeto a uno que sirva ACÁ
             // si no, da todo null en los atributos            
             $salenmozos = $consulta->fetchAll(PDO::FETCH_CLASS, "Mozo");           
-
+            
         foreach ($salenmozos as $key => $value) {
             
             $savior[] = Mozo::OBJMozo($value->Nombre,$value->Pass,$value->idmozo);
         }      
        
-
+        if(isset($savior))
             return $savior;
+
+        return null;
+        
     }
 
-    public function TraerUno($request, $response, $args){}
-    public function BorrarUno($request, $response, $args){}
-    public function ModificarUno($request, $response, $args){}
+    public function BorrarUno($request, $response, $args){
 
-}
+        $ArrayDeParametros = $request->getParsedBody();
 
+        var_dump($ArrayDeParametros['id']);
+        $id=$ArrayDeParametros['id'];
+             
+        $emozo= new Mozo();
+        $emozo->setid($id);
+        $cantidadDeBorrados=$emozo->BorrarMozo();
 
+        $objDelaRespuesta= new stdclass();
+       $objDelaRespuesta->cantidad=$cantidadDeBorrados;
+       if($cantidadDeBorrados>0)
+           {
+                $objDelaRespuesta->resultado="algo borró!!!";
+           }
+           else
+           {
+               $objDelaRespuesta->resultado="no Borró nada!!!";
+           }
+       $newResponse = $response->withJson($objDelaRespuesta, 200);  
+         return $newResponse;
+
+    }
+
+    public function BorrarMozo()
+   {
+           $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+          $consulta =$objetoAccesoDato->RetornarConsulta("
+              delete 
+              from mozos 				
+              WHERE idmozo=:id");	
+              $consulta->bindValue(':id',$this->id, PDO::PARAM_INT);		
+              $consulta->execute();
+              return $consulta->rowCount();
+   }
+    
+    public function ModificarUno($request, $response, $args) {
+
+        $ArrayDeParametros = $request->getParsedBody();
+        var_dump($ArrayDeParametros);    	
+
+       $mozomod = new mozo();
+       
+       $mozomod->setid($ArrayDeParametros['id']);
+       $mozomod->setnombre($ArrayDeParametros['nombre']);
+       $mozomod->setpass($ArrayDeParametros['pass']);       
+       
+       $resultado =$mozomod->ModificarMozoParametros();
+       $objDelaRespuesta= new stdclass();
+       
+       $objDelaRespuesta->resultado=$resultado;
+       return $response->withJson($objDelaRespuesta, 200);		
+   }
+
+   public function ModificarMozoParametros()
+	 {
+			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+			$consulta =$objetoAccesoDato->RetornarConsulta("
+				update mozos 
+				set nombre=:nombre,
+                pass=:pass
+                         
+				WHERE idmozo=:id");
+			$consulta->bindValue(':id',$this->id, PDO::PARAM_INT);
+			$consulta->bindValue(':nombre',$this->nombre, PDO::PARAM_STR);
+			$consulta->bindValue(':pass', $this->pass, PDO::PARAM_STR);
+         
+			return $consulta->execute();
+     }
+     
+    //public function TraerUno($request, $response, $args){}
+
+}// mozo
 
 ?>
