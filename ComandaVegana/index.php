@@ -32,6 +32,8 @@
     Base de datos restobd con 8 tablas 
 
     // RESUMEN
+
+    WEB Hosting
     
     - ABM - todas las entidades
 
@@ -66,7 +68,16 @@ use \Firebase\JWT\JWT;
 //CONTINUAR
 
 
-// Web Hosting, en proceso
+// modifiqué el accesodatos con esos dato
+
+// para que ande el web hosting
+
+//pass mysql vO5PrSALAY0x
+
+//nombre bdmysql u227410637_resto
+
+// usuario mysql u227410637_abd
+
 
 // código de pedido para el cliente, en proceso
 // Agrandar el tamaño de la clase comanda incorporando el codigo de pedido
