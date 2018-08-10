@@ -1,12 +1,16 @@
 <?php
 
-// El mozo crea la comanda
-
 /*
 A tener en cuenta
 
 LISTADO - EMPLEADOS (fecha logueo - cant. Operaciones - suspensión - borrado)
 */
+
+// estados de la mesa == estado general de la comanda
+
+    // pendiente o esperando pedido
+
+    // comiendo (mozo, que entrega la comida)
 
 class Mozo implements IApiUsable
 {
@@ -170,6 +174,182 @@ class Mozo implements IApiUsable
          
 			return $consulta->execute();
      }
+
+
+     // ACONDICIONAR PROCESO
+     public function Proceso($request, $response, $args){
+
+        echo "ACONDICIONAR PROCESO";
+        
+        // que el socio sea gran hermano
+        $elt = $request->getHeaderLine('tokenresto');
+        $profile = AutentificadorJWT::ObtenerPayLoad($elt);	
+    
+        date_default_timezone_set("America/Argentina/Buenos_Aires");
+        
+        // traer el metodo mostrar proceso
+        // que algo va a mostrar
+        $laburo = Pendiente::TraerTodosLosPendientes();
+    
+    /*    if($profile->data->tipo === "Socio"){
+    
+            Mozo::MostrarProceso(array_filter($laburo,function($elemento){
+    
+                return $elemento->getestado() === "Listo Para Servir" && $elemento->gettipoempleado() === "Mozo";
+            
+               }));
+    
+    
+            Mozo::MostrarProceso(array_filter($laburo,function($elemento){
+    
+                return $elemento->getestado() === "En Proceso" && $elemento->gettipoempleado() === "Mozo";
+            
+               }));   
+            
+    
+    
+            return $request;
+        }
+    
+        // verifico la lista de pedidos en proceso, y si alguno supera la hora de finalizacion, lo cambio a "listo para servir"
+    
+        // muestro en la misma tabla los listo para servir?!
+    
+        // por ahora si
+    
+    // pendientes genericos
+    // arriba
+    //$laburo = Pendiente::TraerTodosLosPendientes();
+    
+    
+    $listo = array_filter($laburo,function($elemento){
+    
+        return $elemento->getestado() === "En Proceso" && $elemento->gettipoempleado() === "Mozo";
+    
+       });
+       // echo "<pre>";
+       //var_dump($listo);
+       //echo "</pre>";
+    
+        $reloje = date("H:i:s");    
+    
+        if(empty($listo) == false){
+    
+       foreach ($listo as $key => $value) {
+           
+        //if()
+        
+    
+        if($reloje >$value->gethorafin()){
+            // FUNCA!!
+            //var_dump($value->gethorafin());
+    
+            // cambio el estado en la base de datos
+    
+       // todo lo que necesito cambiar es el estado
+    
+       $value->setestado("Listo Para Servir");  
+    
+       $value->ModificarPendienteUnoParametros();
+    
+    
+            
+        }
+        
+       }
+    
+    }else{
+        echo "no hay en proceso que estén listopara servir";
+    }
+    
+    Mozo::MostrarProceso(array_filter($laburo,function($elemento){
+    
+        return $elemento->getestado() === "Listo Para Servir" && $elemento->gettipoempleado() === "Mozo";
+    
+       }));
+    
+    
+    $cerveza = array_filter($laburo,function($elemento){
+    
+        return $elemento->getestado() === "Pendiente" && $elemento->gettipoempleado() === "Mozo";
+    
+       });
+    
+       // está desordenado
+    
+       sort($cerveza);
+    
+       // cambio el estado en la base de datos
+    
+       // todo lo que necesito cambiar
+    
+       // id empleado, hora inicio, hora fin, estado
+    
+      // var_dump($cerveza);
+    
+       if(empty($cerveza) == false){
+       
+       $cerveza[0]->setestado("En Proceso");  
+      
+       $ahoras = date("H:i:s");    
+       
+       $cerveza[0]->sethorainicio($ahoras);
+    
+      $nuevafecha = strtotime ( '+5 minute' , strtotime ( $ahoras ) ) ;
+    
+      $finale = date("H:i:s",$nuevafecha);   
+    
+       $cerveza[0]->sethorafin($finale);
+    
+       // está arriba
+       //$elt = $request->getHeaderLine('tokenresto');
+       //$profile = AutentificadorJWT::ObtenerPayLoad($elt);		
+    
+       $cerveza[0]->setidempleado($profile->data->id);
+    
+       $cerveza[0]->ModificarPendienteUnoParametros();
+       }else{
+           echo "Nada pendiente. Puede descansar un rato mirando su celular.<br><br>";
+       }
+    
+       Mozo::MostrarProceso(array_filter($laburo,function($elemento){
+    
+        return $elemento->getestado() === "En Proceso" && $elemento->gettipoempleado() === "Mozo";
+    
+       }));*/
+    }
+
+    public static function MostrarProceso($pedidos){
+
+        echo "<table border='2px' solid>";
+            echo "<caption>Pedidos Listo Para Servir, y En Proceso Cerveceros vivos</caption>";
+            echo "<thead>";
+            echo "<tr>";
+            echo "<th>ID PEDIDO</th>";
+            echo "<th>DESCRIPCION Cervecero</th>";         
+            echo "<th>ESTADO</th>";         
+            echo "<th>INICIO</th>";
+            echo "<th>FIN</th>";         
+            echo "<th>EMPLEADO</th>";         
+            echo "</thead>";
+            echo "</tr>";
+            echo "<tbody>";
+    
+            foreach ($pedidos as $key => $value) {
+    
+                echo "<tr>";
+                echo "<td >".$value->getidpedido()."</td>";
+                echo "<td >".$value->getdescripcion()."</td>";
+                echo "<td >".$value->getestado()."</td>";
+                echo "<td >".$value->gethorainicio()."</td>";
+                echo "<td >".$value->gethorafin()."</td>";
+                echo "<td >".$value->getidempleado()."</td>";
+                echo "</tr>";
+            }   
+    
+            echo "</tbody>";
+            echo "</table>";
+    }
      
     //public function TraerUno($request, $response, $args){}
 

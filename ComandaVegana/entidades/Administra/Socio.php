@@ -3,6 +3,14 @@
 require_once "guia/IApiUsable.php";
 require_once "guia/AccesoDatos.php";
 
+
+// los socios controlan  todo incluso los pagos
+
+// los socios cierran la mesa
+
+// pagada y cerrada (socio)
+
+// los socios pueden ver el estado de todos los pedidos OK
 class Socio implements IApiUsable
 {
     private $nombre;

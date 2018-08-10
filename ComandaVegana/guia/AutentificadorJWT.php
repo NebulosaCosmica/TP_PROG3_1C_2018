@@ -11,7 +11,7 @@ class AutentificadorJWT
     
     public static function CrearToken($datos)
     {
-        $ahora = time();
+        $ahora = time();        
         /*
          parametros del payload
          https://tools.ietf.org/html/rfc7519#section-4.1
@@ -22,7 +22,9 @@ class AutentificadorJWT
             'exp' => $ahora + (120000000000000000000000000000000),
             //'aud' => self::Aud(),
             'data' => $datos,
-            'app'=> "Restó Comanda Vegana"
+            'app'=> "Restó Comanda Vegana",
+
+
         );
         return JWT::encode($payload, self::$claveSecreta);
     }

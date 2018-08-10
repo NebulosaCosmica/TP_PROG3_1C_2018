@@ -71,7 +71,9 @@ class MWparaAutentificar
 		}	
 
 
-		$params = $request->getParsedBody(); 		
+		$params = $request->getParsedBody(); 
+
+		
 
 		foreach ($graciastotales as $key => $value) {
 			
@@ -178,7 +180,7 @@ class MWparaAutentificar
 
 		if($profile->data->tipo == "Socio")
 		{
-			echo "El Socio todo lo puede<br><br>";
+			echo "El Socio todo lo puede ver<br><br>";
 			$response = $next($request, $response); 
 		}else{
 			echo "Si no soscio, no podes continuar<br><br>";
@@ -211,11 +213,15 @@ class MWparaAutentificar
 		if($profile->data->tipo == "Cervecero")
 		{
 			echo "El Cervecero puede<br><br>";
+			// antes del proceso
 			$response = $next($request, $response); 
+
+
 		}else{
 			echo "Si no sos Cervecero, no podes continuar<br><br>";
 		}
 
+		// despues del proceso
 		return $response;
 	}
 
@@ -264,6 +270,15 @@ class MWparaAutentificar
 			echo "Si no sos Pastelero, no podes continuar<br><br>";
 		}
 
+		return $response;
+	}
+
+	public function VerificarPedidoCierto($request, $response, $next) {
+
+		// cuando entra
+		$response = $next($request, $response); 
+
+		//cuando sale
 		return $response;
 	}
 

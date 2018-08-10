@@ -107,7 +107,7 @@ public function Trabajo(){
     $lopen=Array();
 
     foreach ($pend as $key => $value) {
-        $lopen[] = Pedido::OBJPedido($value->getidcomanda(),"","","",$value->getpbd());
+        $lopen[] = Pedido::OBJPedido($value->getidcomanda(),"","","",$value->getpbd(),$value->getestado());
     }
 
    // var_dump($lopen);
@@ -122,7 +122,8 @@ public static function MostrarPendientes($pedidos){
         echo "<thead>";
         echo "<tr>";
         echo "<th>ID COMANDA</th>";
-        echo "<th>PENDIENTE Pastelero</th>";         
+        echo "<th>PENDIENTE Pastelero</th>"; 
+        echo "<th>ESTADO</th>";                 
         echo "</thead>";
         echo "</tr>";
         echo "<tbody>";
@@ -132,6 +133,7 @@ public static function MostrarPendientes($pedidos){
             echo "<tr>";
             echo "<td >".$value->getidcomanda()."</td>";
             echo "<td >".$value->getpbd()."</td>";
+            echo "<td >".$value->getestado()."</td>";
             echo "</tr>";
         }                    
 

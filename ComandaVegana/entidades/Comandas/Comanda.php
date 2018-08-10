@@ -4,9 +4,9 @@ require_once "guia/IApiUsable.php";
 require_once "guia/AccesoDatos.php";
 
 require_once "entidades/Ambulancia/Pedido.php";
+require_once "entidades/Ambulancia/Pendiente.php";
 
-
-// el idpedido en la comanda se puede reemplazar por el alfapedido?
+require_once "entidades/Administra/GesCliente.php";
 
 class Comanda implements IApiUsable{    
     
@@ -29,26 +29,32 @@ class Comanda implements IApiUsable{
     
     private $FotoMesa;
 
+    // numero de pedido, no? (igual a idcomanda)
     private $ElPedido;   
 
 
     public function __construct(){}
 
-    public static function OBJComanda($idmozo,$nombrecliente,$elpedido,$importe = 0,$horaini="",$horafin="",$fotomesa="",$id= -1){
 
+    // uso el objcomanda cuando ingreso la comanda 
+    // y cuando traigo todas las comandas
+    public static function OBJComanda($idmozo,$nombrecliente,$elpedido,$importe = 0,$horaini="",$horafin="",$fotomesa="",$id= -1){
         
         $lacomanda = new Comanda();        
             
         $lacomanda->setIdMozo($idmozo);
 
-        $lacomanda->setNC($nombrecliente);
+        $lacomanda->setNC($nombrecliente);        
         
-        // retocar esto que falla
-        $lacomanda->setElPedido($elpedido->InsertarElPedidoParametros());
+        $lacomanda->setElPedido($elpedido);
 
         if($importe != 0){ $lacomanda->setImporte($importe);}
 
+        date_default_timezone_set("America/Argentina/Buenos_Aires");
         if($horaini == ""){ $lacomanda->setHoraIni(date("H:i:s"));}
+        else{
+            $lacomanda->setHoraIni($horaini);
+        }
 
         if($horafin != ""){ $lacomanda->setHoraFin($horafin);}
 
@@ -69,7 +75,9 @@ class Comanda implements IApiUsable{
 
     public function getHoraIni(){return $this->HoraIni;}
 
-    public function setHoraIni($HoraIni){$this->HoraIni = $HoraIni;}
+    public function setHoraIni($HoraIni){
+        date_default_timezone_set("America/Argentina/Buenos_Aires");
+        $this->HoraIni = $HoraIni;}
 
     public function getImporte(){return $this->Importe;}
 
@@ -77,7 +85,9 @@ class Comanda implements IApiUsable{
 
     public function getHoraFin(){return $this->HoraFin;}
 
-    public function setHoraFin($HoraFin){$this->HoraFin = $HoraFin;}
+    public function setHoraFin($HoraFin){
+        date_default_timezone_set("America/Argentina/Buenos_Aires");
+        $this->HoraFin = $HoraFin;}
 
     public function getFotoMesa(){return $this->FotoMesa;}
 
@@ -91,6 +101,22 @@ class Comanda implements IApiUsable{
 
     public function setIdMozo($IdMozo){$this->IdMozo = $IdMozo;}
     
+
+    // datos de la mesa:
+
+    // codigo de 5 caracteres.
+
+    // mis mesas van desde el 10000 al 10080
+
+    // el cliente ve el tiempo restante para su pedido
+
+    // estados de la mesa == estado general de la comanda
+
+    // pendiente o esperando pedido
+
+    // comiendo (mozo, que entrega la comida)
+
+    // pagada y cerrada (socio)
     public function CargarUno($request, $response, $args){
 
     // ver los datos del empleado que cargó la comanda
@@ -98,26 +124,34 @@ class Comanda implements IApiUsable{
 
     $responsable = AutentificadorJWT::ObtenerData($elt)->id;
         
-    $params = $request->getParsedBody();          
-
+    $params = $request->getParsedBody();    
+        
     $unpedido = new Pedido();
 
+    // no mete pendiente
     if(empty($params['bartender']) == false){
         $unpedido->setpbtv($params['bartender']);
+        Pedido::MetePendiente("Bartender",$params['bartender'],"Pendiente");
     }
 
     if(empty($params['cervecero']) == false){
         $unpedido->setpbcca($params['cervecero']);
+        Pedido::MetePendiente("Cervecero",$params['cervecero'],"Pendiente");
+        
     }
 
     if(empty($params['cocinero']) == false){
         $unpedido->setppc($params['cocinero']);
+        Pedido::MetePendiente("Cocinero",$params['cocinero'],"Pendiente");        
     }
 
     if(empty($params['pastelero']) == false){
         $unpedido->setpbd($params['pastelero']);
+        Pedido::MetePendiente("Pastelero",$params['pastelero'],"Pendiente");        
     }
     
+    $unpedido->setestado("Pendiente");
+
     if(empty($request->getUploadedFiles()) == false){
     
     $archi = $request->getUploadedFiles();
@@ -141,24 +175,40 @@ class Comanda implements IApiUsable{
     
     $archi['fotomesa']->moveTo($destino.$params['nombrecliente'].".".$ext);    
     $ruta = ($params['nombrecliente'].".".$ext);
-
+    
     if(empty($unpedido)== false){
 
-        $altaComanda = Comanda::OBJComanda($responsable,$params['nombrecliente'],$unpedido,0,"","",$ruta);
-        $altaComanda->InsertarLaComandaParametros();
+        // inserto el pedido
 
+        $altaComanda = Comanda::OBJComanda($responsable,$params['nombrecliente'],$unpedido->InsertarElPedidoParametros(),0,"","",$ruta);
+     $elnumerofavorito =  $altaComanda->InsertarLaComandaParametros();   
+        
+        
         // mostrar codigo alfa OK
-        // que revise en la lista de codigos y que si es el mismo, que tire de nuevo... .
-        $characters = 'abcdefghijklmnñopqrstuvwxyz0123456789';
+        // que revise en la lista de codigos y que si es el mismo, que tire de nuevo... . último detalle
+        $characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
+        // insert into... .
+        
         $string = '';
         $max = strlen($characters) - 1;
         for ($i = 0; $i < 5; $i++) {
             $string .= $characters[mt_rand(0, $max)];
-            }
+        }
 
+        //verificar la tabla clientes y asignar 10000 o el numero que corresponda
+
+        // segun las mesas abiertas
+
+        $mesacon = GesCliente::ProximaMesa();
+        
         echo "Comanda puesta en escena<br><br>";
+        echo "Código de mesa: $mesacon <br><br>";
         echo "Código del pedido: $string";
+
+        $control = GesCliente::OBJGesCliente($mesacon,$string,$elnumerofavorito);
+
+        $control->InsertarElGesClienteParametros();
         $newResponse = $response->withJson($altaComanda, 200);  
 
         return $newResponse;
@@ -168,6 +218,7 @@ class Comanda implements IApiUsable{
         echo "al mozo se le escapó el pedido";        
     }
 
+    // revisar esto
     }else {
         if(empty($unpedido)== false){
 
@@ -211,7 +262,7 @@ class Comanda implements IApiUsable{
     public function TraerTodos($request, $response, $args){
         
         // listado de comandas/pedidos        
-        $lascomandas=socio::TraerTodasLasComandas();                             
+        $lascomandas=Socio::TraerTodasLasComandas();                             
         $newResponse = $response->withJson($lascomandas, 200);         
         return $newResponse;
     } 
@@ -227,12 +278,40 @@ class Comanda implements IApiUsable{
 
         foreach ($salencomandas as $key => $value) {
             
-
+          // Pedido::TraerPedido($value->Pedido)
+          // para que se vea el pedido, y no solo el id
 
             $savior[] = Comanda::OBJComanda($value->Mozo,$value->Nombre,Pedido::TraerPedido($value->Pedido),$value->Importe,$value->Inicio,$value->Fin,$value->Foto,$value->idcomanda);
+
         }      
        
             return $savior;
+    }
+
+    public static function TraerComanda($id){
+        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+			$consulta =$objetoAccesoDato->RetornarConsulta("select idcomanda,idmozo as Mozo,nombrecliente as Nombre,horaini as Inicio,horafin as Fin from comandas where idpedido = $id");
+			$consulta->execute();
+            $lacomanda= $consulta->fetchObject('Comanda');           
+                
+            $savior = Comanda::OBJComanda($lacomanda->Mozo,$lacomanda->Nombre,$lacomanda->idcomanda,0,$lacomanda->Inicio,$lacomanda->Fin);
+                  
+                     
+            if(isset($savior))
+            {
+              /*  echo "<pre>";
+                var_dump($savior);
+                echo "</pre>";*/
+
+                return $savior;
+            }else{
+
+                return null;
+
+            }
+    
+       
+			
     }
 
   //  public function TraerUno($request, $response, $args){}

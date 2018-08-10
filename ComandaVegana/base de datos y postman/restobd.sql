@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-07-2018 a las 17:35:09
+-- Tiempo de generación: 10-08-2018 a las 19:47:20
 -- Versión del servidor: 10.1.33-MariaDB
 -- Versión de PHP: 7.2.6
 
@@ -66,6 +66,28 @@ INSERT INTO `cerveceros` (`idcervecero`, `nombre`, `pass`, `tipo`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `clientes`
+--
+
+CREATE TABLE `clientes` (
+  `idcliente` int(11) NOT NULL,
+  `codigomesa` int(11) NOT NULL,
+  `codigopedido` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
+  `idpedido` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`idcliente`, `codigomesa`, `codigopedido`, `idpedido`) VALUES
+(1, 10000, 'f9w0p', 1),
+(2, 10001, 'p6uqy', 2),
+(3, 10002, 'nbrbq', 3);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `cocineros`
 --
 
@@ -105,9 +127,9 @@ CREATE TABLE `comandas` (
 --
 
 INSERT INTO `comandas` (`idcomanda`, `idmozo`, `nombrecliente`, `idpedido`, `fotomesa`, `horaini`, `importe`, `horafin`) VALUES
-(1, 1, 'Fabian', 1, 'Fabian.jpg', '19:04:42', 0, ''),
-(2, 2, 'Federico', 2, 'Federico.png', '19:25:22', 0, ''),
-(3, 2, 'Anita', 3, 'Anita.jpg', '19:34:53', 0, '');
+(1, 1, 'Franco', 1, 'Franco.jpg', '18:36:18', 0, ''),
+(2, 1, 'Luisa', 2, 'Luisa.jpg', '18:40:52', 0, ''),
+(3, 1, 'Fede', 3, 'Fede.jpg', '14:17:12', 0, '');
 
 -- --------------------------------------------------------
 
@@ -128,7 +150,8 @@ CREATE TABLE `mozos` (
 
 INSERT INTO `mozos` (`idmozo`, `nombre`, `pass`, `tipo`) VALUES
 (1, 'Fenicio', 'Fenicio', 'Mozo'),
-(2, 'Elipides', 'Elipides', 'Mozo');
+(2, 'Elipides', 'Elipides', 'Mozo'),
+(3, 'Karina', 'Karina', 'Mozo');
 
 -- --------------------------------------------------------
 
@@ -161,17 +184,53 @@ CREATE TABLE `pedidos` (
   `pbtv` varchar(150) COLLATE utf8_spanish2_ci NOT NULL,
   `pbcca` varchar(150) COLLATE utf8_spanish2_ci NOT NULL,
   `ppc` varchar(150) COLLATE utf8_spanish2_ci NOT NULL,
-  `pbd` varchar(150) COLLATE utf8_spanish2_ci NOT NULL
+  `pbd` varchar(150) COLLATE utf8_spanish2_ci NOT NULL,
+  `estado` varchar(30) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `pedidos`
 --
 
-INSERT INTO `pedidos` (`idpedido`, `pbtv`, `pbcca`, `ppc`, `pbd`) VALUES
-(1, 'malbec,daikiri pomelo', 'ipa,stout', 'seitan,falafel,chorizo vegano,fugaza y faina', 'torta de naranja, torta de chocolate'),
-(2, '7mo regimiento, whiscola', 'Honey', 'croquetas de espinaca, tortilla de papa, churrasco de seitan', 'alfajor frutos del bosque x4'),
-(3, 'Limonada con gengibre', 'Stout', 'Ensalada Cesar, Nori roll', 'Cheese cake');
+INSERT INTO `pedidos` (`idpedido`, `pbtv`, `pbcca`, `ppc`, `pbd`, `estado`) VALUES
+(1, 'Santa Julia Syrah', 'Stout', 'chorivegano con ensalada Cesar', 'Ensalada de frutas', 'Pendiente'),
+(2, 'Los Arboles', 'IPA', 'Seitan a  la parrilla con morrones asados', 'Brownie loco', 'Pendiente'),
+(3, 'Daikiri frutal', 'Honey', 'Brocoli al oliva con brotes de soja', 'Torta de manzana', 'Pendiente');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pendientes`
+--
+
+CREATE TABLE `pendientes` (
+  `idpendiente` int(11) NOT NULL,
+  `idpedido` int(11) NOT NULL,
+  `idempleado` int(11) NOT NULL,
+  `tipoempleado` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `descripcion` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `horainicio` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `horafin` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `estado` varchar(30) COLLATE utf8_spanish2_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `pendientes`
+--
+
+INSERT INTO `pendientes` (`idpendiente`, `idpedido`, `idempleado`, `tipoempleado`, `descripcion`, `horainicio`, `horafin`, `estado`) VALUES
+(1, 1, 0, 'Bartender', 'Santa Julia Syrah', '00:00', '00:00', 'Pendiente'),
+(2, 1, 0, 'Cervecero', 'Stout', '00:00', '00:00', 'Pendiente'),
+(3, 1, 0, 'Cocinero', 'chorivegano con ensalada Cesar', '00:00', '00:00', 'Pendiente'),
+(4, 1, 0, 'Pastelero', 'Ensalada de frutas', '00:00', '00:00', 'Pendiente'),
+(5, 2, 0, 'Bartender', 'Los Arboles', '00:00', '00:00', 'Pendiente'),
+(6, 2, 0, 'Cervecero', 'IPA', '00:00', '00:00', 'Pendiente'),
+(7, 2, 0, 'Cocinero', 'Seitan a  la parrilla con morr', '00:00', '00:00', 'Pendiente'),
+(8, 2, 0, 'Pastelero', 'Brownie loco', '00:00', '00:00', 'Pendiente'),
+(9, 3, 0, 'Bartender', 'Daikiri frutal', '00:00', '00:00', 'Pendiente'),
+(10, 3, 0, 'Cervecero', 'Honey', '00:00', '00:00', 'Pendiente'),
+(11, 3, 0, 'Cocinero', 'Brocoli al oliva con brotes de', '00:00', '00:00', 'Pendiente'),
+(12, 3, 0, 'Pastelero', 'Torta de manzana', '00:00', '00:00', 'Pendiente');
 
 -- --------------------------------------------------------
 
@@ -213,6 +272,12 @@ ALTER TABLE `cerveceros`
   ADD PRIMARY KEY (`idcervecero`);
 
 --
+-- Indices de la tabla `clientes`
+--
+ALTER TABLE `clientes`
+  ADD PRIMARY KEY (`idcliente`);
+
+--
 -- Indices de la tabla `cocineros`
 --
 ALTER TABLE `cocineros`
@@ -243,6 +308,12 @@ ALTER TABLE `pedidos`
   ADD PRIMARY KEY (`idpedido`);
 
 --
+-- Indices de la tabla `pendientes`
+--
+ALTER TABLE `pendientes`
+  ADD PRIMARY KEY (`idpendiente`);
+
+--
 -- Indices de la tabla `socios`
 --
 ALTER TABLE `socios`
@@ -265,6 +336,12 @@ ALTER TABLE `cerveceros`
   MODIFY `idcervecero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de la tabla `clientes`
+--
+ALTER TABLE `clientes`
+  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de la tabla `cocineros`
 --
 ALTER TABLE `cocineros`
@@ -280,7 +357,7 @@ ALTER TABLE `comandas`
 -- AUTO_INCREMENT de la tabla `mozos`
 --
 ALTER TABLE `mozos`
-  MODIFY `idmozo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idmozo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `pasteleros`
@@ -293,6 +370,12 @@ ALTER TABLE `pasteleros`
 --
 ALTER TABLE `pedidos`
   MODIFY `idpedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `pendientes`
+--
+ALTER TABLE `pendientes`
+  MODIFY `idpendiente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `socios`

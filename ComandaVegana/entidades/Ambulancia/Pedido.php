@@ -1,6 +1,9 @@
 <?php
 
 // mas adelante veremos si nesito el abm
+
+
+
 class Pedido 
 {   
 
@@ -8,12 +11,13 @@ class Pedido
     private $pbcca;
     private $ppc;
     private $pbd;
+    private $estado;
 
     private $idcomanda;
 
-    public function __construct(){}
+    // el objpedido se usa tambien para traer todos, no va como para insertar
 
-    public function OBJPedido($idcomanda,$pbtv = "",$pbcca="",$ppc="",$pbd=""){
+    public static function OBJPedido($idcomanda,$pbtv = "",$pbcca="",$ppc="",$pbd="",$estado ="Pendiente"){
 
         $elpedido = new Pedido();
 
@@ -26,6 +30,8 @@ class Pedido
         if($ppc !=""){$elpedido->setppc($ppc);}
 
         if($pbd !=""){$elpedido->setpbd($pbd);}
+
+        $elpedido->setestado($estado);
 
         return $elpedido;
     }
@@ -50,17 +56,55 @@ class Pedido
 
     public function setidcomanda($idcomanda){$this->idcomanda = $idcomanda;}
 
+    public function getestado(){return $this->estado;}
+
+    public function setestado($estado){$this->estado = $estado;}
+
+    public static function MetePendiente($tipoempleado,$descripcion,$estado){   
+        
+        // acá resuelvo el idpedido
+
+       // el próximo pedido va a ser mi idpedido
+
+      
+       if(empty(Pedido::TraerTodosLosPedidos())){
+
+           $elpendiente = Pendiente::OBJPendiente($tipoempleado,$descripcion,$estado,1);
+       }else{
+
+//        var_dump(Pedido::TraerTodosLosPedidos());
+
+        $entero = Pedido::TraerTodosLosPedidos();
+        $ultimo = array_pop($entero);
+
+        $nuevo = $ultimo->getidcomanda() + 1;
+        //var_dump($nuevo);
+
+
+        $elpendiente = Pendiente::OBJPendiente($tipoempleado,$descripcion,$estado,$nuevo);
+           
+       }
+       
+
+        $elpendiente->InsertarElPendienteParametros();
+
+    }
+
     public function InsertarElPedidoParametros()
     {
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-        $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into pedidos (pbtv,pbcca,ppc,pbd)values(:pbtv,:pbcca,:ppc,:pbd)");
+        $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into pedidos (pbtv,pbcca,ppc,pbd,estado)values(:pbtv,:pbcca,:ppc,:pbd,:estado)");
         if(isset($this->pbtv)){$consulta->bindValue(':pbtv',$this->pbtv, PDO::PARAM_STR);}
 
         if(isset($this->pbcca)){$consulta->bindValue(':pbcca', $this->pbcca, PDO::PARAM_STR);}
         if(isset($this->ppc)){$consulta->bindValue(':ppc',$this->ppc, PDO::PARAM_STR);}
         if(isset($this->pbd)){$consulta->bindValue(':pbd', $this->pbd, PDO::PARAM_STR);}
+        if(isset($this->estado)){$consulta->bindValue(':estado', $this->estado, PDO::PARAM_STR);}
+        $consulta->execute();	
         
-        $consulta->execute();		
+        // a demas agrego el pendiente, por comodidad más arriba
+
+
         return $objetoAccesoDato->RetornarUltimoIdInsertado();
     }
 
@@ -68,7 +112,7 @@ class Pedido
     public static function TraerTodosLosPedidos(){        
 
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-            $consulta =$objetoAccesoDato->RetornarConsulta("select idpedido,pbtv as PendienteBTV, pbcca as PendienteCCA,ppc as PendientePC,pbd as PendienteBD from pedidos");
+            $consulta =$objetoAccesoDato->RetornarConsulta("select idpedido,pbtv as PendienteBTV, pbcca as PendienteCCA,ppc as PendientePC,pbd as PendienteBD, estado as Estado from pedidos");
 			$consulta->execute();			
             // transformar a objeto a uno que sirva ACÁ
             // si no, da todo null en los atributos            
@@ -76,7 +120,7 @@ class Pedido
        
         foreach ($salenpedidos as $key => $value) {
          
-            $savior[] = Pedido::OBJPedido($value->idpedido,$value->PendienteBTV,$value->PendienteCCA,$value->PendientePC,$value->PendienteBD);
+            $savior[] = Pedido::OBJPedido($value->idpedido,$value->PendienteBTV,$value->PendienteCCA,$value->PendientePC,$value->PendienteBD,$value->Estado);
         }      
        
 
@@ -89,16 +133,32 @@ class Pedido
 
     public static function TraerPedido($id){
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select idpedido,pbtv as Bartenders,pbcca as Cerveceros,ppc as Cocineros,pbd as Pasteleros from pedidos where idpedido = $id");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select idpedido,pbtv as Bartenders,pbcca as Cerveceros,ppc as Cocineros,pbd as Pasteleros,estado as Estado from pedidos where idpedido = $id");
 			$consulta->execute();
-			$elpedido= $consulta->fetchObject('Pedido');
-			return $elpedido;	
+            $elpedido= $consulta->fetchObject('Pedido');
+            
+
+                
+            $savior = Pedido::OBJPedido($elpedido->idpedido,$elpedido->Bartenders,$elpedido->Cerveceros,$elpedido->Cocineros,$elpedido->Pasteleros, $elpedido->Estado);
+                  
+                     
+            if(isset($savior))
+            {
+               /* echo "<pre>";
+                var_dump($savior);
+                echo "</pre>";*/
+
+                return $savior;
+            }else{
+
+                return null;
+
+            }
+    
+       
+			
     }
 
     
 }// Pedido
-
-
-
-
 ?>
