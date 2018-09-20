@@ -1,41 +1,158 @@
 <?php
-/*  SEGUIMIENTO
 
-Verificar las rutas!
 
-orde/localhost/
+/*
+
+La app empieza cerca de la línea 260
+
+CONTINUAR CON
+
+EL MOZO SE ENTERA CUANDO EL PEDIDO COMPLETO ESTÁ LISTO PARA SERVIR
+
+EL MOZO OPERA SOBRE LOS PENDIENTES
+
+EL MOZO COBRA Y PERMITE AL SOCIO CERRAR LA MESA (o algo así)
+
+PUNTEAR LAS ESTADÍSTICAS DE LOS EMPLEADOS Y LAS VENTAS
+
+SEGUIMIENTO
+
+INICIO
+
+http://localhost/prog/ComandaVegana/
+
+LOGINES
+
+socios mozos bartenders cocineros pasteleros cerveceros
+
+(manejar excepciones)
+(revisar el login y el buen funcionamiento cuando eso falla)
+(token deformado o ausente)
+
+http://localhost/prog/ComandaVegana/login/
+
+
+ALTA DE COMANDA/PEDIDO/PENDIENTES
+
+1° login del mozo
+
+2° alta del pedido
+
+http://localhost/prog/ComandaVegana/comandas/alta/
+
+el admin no puede dar de alta comandas
+
+(por el momento se aceptan pedidos completos, no hay otra alternativa)
+
+(ABM de Comandas, luego)
+
+genera un codigo de mesa y de cliente para revisar el pedido
+
+VER EL PEDIDO CARGADO
+
+El pedido le llega a cada empleado para que lo procese
+
+Cerveceros como ejemplo
+
+Login del cervecero
+
+El cervecero ve los pendientes
+
+http://localhost/prog/ComandaVegana/cerveceros/pendientes/
+
+
+EL EMPLEADO OPERA SOBRE LOS PENDIENTES
+
+Login del cervecero
+
+El cervecero cambia el primer pendiente, y le asigna un tiempo de proceso
+
+El cervecero ve cuándo el pedido está listo para ser servido
+
+
+OTROS PROCESOS ACTIVOS
+
+http://localhost/prog/ComandaVegana/mozos/alta/
+
+Alta de mozos
+
+http://localhost/prog/ComandaVegana/bartenders/alta/
+
+Alta de bartenders
+
+http://localhost/prog/ComandaVegana/socios/alta/
+
+Alta de socios
+
+http://localhost/prog/ComandaVegana/cerveceros/alta/
+
+Alta de cerveceros
+
+http://localhost/prog/ComandaVegana/cocineros/alta/
+
+Alta de cocineros
+
+http://localhost/prog/ComandaVegana/pasteleros/alta/
+
+Alta de pasteleros
+
+http://localhost/prog/ComandaVegana/socios/baja/
+
+Baja de socios 
+
+(Ver de nuevo el DELETE, que no andaba)
+
+http://localhost/prog/ComandaVegana/socios/modifica/
+
+Modifica socios
+
+http://localhost/prog/ComandaVegana/clientes/
+
+con codigopedido y codigomesa de parametros (GET)
+
+http://localhost/prog/ComandaVegana/clientes/?codigomesa=10004&codigopedido=8dg45
+
+muestra el pedido que coincide con los códigos
+
+http://localhost/prog/ComandaVegana/socios/cerveceros/operaciones/
+
+el socio ve las operaciones del cervecero
+
+http://localhost/prog/ComandaVegana/socios/cerveceros/pendientes/
+
+el socio ve los pendientes del cervecero
+
+
+COSAS PARA MEJORAR
+
+LOGINES
+
+(manejar excepciones)
+(revisar el login y el buen funcionamiento cuando eso falla)
+(token deformado o ausente)
+
+ALTA DE COMANDA/PEDIDO/PENDIENTES
+
+(por el momento se aceptan pedidos completos, no hay otra alternativa)
+
+(ABM de Comandas, luego)
+
+
+VER EL PEDIDO CARGADO
+
+(Cerveceros como ejemplo, extender a los 4 empleados)
 
 
 // codigo de mesa fantasma, sin entidad, que no hace falta
 
 // (el mozo identifica mesa y comanda por la foto de la mesa ;)  )
 
-// EN LA TABLA CLIENTES tengo el codigo de mesa OK
-
-// el cliente puede entrar a la app y ver 
-
-// código de pedido para el cliente junto al codigo de mesa OK
-
 // puedo usar el estado generico del pedido para el mozo, cuando esta
 
 // finalizado, que le aparezca en Pendientes del mozo
 
-http://localhost/prog/orde/localhost/ComandaVegana/login/
 
-POST (login de usuario)
-(socios mozos bartenders cocineros pasteleros cerveceros)
-
-http://localhost/prog/ComandaVegana/mozos/alta/
-
-POST (alta de mozos) solo Socios
-
-http://localhost/prog/orde/localhost/ComandaVegana/comandas/alta/
-
-POST (alta de comandas) solo Mozos
-
- */
-
-/* PRESENTACION
+PRESENTACION
 
     Comanda Vegana Base
 
@@ -90,22 +207,7 @@ POST (alta de comandas) solo Mozos
 
  */
 
-
-
-
 //CONTINUAR
-
-// NECESITO ESTADOS POR EMPLEADO OK
-// creé una tabla pendientes, para volcar el proceso de preparación por separado OK
-
-// cuando un empleado recibe algo en su lista de pendientes
-// se supone que trabajará en el primer pedido llegado. 
-// pondrá el estado del pedido en "en preparacion" OK
-// empleado/operacion , cambia el estado del primer pedido ingresado OK
-
-
-// el pedido en preparacions tiene un tiempo estimado OK      
-// puede haber más de un empleado en el mismo puesto OK
 
 // PREVIOS
 
@@ -194,7 +296,7 @@ $app->group('/comandas',function(){
 ->add(\MWparaAutentificar::class.':ValidarToc');
 
 $app->group('/mozos',function(){
-    $this->post('/alta/',\Mozo::class.':CargarUno');
+    $this->post('/alta/',\Mozo::class.':CargarUno');       
     
 
 })->add(\MWparaAutentificar::class.':ValidarSocio')
@@ -217,6 +319,8 @@ $app->group('/bartenders',function(){
     ->add(\MWparaAutentificar::class.':ValidarSocio');
     $this->post('/pendientes/',\Bartender::class.':Trabajo')
     ->add(\MWparaAutentificar::class.':ValidarBart');
+    $this->post('/operaciones/',\Bartender::class.':Proceso')
+    ->add(\MWparaAutentificar::class.':ValidarBart');
 
 })->add(\MWparaAutentificar::class.':ValidarToc');
 
@@ -225,6 +329,8 @@ $app->group('/cocineros',function(){
     ->add(\MWparaAutentificar::class.':ValidarSocio');
     $this->post('/pendientes/',\Cocinero::class.':Trabajo')
     ->add(\MWparaAutentificar::class.':ValidarCoci');
+    $this->post('/operaciones/',\Cocinero::class.':Proceso')
+    ->add(\MWparaAutentificar::class.':ValidarCoci');
 
 })->add(\MWparaAutentificar::class.':ValidarToc');
 
@@ -232,6 +338,8 @@ $app->group('/pasteleros',function(){
     $this->post('/alta/',\Pastelero::class.':CargarUno')
     ->add(\MWparaAutentificar::class.':ValidarSocio');
     $this->post('/pendientes/',\Pastelero::class.':Trabajo')
+    ->add(\MWparaAutentificar::class.':ValidarPast');
+    $this->post('/operaciones/',\Pastelero::class.':Proceso')
     ->add(\MWparaAutentificar::class.':ValidarPast');
 
 })->add(\MWparaAutentificar::class.':ValidarToc');
@@ -248,13 +356,17 @@ $app->group('/socios',function(){
     // put anda
     $this->put('/modifica/',\Socio::class.':ModificarUno');
 
+    $this->post('/comandas/operaciones/',\Mozo::class.':Proceso');
 
-    $this->post('/cerveceros/pendientes/',\Cervecero::class.':Trabajo');
-    
+
+    $this->post('/cerveceros/pendientes/',\Cervecero::class.':Trabajo');    
 
     $this->post('/cerveceros/operaciones/',\Cervecero::class.':Proceso');
 
-    $this->post('/comandas/operaciones/',\Mozo::class.':Proceso');
+
+    $this->post('/cocineros/pendientes/',\Cocinero::class.':Trabajo');    
+
+    $this->post('/cocineros/operaciones/',\Cocinero::class.':Proceso');    
 
 })->add(\MWparaAutentificar::class.':ValidarSocio')
 ->add(\MWparaAutentificar::class.':ValidarToc');
@@ -275,7 +387,7 @@ $app->any('[/]',function($req,$resp){
     echo "<br><br>";
     echo "Los clientes pueden revisar su pedido /clientes/";
 	echo "<br><br>";
-	echo "codigomesa: Código de mesa. codigopedido: Código de pedido";  
+	echo "codigomesa: Código de mesa <br>codigopedido: Código de pedido";  
     echo "</pre>";    
 
 });

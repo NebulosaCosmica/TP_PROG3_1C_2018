@@ -96,20 +96,9 @@ public static function TraerTodosLosCerveceros()
 }
 
 public function Trabajo(){
- 
-    // el idpedido corresponde siempre con el idcomanda
-    // en la base de datos
-
-    // cambio pedidos por pendientes
-    // pedidos solamente muestra, pero no opera
+    
 
     $laburo = Pendiente::TraerTodosLosPendientes();
-
-/*    echo "<pre>";
-    var_dump($laburo);
-    echo "</pre>";*/
-
-    
 
    Cervecero::MostrarPendientes(array_filter($laburo,function($elemento){
 

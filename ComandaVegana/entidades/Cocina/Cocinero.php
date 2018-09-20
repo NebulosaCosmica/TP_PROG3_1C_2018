@@ -95,25 +95,17 @@ public static function TraerTodosLosCocineros()
         
 }
 
-public function Trabajo(){
-    // muestra el listado de pendientes
+public function Trabajo(){    
 
-    // el idpedido corresponde siempre con el idcomanda
-    // en la base de datos
 
-    $pend = Pedido::TraerTodosLosPedidos();
+    $laburo = Pendiente::TraerTodosLosPendientes();
+
+   Cocinero::MostrarPendientes(array_filter($laburo,function($elemento){
+
+    return $elemento->getestado() === "Pendiente" && $elemento->gettipoempleado() === "Cocinero";
+
+   }));
     
-   // var_dump($pend);
-
-    $lopen=Array();
-
-    foreach ($pend as $key => $value) {
-        $lopen[] = Pedido::OBJPedido($value->getidcomanda(),"","",$value->getppc(),"",$value->getestado());
-    }
-
-   // var_dump($lopen);
-
-    cocinero::MostrarPendientes($lopen);
 }
 
 public static function MostrarPendientes($pedidos){
@@ -122,8 +114,8 @@ public static function MostrarPendientes($pedidos){
         echo "<caption>Resumen de Pendientes Cocineros vivos</caption>";
         echo "<thead>";
         echo "<tr>";
-        echo "<th>ID COMANDA</th>";
-        echo "<th>PENDIENTE Cocinero</th>";
+        echo "<th>ID PEDIDO</th>";
+        echo "<th>DESCRIPCIÓN Cocinero</th>";
         echo "<th>ESTADO</th>";                          
         echo "</thead>";
         echo "</tr>";
@@ -132,12 +124,182 @@ public static function MostrarPendientes($pedidos){
         foreach ($pedidos as $key => $value) {
 
             echo "<tr>";
-            echo "<td >".$value->getidcomanda()."</td>";
-            echo "<td >".$value->getppc()."</td>";
+            echo "<td >".$value->getidpedido()."</td>";
+            echo "<td >".$value->getdescripcion()."</td>";
             echo "<td >".$value->getestado()."</td>";
             echo "</tr>";
         }                    
 
+
+        echo "</tbody>";
+        echo "</table>";
+}
+
+public function Proceso($request, $response, $args){
+
+    // que el socio sea gran hermano
+    $elt = $request->getHeaderLine('tokenresto');
+    $profile = AutentificadorJWT::ObtenerPayLoad($elt);	
+
+    date_default_timezone_set("America/Argentina/Buenos_Aires");
+    
+    $laburo = Pendiente::TraerTodosLosPendientes();
+
+    if($profile->data->tipo === "Socio"){
+
+        Cocinero::MostrarProceso(array_filter($laburo,function($elemento){
+
+            return $elemento->getestado() === "Listo Para Servir" && $elemento->gettipoempleado() === "Cocinero";
+        
+           }));
+
+
+        Cocinero::MostrarProceso(array_filter($laburo,function($elemento){
+
+            return $elemento->getestado() === "En Proceso" && $elemento->gettipoempleado() === "Cocinero";
+        
+           }));   
+        
+
+
+        return $request;
+    }
+
+    // verifico la lista de pedidos en proceso, y si alguno supera la hora de finalizacion, lo cambio a "listo para servir"
+
+    // muestro en la misma tabla los listo para servir?!
+
+    // por ahora si
+
+// pendientes genericos
+// arriba
+//$laburo = Pendiente::TraerTodosLosPendientes();
+
+
+$listo = array_filter($laburo,function($elemento){
+
+    return $elemento->getestado() === "En Proceso" && $elemento->gettipoempleado() === "Cocinero";
+
+   });
+    /*echo "<pre>";
+   var_dump($listo);
+   echo "</pre>";*/
+
+    $reloje = date("H:i:s");    
+
+    if(empty($listo) == false){
+
+   foreach ($listo as $key => $value) {
+       
+    //if()
+    
+
+    if($reloje >$value->gethorafin()){
+        // FUNCA!!
+        //var_dump($value->gethorafin());
+
+        // cambio el estado en la base de datos
+
+   // todo lo que necesito cambiar es el estado
+
+   $value->setestado("Listo Para Servir");  
+
+   $value->ModificarPendienteUnoParametros();
+
+
+        
+    }
+    
+   }
+
+}else{
+    echo "no hay en proceso que estén listopara servir";
+}
+
+Cocinero::MostrarProceso(array_filter($laburo,function($elemento){
+
+    return $elemento->getestado() === "Listo Para Servir" && $elemento->gettipoempleado() === "Cocinero";
+
+   }));
+
+
+$cerveza = array_filter($laburo,function($elemento){
+
+    return $elemento->getestado() === "Pendiente" && $elemento->gettipoempleado() === "Cocinero";
+
+   });
+
+   // está desordenado
+
+   sort($cerveza);
+
+   // cambio el estado en la base de datos
+
+   // todo lo que necesito cambiar
+
+   // id empleado, hora inicio, hora fin, estado
+
+  // var_dump($cerveza);
+
+   if(empty($cerveza) == false){
+   
+   $cerveza[0]->setestado("En Proceso");  
+  
+   $ahoras = date("H:i:s");    
+   
+   $cerveza[0]->sethorainicio($ahoras);
+
+  $nuevafecha = strtotime ( '+5 minute' , strtotime ( $ahoras ) ) ;
+
+  $finale = date("H:i:s",$nuevafecha);   
+
+   $cerveza[0]->sethorafin($finale);
+
+   // está arriba
+   //$elt = $request->getHeaderLine('tokenresto');
+   //$profile = AutentificadorJWT::ObtenerPayLoad($elt);		
+
+   $cerveza[0]->setidempleado($profile->data->id);
+
+   $cerveza[0]->ModificarPendienteUnoParametros();
+   }else{
+       echo "Nada pendiente. Puede descansar un rato mirando su celular.<br><br>";
+   }
+
+   Cocinero::MostrarProceso(array_filter($laburo,function($elemento){
+
+    return $elemento->getestado() === "En Proceso" && $elemento->gettipoempleado() === "Cocinero";
+
+   }));
+}
+
+public static function MostrarProceso($pedidos){
+
+    echo "<table border='2px' solid>";
+        echo "<caption>Pedidos Listo Para Servir, y En Proceso Cocineros vivos</caption>";
+        echo "<thead>";
+        echo "<tr>";
+        echo "<th>ID PEDIDO</th>";
+        echo "<th>DESCRIPCION Cocinero</th>";         
+        echo "<th>ESTADO</th>";         
+        echo "<th>INICIO</th>";
+        echo "<th>FIN</th>";         
+        echo "<th>EMPLEADO</th>";         
+        echo "</thead>";
+        echo "</tr>";
+        echo "<tbody>";
+
+        foreach ($pedidos as $key => $value) {
+
+            echo "<tr>";
+            echo "<td >".$value->getidpedido()."</td>";
+            echo "<td >".$value->getdescripcion()."</td>";
+            echo "<td >".$value->getestado()."</td>";
+            echo "<td >".$value->gethorainicio()."</td>";
+            echo "<td >".$value->gethorafin()."</td>";
+            echo "<td >".$value->getidempleado()."</td>";
+            echo "</tr>";
+        }   
 
         echo "</tbody>";
         echo "</table>";
