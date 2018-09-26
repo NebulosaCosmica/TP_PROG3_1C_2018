@@ -288,21 +288,30 @@ class Comanda implements IApiUsable{
             return $savior;
     }
 
+    // hay un problema con el select idcomanda 
+
+    // revisar la construccion del objeto OBJComanda
+    
+    //public static function OBJComanda($idmozo,$nombrecliente,$elpedido,$importe = 0,$horaini="",$horafin="",$fotomesa="",$id= -1)
     public static function TraerComanda($id){
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 			$consulta =$objetoAccesoDato->RetornarConsulta("select idcomanda,idmozo as Mozo,nombrecliente as Nombre,horaini as Inicio,horafin as Fin from comandas where idpedido = $id");
 			$consulta->execute();
             $lacomanda= $consulta->fetchObject('Comanda');           
-                
-            $savior = Comanda::OBJComanda($lacomanda->Mozo,$lacomanda->Nombre,$lacomanda->idcomanda,0,$lacomanda->Inicio,$lacomanda->Fin);
+            
+            var_dump($lacomanda);
+
+            echo "<pre>";
+
+            var_dump($lacomanda->idcomanda);
+            echo "</pre>";
+
+            $savior = Comanda::OBJComanda($lacomanda->Mozo,$lacomanda->Nombre,$idcomanda,0,$lacomanda->Inicio,$lacomanda->Fin,$id);
                   
                      
             if(isset($savior))
             {
-              /*  echo "<pre>";
-                var_dump($savior);
-                echo "</pre>";*/
-
+        
                 return $savior;
             }else{
 
@@ -314,6 +323,7 @@ class Comanda implements IApiUsable{
 			
     }
 
+    
   //  public function TraerUno($request, $response, $args){}
     public function BorrarUno($request, $response, $args){}
     public function ModificarUno($request, $response, $args){}

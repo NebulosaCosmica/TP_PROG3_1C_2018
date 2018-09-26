@@ -2,16 +2,22 @@
 
 
 /*
+(revisar esto)
+
+ CUANDO EL MOZO TIENE UN PEDIDO LISTO PARA SERVIR, 
+ ACTUALIZAR LA TABLA EN LA BASE DE DATOS,
+ SI NO, NO DETECTA EL CAMBIO DE ESTADO
+ EN MI MÁQUINA LOCAL // ver de volver a pedir la lista de la base de datos
 
 La app empieza cerca de la línea 260
 
 CONTINUAR CON
 
-EL MOZO SE ENTERA CUANDO EL PEDIDO COMPLETO ESTÁ LISTO PARA SERVIR
+La ruta de comandas es utilizada por el mozo. Que el token, etc... .
 
-EL MOZO OPERA SOBRE LOS PENDIENTES
+EL MOZO COBRA
 
-EL MOZO COBRA Y PERMITE AL SOCIO CERRAR LA MESA (o algo así)
+Y PERMITE AL SOCIO CERRAR LA MESA (o algo así)
 
 PUNTEAR LAS ESTADÍSTICAS DE LOS EMPLEADOS Y LAS VENTAS
 
@@ -287,18 +293,24 @@ $app->post('/login/',function($request,$response,$args){
 
 
 
-$app->group('/comandas',function(){
-    $this->post('/alta/',\Comanda::class.':CargarUno');
-    $this->post('/operaciones/',\Mozo::class.':Proceso');
-    
+ $app->group('/comandas',function(){
+     $this->post('/alta/',\Comanda::class.':CargarUno');
+     // el trabajo es del mozo
+     //actua sobre las comandas
+
+     //la ruta me queda mejor, por el validarmozo MW
+     $this->post('/pendientes/',\Mozo::class.':Trabajo');     
+     
+     $this->post('/operaciones/',\Mozo::class.':Proceso');
+
+     $this->post('/cierres/',\Mozo::class.':Cierre');
 
 })->add(\MWparaAutentificar::class.':ValidarMozo')
 ->add(\MWparaAutentificar::class.':ValidarToc');
 
 $app->group('/mozos',function(){
-    $this->post('/alta/',\Mozo::class.':CargarUno');       
+    $this->post('/alta/',\Mozo::class.':CargarUno');   
     
-
 })->add(\MWparaAutentificar::class.':ValidarSocio')
 ->add(\MWparaAutentificar::class.':ValidarToc');
 

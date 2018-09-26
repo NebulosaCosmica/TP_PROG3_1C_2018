@@ -159,6 +159,35 @@ class Pedido
 			
     }
 
+    public function ModificarPedidoUnoParametros()
+    {
+        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+        $consulta =$objetoAccesoDato->RetornarConsulta("
+            update pedidos 
+        
+               set estado=:estado
+                        
+               WHERE idpedido=:id");
+           $consulta->bindValue(':id',$this->idcomanda, PDO::PARAM_INT);
+           $consulta->bindValue(':estado',$this->estado, PDO::PARAM_STR);            
+           
+           return $consulta->execute();
+    }    
+
+    public static function CerrarPedido($comanda){
+
+
+        $dido = Pedido::TraerPedido($comanda);
+
+        $dido->setestado("Cerrado");
+
+       // $dido->ModificarPedidoUnoParametros();
+
+       var_dump($dido);
+
+        return $dido;
+    }
+
     
 }// Pedido
 ?>

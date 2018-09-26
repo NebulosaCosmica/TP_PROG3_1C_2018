@@ -118,11 +118,11 @@ class Mozo implements IApiUsable
        $objDelaRespuesta->cantidad=$cantidadDeBorrados;
        if($cantidadDeBorrados>0)
            {
-                $objDelaRespuesta->resultado="algo borró!!!";
+                $objDelaRespuesta->resultado="algo borro!!!";
            }
            else
            {
-               $objDelaRespuesta->resultado="no Borró nada!!!";
+               $objDelaRespuesta->resultado="no Borro nada!!!";
            }
        $newResponse = $response->withJson($objDelaRespuesta, 200);  
          return $newResponse;
@@ -175,63 +175,240 @@ class Mozo implements IApiUsable
 			return $consulta->execute();
      }
 
+     // ACTUALIZAR LA TABLA, SI NO NO DETECTA EL CAMBIO DE ESTADO
 
-     // ACONDICIONAR PROCESO
-     public function Proceso($request, $response, $args){
+     //VER VER
 
-        echo "ACONDICIONAR PROCESO";
+     // TRABAJO Y PROCESO
+
+     // ANDAN MAL
+
+     // consulto dos veces seguidas, por los estados
+
+     // listo para servir, una me da 2 y la siguiente 3... .
+
+     // El trabajo cambia el estado "Comiendo" y lo pone de nuevo listo para servir
+
+
+     // consulto dos veces seguidas, por los estados
+     // comiendo, una me da uno, y la siguiente me da 0
+
+     // El proceso cambia una vez a comiendo, y despues lo vuelve listo para servir... .
+
+     public function Trabajo(){    
+       
+        $laburo = Pendiente::TraerTodosLosPendientes();  
+
+        // la tabla pedidos ya tiene estado. Uso eso para el mozo
+
+        $pedios = Pedido::TraerTodosLosPedidos();  
+
+        $last = array_pop($laburo);       
+
         
+        for ($i=1; $i < $last->getidpedido(); $i++) { 
+            
+        $banda = 0;  
+      
+        $elpe = array_filter($laburo,function($elemento)use ($i){
+    
+                return $elemento->getidpedido() == $i;
+            
+               });  
+               
+        foreach ($elpe as $key => $value) {
+            
+            if($value->getestado() === "Listo Para Servir"){
+
+            }else{
+              //  echo "Estado del pedido completo: Pendiente";
+                $banda = 1;
+                break;
+            }
+        }       
+
+        if($banda == 0){
+
+        // transformo el pendiente listo a pedido
+      
+        $pedidomod = Pedido::OBJPedido($i,"","","","","Listo Para Servir");
+            $pedidomod->ModificarPedidoUnoParametros();
+
+            // Y transformo listo Pendientes, LPS a Servido
+
+            // en operaciones
+
+            /*echo "<pre>";
+            var_dump($elpe);
+            echo "</pre>";*/
+
+        
+        }
+        
+        } // for  recorre todos los pedidos
+
+        Mozo::MostrarPedidos(array_filter($pedios,function($elemento){
+    
+            return $elemento->getestado() === "Listo Para Servir";
+        
+        }));
+    
+        
+    }
+
+
+    public static function MostrarPedidos($pedidos){
+
+        echo "<table border='2px' solid>";
+            echo "<caption>Resumen de Pedidos para servir y Pedidos que se están Comiendo, Mozos vivos</caption>";
+            echo "<thead>";
+            echo "<tr>";
+            echo "<th>ID PEDIDO</th>";
+            echo "<th>BARTENDER</th>";
+            echo "<th>CERVECERO</th>";
+            echo "<th>COCINERO</th>";
+            echo "<th>PASTELERO</th>";
+            echo "<th>ESTADO</th>";                          
+            echo "</thead>";
+            echo "</tr>";
+            echo "<tbody>";
+    
+            foreach ($pedidos as $key => $value) {
+    
+                echo "<tr>";
+                echo "<td >".$value->getidcomanda()."</td>";
+                echo "<td >".$value->getpbtv()."</td>";
+                echo "<td >".$value->getpbcca()."</td>";
+                echo "<td >".$value->getppc()."</td>";
+                echo "<td >".$value->getpbd()."</td>";
+                echo "<td >".$value->getestado()."</td>";
+                echo "</tr>";
+            }                    
+    
+    
+            echo "</tbody>";
+            echo "</table>";
+    }
+
+
+    // en operaciones, lo sirve (estado comiendo)    
+    
+    // el socio les cobra
+
+    // etc... fin parte dos    
+
+    public function Proceso($request, $response, $args){
+               
         // que el socio sea gran hermano
         $elt = $request->getHeaderLine('tokenresto');
         $profile = AutentificadorJWT::ObtenerPayLoad($elt);	
     
         date_default_timezone_set("America/Argentina/Buenos_Aires");
         
-        // traer el metodo mostrar proceso
-        // que algo va a mostrar
-        $laburo = Pendiente::TraerTodosLosPendientes();
+        // ver de volver a pedir la lista de la base de datos??
+        $pedios = Pedido::TraerTodosLosPedidos();  
+      
+        if($profile->data->tipo === "Socio"){
     
-    /*    if($profile->data->tipo === "Socio"){
+            Mozo::MostrarPedidos(array_filter($pedios,function($elemento){
     
-            Mozo::MostrarProceso(array_filter($laburo,function($elemento){
-    
-                return $elemento->getestado() === "Listo Para Servir" && $elemento->gettipoempleado() === "Mozo";
+                return $elemento->getestado() === "Listo Para Servir" || $elemento->getestado() === "Comiendo";
             
                }));
-    
-    
-            Mozo::MostrarProceso(array_filter($laburo,function($elemento){
-    
-                return $elemento->getestado() === "En Proceso" && $elemento->gettipoempleado() === "Mozo";
+
+   
+            // mover a pendiente con todo el tema del socio
+            /*Mozo::MostrarPedidos(array_filter($laburo,function($elemento){
+   
+                return $elemento->getestado() === "En Pedidos" && $elemento->gettipoempleado() === "Mozo";
             
-               }));   
-            
-    
+               }));   */
     
             return $request;
-        }
+        }  
+        
+
     
-        // verifico la lista de pedidos en proceso, y si alguno supera la hora de finalizacion, lo cambio a "listo para servir"
+    $listo = array_filter($pedios,function($elemento){
     
-        // muestro en la misma tabla los listo para servir?!
-    
-        // por ahora si
-    
-    // pendientes genericos
-    // arriba
-    //$laburo = Pendiente::TraerTodosLosPendientes();
-    
-    
-    $listo = array_filter($laburo,function($elemento){
-    
-        return $elemento->getestado() === "En Proceso" && $elemento->gettipoempleado() === "Mozo";
+        return $elemento->getestado() === "Listo Para Servir";
+
     
        });
-       // echo "<pre>";
-       //var_dump($listo);
-       //echo "</pre>";
+
+       // algo falla
+
+       
+
+       // REVISAR, la transformacion
+       // en este lugar transformo los estados de los pedidos
+       // a Comiendo
+
+       // Y transformo listo Pendientes, LPS a Servido
+
+            // en operaciones
+
+            /*echo "<pre>";
+            var_dump($elpe);
+            echo "</pre>";*/
+
+     
+       //REVISAR el undefined offset
+
+       //ANDA MAL, REVISAR/REHACER
+
+    // de listo tomo el primero y le cambio
+
+    $listo = array_reverse($listo);
+
     
-        $reloje = date("H:i:s");    
+
+    $opera = array_pop($listo);
+
+    if(empty($opera) == false)   
+      {
+
+        $opera->setestado("Comiendo");
+
+       
+    $opera->ModificarPedidoUnoParametros();
+       
+        
+    // CAMBIAR ESTADO DEL PENDIENTE ASOCIADO
+    //var_dump($opera->getidcomanda());
+
+    $pendientes = Pendiente::TraerTodosLosPendientes();
+
+    foreach ($pendientes as $key => $value) {
+        
+        if($value->getidpedido() == $opera->getidcomanda()){
+
+            $value->setestado("Servido");
+
+        }
+
+        $value->ModificarPendienteUnoParametros();
+    }
+
+
+      } else {
+
+        echo "No hay laburo listo para servir";
+
+
+      }
+
+      $peditres = Pedido::TraerTodosLosPedidos();  
+      Mozo::MostrarPedidos(array_filter($peditres,function($elemento){
+  
+          return $elemento->getestado() === "Comiendo";
+  
+         }));  
+    
+    
+
+       // la fecha al cerrar la mesa
+     /*   $reloje = date("H:i:s");    
     
         if(empty($listo) == false){
     
@@ -259,27 +436,11 @@ class Mozo implements IApiUsable
        }
     
     }else{
-        echo "no hay en proceso que estén listopara servir";
+        echo "no hay en pedidos que estén listopara servir";
     }
-    
-    Mozo::MostrarProceso(array_filter($laburo,function($elemento){
-    
-        return $elemento->getestado() === "Listo Para Servir" && $elemento->gettipoempleado() === "Mozo";
-    
-       }));
-    
-    
-    $cerveza = array_filter($laburo,function($elemento){
-    
-        return $elemento->getestado() === "Pendiente" && $elemento->gettipoempleado() === "Mozo";
-    
-       });
-    
-       // está desordenado
-    
-       sort($cerveza);
-    
-       // cambio el estado en la base de datos
+        */
+
+    // cambio el estado en la base de datos
     
        // todo lo que necesito cambiar
     
@@ -287,9 +448,9 @@ class Mozo implements IApiUsable
     
       // var_dump($cerveza);
     
-       if(empty($cerveza) == false){
+       /*if(empty($cerveza) == false){
        
-       $cerveza[0]->setestado("En Proceso");  
+       $cerveza[0]->setestado("En Pedidos");  
       
        $ahoras = date("H:i:s");    
        
@@ -312,44 +473,50 @@ class Mozo implements IApiUsable
            echo "Nada pendiente. Puede descansar un rato mirando su celular.<br><br>";
        }
     
-       Mozo::MostrarProceso(array_filter($laburo,function($elemento){
+       Mozo::MostrarPedidos(array_filter($pedios,function($elemento){
     
-        return $elemento->getestado() === "En Proceso" && $elemento->gettipoempleado() === "Mozo";
+        return $elemento->getestado() === "En Pedidos" && $elemento->gettipoempleado() === "Mozo";
     
        }));*/
     }
 
-    public static function MostrarProceso($pedidos){
+    public function Cierre($request, $response, $args){
 
-        echo "<table border='2px' solid>";
-            echo "<caption>Pedidos Listo Para Servir, y En Proceso Cerveceros vivos</caption>";
-            echo "<thead>";
-            echo "<tr>";
-            echo "<th>ID PEDIDO</th>";
-            echo "<th>DESCRIPCION Cervecero</th>";         
-            echo "<th>ESTADO</th>";         
-            echo "<th>INICIO</th>";
-            echo "<th>FIN</th>";         
-            echo "<th>EMPLEADO</th>";         
-            echo "</thead>";
-            echo "</tr>";
-            echo "<tbody>";
-    
-            foreach ($pedidos as $key => $value) {
-    
-                echo "<tr>";
-                echo "<td >".$value->getidpedido()."</td>";
-                echo "<td >".$value->getdescripcion()."</td>";
-                echo "<td >".$value->getestado()."</td>";
-                echo "<td >".$value->gethorainicio()."</td>";
-                echo "<td >".$value->gethorafin()."</td>";
-                echo "<td >".$value->getidempleado()."</td>";
-                echo "</tr>";
-            }   
-    
-            echo "</tbody>";
-            echo "</table>";
+
+        echo "Acá el mozo transforma el estado de los pedidos ingresando el idcomanda OK<br>";
+
+        echo "Ingresa el Importe y automaticamente la hora fin<br>";
+
+        echo "En pedidos, se cambia el estado por Completo<br>";
+
+        echo "Muestra las mesas cerradas<br>";
+
+        $algo = $request->getParsedBody();
+
+        $manda = (int)$algo["idcomanda"];
+        //var_dump($manda);
+
+        $porte = (int)$algo['importe'];
+        //var_dump($porte);
+                
+        date_default_timezone_set("America/Argentina/Buenos_Aires");
+        
+        $reloje = date("H:i:s");   
+        
+        
+        
+        // revisar el TraerComanda($id)
+        $comand = Comanda::TraerComanda($manda);
+        echo "<pre>";
+       // Pedido::CerrarPedido($manda);
+        
+        //var_dump($reloje);
+
+        var_dump($comand);
+
+        echo "</pre>";
     }
+
      
     //public function TraerUno($request, $response, $args){}
 

@@ -139,9 +139,10 @@ class Pendiente
 			return $consulta->execute();
 	 }
       
+     // no anda, ver si hace falta
     /*public static function TraerPendiente($id){
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select idpendiente,idempleado as IdEmpleadobctipoempleado CerTipoEmpleadoadescripcionocinDescripcion  horainicioteleInicioa  horafinteleFin,s Estado from pendientes where idpendiente = $id");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select idpendiente,idempleado as IdEmpleado, idpedido as IdPedido, tipoempleado as TipoEmpleado, descripcion as Descripcion,  horainicio as Inicio, horafin as Fin, estado as Estado from pendientes where idpendiente = $id");
 			$consulta->execute();
             $elpendiente= $consulta->fetchObject('pendiente');
             
