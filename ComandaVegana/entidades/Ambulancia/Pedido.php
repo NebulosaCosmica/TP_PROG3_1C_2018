@@ -181,9 +181,9 @@ class Pedido
 
         $dido->setestado("Cerrado");
 
-       // $dido->ModificarPedidoUnoParametros();
+        $dido->ModificarPedidoUnoParametros();
 
-       var_dump($dido);
+       //var_dump($dido);
 
         return $dido;
     }

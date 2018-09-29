@@ -48,7 +48,7 @@ class Comanda implements IApiUsable{
         
         $lacomanda->setElPedido($elpedido);
 
-        if($importe != 0){ $lacomanda->setImporte($importe);}
+        $lacomanda->setImporte($importe);
 
         date_default_timezone_set("America/Argentina/Buenos_Aires");
         if($horaini == ""){ $lacomanda->setHoraIni(date("H:i:s"));}
@@ -293,20 +293,25 @@ class Comanda implements IApiUsable{
     // revisar la construccion del objeto OBJComanda
     
     //public static function OBJComanda($idmozo,$nombrecliente,$elpedido,$importe = 0,$horaini="",$horafin="",$fotomesa="",$id= -1)
+
+    //falta traer la foto de la mesa, el importe
     public static function TraerComanda($id){
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select idcomanda,idmozo as Mozo,nombrecliente as Nombre,horaini as Inicio,horafin as Fin from comandas where idpedido = $id");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select idcomanda,idmozo as Mozo,nombrecliente as Nombre,fotomesa as Foto, horaini as Inicio,importe as Importe, horafin as Fin from comandas where idpedido = $id");
 			$consulta->execute();
             $lacomanda= $consulta->fetchObject('Comanda');           
             
-            var_dump($lacomanda);
-
+            
             echo "<pre>";
-
-            var_dump($lacomanda->idcomanda);
+            
+            //ok
+            // var_dump($lacomanda);
+            //var_dump($lacomanda->Importe);
+            
+            //var_dump($lacomanda->idcomanda);
             echo "</pre>";
 
-            $savior = Comanda::OBJComanda($lacomanda->Mozo,$lacomanda->Nombre,$idcomanda,0,$lacomanda->Inicio,$lacomanda->Fin,$id);
+            $savior = Comanda::OBJComanda($lacomanda->Mozo,$lacomanda->Nombre,$lacomanda->idcomanda,$lacomanda->Importe,$lacomanda->Inicio,$lacomanda->Fin,$lacomanda->Foto,$id);
                   
                      
             if(isset($savior))
@@ -322,6 +327,61 @@ class Comanda implements IApiUsable{
        
 			
     }
+
+    public function ModificarComandaUnoParametros()
+    {
+        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+        $consulta =$objetoAccesoDato->RetornarConsulta("
+            update comandas 
+        
+            set importe=:importe,
+
+            horafin = :horafin
+                        
+            WHERE idcomanda=:id");
+           $consulta->bindValue(':id',$this->IdComanda, PDO::PARAM_INT);
+           $consulta->bindValue(':importe',$this->Importe, PDO::PARAM_INT);            
+           $consulta->bindValue(':horafin',$this->HoraFin, PDO::PARAM_STR);            
+           
+           return $consulta->execute();
+    }    
+
+    public static function MostrarComandas($comandas){
+
+        echo "<table border='2px' solid>";
+            echo "<caption>Resumen de Comandas, más que nada cerradas, Mozos vivos</caption>";
+            echo "<thead>";
+            echo "<tr>";
+            echo "<th>ID COMANDA</th>";
+            echo "<th>CÓDIGO DEL MOZO</th>";
+            echo "<th>CLIENTE</th>";
+            echo "<th>FOTO</th>";
+            echo "<th>HORA DEL INICIO</th>";
+            echo "<th>IMPORTE</th>";                          
+            echo "<th>HORA DEL FIN</th>";                          
+            echo "</thead>";
+            echo "</tr>";
+            echo "<tbody>";
+    
+            foreach ($comandas as $key => $value) {
+    
+                echo "<tr>";
+                echo "<td >".$value->getIdComanda()."</td>";
+                echo "<td >".$value->getIdMozo()."</td>";
+                echo "<td >".$value->getNC()."</td>";
+                echo "<td >".$value->getFotoMesa()."</td>";
+                echo "<td >".$value->getHoraIni()."</td>";
+                echo "<td >".$value->getImporte()."</td>";
+                echo "<td >".$value->getHoraFin()."</td>";
+                echo "</tr>";
+            }                    
+    
+    
+            echo "</tbody>";
+            echo "</table>";
+    }
+
+
 
     
   //  public function TraerUno($request, $response, $args){}

@@ -20,7 +20,18 @@ class MWparaAutentificar
    */
 	public function VerificarUsuario($request, $response, $next) {
 	
+		date_default_timezone_set("America/Argentina/Buenos_Aires");
+         
+		$reloje = date("d/m/Y");    
+
+		//guardar fecha en la tabla ingresos de la BD
+
+
 		// todes
+
+
+
+
 		$lossocios = Socio::TraerTodosLosSocios();
 		$losmohos = Mozo::TraerTodosLosMozos();
 		$losbares = Bartender::TraerTodosLosBartenders();		

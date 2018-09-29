@@ -9,17 +9,59 @@
  SI NO, NO DETECTA EL CAMBIO DE ESTADO
  EN MI MÁQUINA LOCAL // ver de volver a pedir la lista de la base de datos
 
+ La ruta de comandas es utilizada por el mozo. Que el token, etc... .
+
+
+
+
 La app empieza cerca de la línea 260
 
 CONTINUAR CON
 
-La ruta de comandas es utilizada por el mozo. Que el token, etc... .
+// hacer la entidad reportes / ingreso / logueo
 
-EL MOZO COBRA
+//guardar fecha en la tabla ingresos de la BD
 
-Y PERMITE AL SOCIO CERRAR LA MESA (o algo así)
+// y seguir AGREGAR FECHAS A TODO EL SISTEMA
 
-PUNTEAR LAS ESTADÍSTICAS DE LOS EMPLEADOS Y LAS VENTAS
+
+estadisticas
+de una fecha
+
+cantidad de operaciones totales por sector
+
+y por empleado
+
+y por empleado, por sector
+
+abm de empleados (ok, solo alta)
+
+
+pedidos
+
+lo mas vendido (tipo de comida)
+
+lo menos vendido (tipo de comida)
+
+por mesas (por pedidos)
+
+mayor facturacion
+
+menor facturacion
+
+
+ABM todas las entidades (comanda)
+
+listados de empleados
+
+listado de los pedidos
+
+si no cuesta
+
+promedio del dia
+
+importe, empleados (operaciones)
+
 
 SEGUIMIENTO
 
@@ -370,6 +412,13 @@ $app->group('/socios',function(){
 
     $this->post('/comandas/operaciones/',\Mozo::class.':Proceso');
 
+    //activo el cierre del socio
+    // ver que no se superponga con ver los cierres de los mozos
+
+    // por eso SOcio y no Mozo::class .. .
+
+    $this->post('/comandas/cierres/',\Socio::class.':Cierre');
+
 
     $this->post('/cerveceros/pendientes/',\Cervecero::class.':Trabajo');    
 
@@ -389,8 +438,15 @@ $app->get('/clientes/',\GesCliente::class.':ConsultarPedido')
 //abajo muestro deces por pantalla
 
 $app->any('[/]',function($req,$resp){
+
+    date_default_timezone_set("America/Argentina/Buenos_Aires");
+         
+    $reloje = date("d/m/Y");          
+    
     
     echo "<pre>";
+
+    echo $reloje;
     echo "<body style='background: palegoldenrod'>";
     echo "<h1>Ver el gestor de comandas del Restó Vegano edición on line</h1>";
     echo "<h2>Alta calidad</h2>";

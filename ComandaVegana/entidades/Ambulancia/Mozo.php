@@ -480,16 +480,18 @@ class Mozo implements IApiUsable
        }));*/
     }
 
+
+    // falta el dueño gran hermano
     public function Cierre($request, $response, $args){
 
 
-        echo "Acá el mozo transforma el estado de los pedidos ingresando el idcomanda OK<br>";
+       /* echo "Acá el mozo transforma el estado de los pedidos ingresando el idcomanda OK<br>";        
 
-        echo "Ingresa el Importe y automaticamente la hora fin<br>";
+        echo "Ingresa el Importe y el resto le queda al dueño OK<br>";
 
-        echo "En pedidos, se cambia el estado por Completo<br>";
+        echo "En pedidos, se cambia el estado por Completo OK<br>";
 
-        echo "Muestra las mesas cerradas<br>";
+        echo "Muestra las mesas cerradas OK<br>";*/
 
         $algo = $request->getParsedBody();
 
@@ -498,24 +500,41 @@ class Mozo implements IApiUsable
 
         $porte = (int)$algo['importe'];
         //var_dump($porte);
+        
+        
+        // SOCIO
+      //  date_default_timezone_set("America/Argentina/Buenos_Aires");
+        
+      //  $reloje = date("H:i:s");   
+        
+      //var_dump($reloje);
                 
-        date_default_timezone_set("America/Argentina/Buenos_Aires");
         
-        $reloje = date("H:i:s");   
-        
-        
-        
-        // revisar el TraerComanda($id)
         $comand = Comanda::TraerComanda($manda);
-        echo "<pre>";
-       // Pedido::CerrarPedido($manda);
         
-        //var_dump($reloje);
+        $comand->setImporte($porte);
+        
+        $comand->ModificarComandaUnoParametros();
 
-        var_dump($comand);
+        Pedido::CerrarPedido($manda);
+        
+        $lamanada = Comanda::TraerTodasLasComandas();
+        
+        $losed = array_filter($lamanada,function($elemento){
 
-        echo "</pre>";
+            return $elemento->getImporte() != 0;
+            
+        });
+        
+        Comanda::MostrarComandas($losed);
+        //echo "<pre>";
+        
+        //ok
+       // var_dump($comand);
+//       echo "</pre>";
     }
+
+    
 
      
     //public function TraerUno($request, $response, $args){}

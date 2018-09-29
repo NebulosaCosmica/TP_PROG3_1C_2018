@@ -170,7 +170,51 @@ class Socio implements IApiUsable
 			$consulta->bindValue(':pass', $this->pass, PDO::PARAM_STR);
          //   $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);            
 			return $consulta->execute();
-	 }
+     }
+     
+     public function Cierre($request, $response, $args){
+
+
+         echo "Acá el Socio pone fin a una comanda con la hora<br>";
+ 
+         echo "Muestra las mesas cerradas <br>";
+ 
+         $algo = $request->getParsedBody();
+ 
+         $manda = (int)$algo["idcomanda"];
+         
+        
+         date_default_timezone_set("America/Argentina/Buenos_Aires");
+         
+         $reloje = date("H:i:s");   
+         
+       //var_dump($reloje);
+                 
+         
+        $comand = Comanda::TraerComanda($manda);
+         
+         $comand->setHoraFin($reloje);
+         // var_dump($comand);
+
+         $comand->ModificarComandaUnoParametros();
+         
+                 
+        $lamanada = Comanda::TraerTodasLasComandas();
+         
+        $losed = array_filter($lamanada,function($elemento){
+ 
+             return $elemento->getHoraFin() != NULL;
+             
+         });
+         
+        Comanda::MostrarComandas($losed);
+         //echo "<pre>";
+         //        Pedido::CerrarPedido($manda);
+         
+         //ok
+        // var_dump($comand);
+ //       echo "</pre>";*/
+     }
 
     // si lo nesito, ver lamedia
    // public function TraerUno($request, $response, $args){}
