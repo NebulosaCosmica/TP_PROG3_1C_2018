@@ -17,9 +17,7 @@ class Socio implements IApiUsable
     private $pass;
     private $tipo;
     private $id;
-    
-    public function __construct(){}
-
+        
     public static function OBJSocio($nombre,$pass,$id=-1){
         
         $unsocio = new Socio();

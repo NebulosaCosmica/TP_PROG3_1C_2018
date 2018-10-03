@@ -110,20 +110,22 @@ class Comanda implements IApiUsable{
 
     // el cliente ve el tiempo restante para su pedido
 
-    // estados de la mesa == estado general de la comanda
-
-    // pendiente o esperando pedido
-
-    // comiendo (mozo, que entrega la comida)
-
-    // pagada y cerrada (socio)
+    //AGREGAR contar 1 mozo
+    
     public function CargarUno($request, $response, $args){
 
     // ver los datos del empleado que cargó la comanda
     $elt = $request->getHeaderLine('tokenresto');
 
     $responsable = AutentificadorJWT::ObtenerData($elt)->id;
-        
+    
+    echo "<pre>";
+    var_dump($responsable);
+
+    var_dump($elt);
+    echo "</pre>";
+
+
     $params = $request->getParsedBody();    
         
     $unpedido = new Pedido();

@@ -2,6 +2,9 @@
 
 require_once "guia/AutentificadorJWT.php";
 
+require_once "entidades/Administra/Ingreso.php";
+require_once "entidades/Administra/Operacion.php";
+
 class MWparaAutentificar
 {
  /**
@@ -84,7 +87,9 @@ class MWparaAutentificar
 
 		$params = $request->getParsedBody(); 
 
-		
+
+
+		// registro el ingreso adentro del foreach
 
 		foreach ($graciastotales as $key => $value) {
 			
@@ -94,7 +99,22 @@ class MWparaAutentificar
 				$response->getBody()->write("<h3>Bienvenido". $value->getnombre()." </h3>");
 				//var_dump($value);
 
-				$losda = ["tipo"=>$value->gettipo(),"id"=>$value->getid()];
+				// si hace falta, le agrego la fecha al token, me queda un objeto Ingreso
+
+				$losda = ["fecha"=>$reloje,"tipo"=>$value->gettipo(),"id"=>$value->getid()];
+
+
+				// y creo el registro de cantidad de operaciones
+			
+			if($value->gettipo()!= "Socio"){
+
+				$adentro = Ingreso::OBJIngreso($reloje,$value->gettipo(),$losda['id']);
+					
+				$opera = Operacion::OBJOperacion($adentro->InsertarElIngresoParametros());
+
+				$opera->InsertarLaOperacionParametros();
+			}
+
 
 				$token= AutentificadorJWT::CrearToken($losda); 
 
@@ -205,10 +225,13 @@ class MWparaAutentificar
 		$elt = $request->getHeaderLine('tokenresto');
 		$profile = AutentificadorJWT::ObtenerPayLoad($elt);		
 
+		var_dump($profile);
+
 		if($profile->data->tipo == "Mozo")
 		{
 			echo "El Mozo puede<br><br>";
 			$response = $next($request, $response); 
+			Operacion::SumarOperacion(1);
 		}else{
 			echo "Si no sos Mozo, no podes continuar<br><br>";
 		}

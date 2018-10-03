@@ -2,6 +2,15 @@
 
 
 /*
+
+el sistema todavía no contempla muchos errores y variaciones
+
+suponiendo una comodidad, el token lleva fecha?!
+
+cuando el empleado se loguea, creo la fila de operaciones y que empiece en 0
+
++ otro metodo para despues que incremente en 1 la cantidad de operaciones
+
 (revisar esto)
 
  CUANDO EL MOZO TIENE UN PEDIDO LISTO PARA SERVIR, 
@@ -11,19 +20,28 @@
 
  La ruta de comandas es utilizada por el mozo. Que el token, etc... .
 
-
-
-
 La app empieza cerca de la línea 260
 
 CONTINUAR CON
 
-// hacer la entidad reportes / ingreso / logueo
+// ver si anda el metodo Ingreso TraerIdIngreso
 
-//guardar fecha en la tabla ingresos de la BD
+// ver en el token los datos necesarios, 
+
+// ver metodo Operacion Sumar operacion
+
+// agregar comanda, primer contador
+
+
+// voy a poner el contador en cada ruta, no en el MW validarmozo
+
+// cuando el mozo da de alta una comanda, agregar uno en su cantidad de operaciones
+
+//clase entera Operacion y ver que ande bien con la BD
+
+// agregar un contador de operaciones por fecha
 
 // y seguir AGREGAR FECHAS A TODO EL SISTEMA
-
 
 estadisticas
 de una fecha
@@ -34,8 +52,10 @@ y por empleado
 
 y por empleado, por sector
 
-abm de empleados (ok, solo alta)
 
+
+
+abm de empleados (ok, solo alta)
 
 pedidos
 
@@ -336,6 +356,7 @@ $app->post('/login/',function($request,$response,$args){
 
 
  $app->group('/comandas',function(){
+
      $this->post('/alta/',\Comanda::class.':CargarUno');
      // el trabajo es del mozo
      //actua sobre las comandas
@@ -437,6 +458,8 @@ $app->get('/clientes/',\GesCliente::class.':ConsultarPedido')
 
 //abajo muestro deces por pantalla
 
+//require_once "entidades/Administra/Ingreso.php";
+
 $app->any('[/]',function($req,$resp){
 
     date_default_timezone_set("America/Argentina/Buenos_Aires");
@@ -446,6 +469,7 @@ $app->any('[/]',function($req,$resp){
     
     echo "<pre>";
 
+    //var_dump(Ingreso::TraerTodosLosIngresos());
     echo $reloje;
     echo "<body style='background: palegoldenrod'>";
     echo "<h1>Ver el gestor de comandas del Restó Vegano edición on line</h1>";
@@ -456,7 +480,9 @@ $app->any('[/]',function($req,$resp){
     echo "Los clientes pueden revisar su pedido /clientes/";
 	echo "<br><br>";
 	echo "codigomesa: Código de mesa <br>codigopedido: Código de pedido";  
-    echo "</pre>";    
+    echo "</pre>"; 
+    
+    
 
 });
 
