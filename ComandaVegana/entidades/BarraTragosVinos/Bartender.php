@@ -241,6 +241,21 @@ $cerveza = array_filter($laburo,function($elemento){
   // var_dump($cerveza);
 
    if(empty($cerveza) == false){
+
+     // con esto genero la Operacion
+   
+    
+     $responsable = AutentificadorJWT::ObtenerData($elt)->id;
+
+     $fetchr = AutentificadorJWT::ObtenerData($elt)->fecha;
+ 
+     $typen = AutentificadorJWT::ObtenerData($elt)->tipo;
+       
+     $filla = Ingreso::TraerIdIngreso($fetchr,$typen,$responsable);
+ 
+     Operacion::SumarOperacion($filla);
+ 
+     // con lo anterior generé la Operacion
    
    $cerveza[0]->setestado("En Proceso");  
   

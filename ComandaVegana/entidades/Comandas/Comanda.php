@@ -111,20 +111,33 @@ class Comanda implements IApiUsable{
     // el cliente ve el tiempo restante para su pedido
 
     //AGREGAR contar 1 mozo
+
+    // public static function TraerIdIngreso($fecha,$tipo,$idempleado){
+
     
+    // TODOS LOS METODOS FUNCIONALES TIENEN QUE TENER FORMA DE MW
     public function CargarUno($request, $response, $args){
 
     // ver los datos del empleado que cargó la comanda
     $elt = $request->getHeaderLine('tokenresto');
 
-    $responsable = AutentificadorJWT::ObtenerData($elt)->id;
+    // tengo el data, mejor que el payload
+    //pispear el metodo AutentificadorJWT::ObtenerData( 
+        
+    // con esto genero la Operacion
+   
     
-    echo "<pre>";
-    var_dump($responsable);
+    $responsable = AutentificadorJWT::ObtenerData($elt)->id;
 
-    var_dump($elt);
-    echo "</pre>";
+    $fetchr = AutentificadorJWT::ObtenerData($elt)->fecha;
 
+    $typen = AutentificadorJWT::ObtenerData($elt)->tipo;
+      
+    $filla = Ingreso::TraerIdIngreso($fetchr,$typen,$responsable);
+
+    Operacion::SumarOperacion($filla);
+
+    // con lo anterior generé la Operacion
 
     $params = $request->getParsedBody();    
         

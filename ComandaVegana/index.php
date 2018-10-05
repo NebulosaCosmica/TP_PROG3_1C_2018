@@ -3,7 +3,13 @@
 
 /*
 
+mozo/cierre sin mucho manejo de errores
+
+Notices con la clase Operacion, detalle para mas adelante
+
 el sistema todavía no contempla muchos errores y variaciones
+
+Me gustaria que la tabla ingreso y operacion no tuviera duplicados innecesarios LATER
 
 suponiendo una comodidad, el token lleva fecha?!
 
@@ -24,22 +30,11 @@ La app empieza cerca de la línea 260
 
 CONTINUAR CON
 
-// ver si anda el metodo Ingreso TraerIdIngreso
+//mostrar cantidad de operaciones totales por sector
 
-// ver en el token los datos necesarios, 
+//mostrar un reporte
 
-// ver metodo Operacion Sumar operacion
-
-// agregar comanda, primer contador
-
-
-// voy a poner el contador en cada ruta, no en el MW validarmozo
-
-// cuando el mozo da de alta una comanda, agregar uno en su cantidad de operaciones
-
-//clase entera Operacion y ver que ande bien con la BD
-
-// agregar un contador de operaciones por fecha
+// Socio  Operaciones fecha y Mostrar operaciones
 
 // y seguir AGREGAR FECHAS A TODO EL SISTEMA
 
@@ -340,6 +335,9 @@ require_once "entidades/BarraCervezaArtesanal/Cervecero.php";
 require_once "entidades/Cocina/Cocinero.php";
 require_once "entidades/BarraDulce/Pastelero.php";
 
+//prueba
+require_once "entidades/Administra/Socio.php";
+
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
 
@@ -448,7 +446,9 @@ $app->group('/socios',function(){
 
     $this->post('/cocineros/pendientes/',\Cocinero::class.':Trabajo');    
 
-    $this->post('/cocineros/operaciones/',\Cocinero::class.':Proceso');    
+    $this->post('/cocineros/operaciones/',\Cocinero::class.':Proceso');
+    
+    $this->post('/reportes/',\Socio::class.':OperacionesFecha');
 
 })->add(\MWparaAutentificar::class.':ValidarSocio')
 ->add(\MWparaAutentificar::class.':ValidarToc');
@@ -458,8 +458,6 @@ $app->get('/clientes/',\GesCliente::class.':ConsultarPedido')
 
 //abajo muestro deces por pantalla
 
-//require_once "entidades/Administra/Ingreso.php";
-
 $app->any('[/]',function($req,$resp){
 
     date_default_timezone_set("America/Argentina/Buenos_Aires");
@@ -467,9 +465,9 @@ $app->any('[/]',function($req,$resp){
     $reloje = date("d/m/Y");          
     
     
-    echo "<pre>";
-
-    //var_dump(Ingreso::TraerTodosLosIngresos());
+    echo "<pre>";    
+    //Operacion::TraerOperacion(3);
+    //Pedido::TraerPedido(2);
     echo $reloje;
     echo "<body style='background: palegoldenrod'>";
     echo "<h1>Ver el gestor de comandas del Restó Vegano edición on line</h1>";

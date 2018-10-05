@@ -32,9 +32,6 @@ class MWparaAutentificar
 
 		// todes
 
-
-
-
 		$lossocios = Socio::TraerTodosLosSocios();
 		$losmohos = Mozo::TraerTodosLosMozos();
 		$losbares = Bartender::TraerTodosLosBartenders();		
@@ -87,8 +84,6 @@ class MWparaAutentificar
 
 		$params = $request->getParsedBody(); 
 
-
-
 		// registro el ingreso adentro del foreach
 
 		foreach ($graciastotales as $key => $value) {
@@ -97,12 +92,8 @@ class MWparaAutentificar
 	
 				$response->getBody()->write('Usuario ingresando correctamente<br><br>');
 				$response->getBody()->write("<h3>Bienvenido". $value->getnombre()." </h3>");
-				//var_dump($value);
-
-				// si hace falta, le agrego la fecha al token, me queda un objeto Ingreso
-
+			
 				$losda = ["fecha"=>$reloje,"tipo"=>$value->gettipo(),"id"=>$value->getid()];
-
 
 				// y creo el registro de cantidad de operaciones
 			
@@ -224,8 +215,6 @@ class MWparaAutentificar
 
 		$elt = $request->getHeaderLine('tokenresto');
 		$profile = AutentificadorJWT::ObtenerPayLoad($elt);		
-
-		var_dump($profile);
 
 		if($profile->data->tipo == "Mozo")
 		{

@@ -175,31 +175,9 @@ class Mozo implements IApiUsable
 			return $consulta->execute();
      }
 
-     // ACTUALIZAR LA TABLA, SI NO NO DETECTA EL CAMBIO DE ESTADO
-
-     //VER VER
-
-     // TRABAJO Y PROCESO
-
-     // ANDAN MAL
-
-     // consulto dos veces seguidas, por los estados
-
-     // listo para servir, una me da 2 y la siguiente 3... .
-
-     // El trabajo cambia el estado "Comiendo" y lo pone de nuevo listo para servir
-
-
-     // consulto dos veces seguidas, por los estados
-     // comiendo, una me da uno, y la siguiente me da 0
-
-     // El proceso cambia una vez a comiendo, y despues lo vuelve listo para servir... .
-
      public function Trabajo(){    
        
         $laburo = Pendiente::TraerTodosLosPendientes();  
-
-        // la tabla pedidos ya tiene estado. Uso eso para el mozo
 
         $pedios = Pedido::TraerTodosLosPedidos();  
 
@@ -230,7 +208,7 @@ class Mozo implements IApiUsable
         if($banda == 0){
 
         // transformo el pendiente listo a pedido
-      
+
         $pedidomod = Pedido::OBJPedido($i,"","","","","Listo Para Servir");
             $pedidomod->ModificarPedidoUnoParametros();
 
@@ -368,6 +346,21 @@ class Mozo implements IApiUsable
     if(empty($opera) == false)   
       {
 
+         // con esto genero la Operacion
+   
+    
+    $responsable = AutentificadorJWT::ObtenerData($elt)->id;
+
+    $fetchr = AutentificadorJWT::ObtenerData($elt)->fecha;
+
+    $typen = AutentificadorJWT::ObtenerData($elt)->tipo;
+      
+    $filla = Ingreso::TraerIdIngreso($fetchr,$typen,$responsable);
+
+    Operacion::SumarOperacion($filla);
+
+    // con lo anterior generé la Operacion
+
         $opera->setestado("Comiendo");
 
        
@@ -495,6 +488,22 @@ class Mozo implements IApiUsable
 
         $algo = $request->getParsedBody();
 
+         // con esto genero la Operacion
+         // -_-
+         $elt = $request->getHeaderLine('tokenresto');
+    
+    $responsable = AutentificadorJWT::ObtenerData($elt)->id;
+
+    $fetchr = AutentificadorJWT::ObtenerData($elt)->fecha;
+
+    $typen = AutentificadorJWT::ObtenerData($elt)->tipo;
+      
+    $filla = Ingreso::TraerIdIngreso($fetchr,$typen,$responsable);
+
+    Operacion::SumarOperacion($filla);
+
+    // con lo anterior generé la Operacion
+    
         $manda = (int)$algo["idcomanda"];
         //var_dump($manda);
 

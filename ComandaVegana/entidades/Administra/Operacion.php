@@ -1,6 +1,9 @@
 <?php
 
 // Incompleta
+
+//TRAER TODOS
+
 class Operacion 
 {
     private $idoperacion;
@@ -42,14 +45,26 @@ class Operacion
         $consulta->execute();		
         return $objetoAccesoDato->RetornarUltimoIdInsertado();
     }    
-    
+
     public static function SumarOperacion($idingreso){
 
-        //tomar del token los datos del ingreso, 
+        //tomar del token los datos del ingreso OK,  
 
-        // si no es un socio
+        // si no es un socio OK
+        
+        // pa que queria el ingreso? pa mostrare algo
+        $targ = Ingreso::TraerIngreso($idingreso);
 
-        // agregar una operacion a la tabla, si ya existe
+        
+        
+        
+        $change = self::TraerOperacion($idingreso);
+        
+        $change->setcantidad($change->getcantidad()+1);
+               
+        $change->ModificarOperacionParametros();
+
+
 
         // sumarte 1 a la cantidad.
 
@@ -58,6 +73,46 @@ class Operacion
         // o tener en cuenta solamente el primer logueo
 
     }
+
+    //TIRA ERROR DE NO OBJETO, es un notice, asi que lo dejo para despues... .
+    public static function TraerOperacion($idingreso){
+
+        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+                $consulta =$objetoAccesoDato->RetornarConsulta("select idoperacion,idingreso as IdIngreso, cantidad as Cantidad from operaciones where idingreso = $idingreso");
+                $consulta->execute();
+                $laoperacion= $consulta->fetchObject('Operacion');                
+                    
+               // var_dump($laoperacion);
+
+                $savior = Operacion::OBJOperacion($idingreso,$laoperacion->Cantidad,$laoperacion->idoperacion);
+                      
+                         
+                if(isset($savior))
+                {                   
+    
+                    return $savior;
+                }else{
+    
+                    return null;
+    
+                }
+        
+        
+    }
+
+    public function ModificarOperacionParametros()
+	 {
+			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+			$consulta =$objetoAccesoDato->RetornarConsulta("
+				update operaciones 
+				set cantidad=:cantidad
+                         
+				WHERE idoperacion=:id");
+			$consulta->bindValue(':id',$this->idoperacion, PDO::PARAM_INT);
+			$consulta->bindValue(':cantidad',$this->cantidad, PDO::PARAM_INT);			
+         
+			return $consulta->execute();
+     }
 }
 
 

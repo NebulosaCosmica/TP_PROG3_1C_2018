@@ -102,11 +102,13 @@ class Ingreso
 
         $losing = Ingreso::TraerTodosLosIngresos();
 
+        //var_dump($eling);
 
         foreach ($losing as $key => $value) {
             
-            if($value->getfecha() == $eling->getfecha() && $value->gettipo == $eling->gettipo() && $value->getidempleado() == $eling->getidempleado()){
-                return $value->idingreso();
+            if($value->getfecha() == $eling->getfecha() && $value->gettipo() == $eling->gettipo() && $value->getidempleado() == $eling->getidempleado()){
+                
+                return $value->getidingreso();
             }
         }
 
@@ -114,6 +116,8 @@ class Ingreso
 
         return null;
     }
+
+    
     
 }
 

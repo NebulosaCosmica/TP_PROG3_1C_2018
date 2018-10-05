@@ -3,12 +3,7 @@
 require_once "guia/IApiUsable.php";
 require_once "guia/AccesoDatos.php";
 
-
-// los socios controlan  todo incluso los pagos
-
-// los socios cierran la mesa
-
-// pagada y cerrada (socio)
+// seguir
 
 // los socios pueden ver el estado de todos los pedidos OK
 class Socio implements IApiUsable
@@ -214,6 +209,52 @@ class Socio implements IApiUsable
  //       echo "</pre>";*/
      }
 
+     //INCOMPLETAR 2
+    public function OperacionesFecha($request, $response, $args){
+
+        $params = $request->getParsedBody();
+
+        self::MostrarOperaciones();
+
+        //var_dump($params['fecha']);
+
+        //busco en la BD el reporte de esta fecha
+
+    }
+
+    public static function MostrarOperaciones(){
+
+        echo "<table border='2px' solid>";
+            echo "<caption>Resumen de Pedidos para servir y Pedidos que se están Comiendo, Mozos vivos</caption>";
+            echo "<thead>";
+            echo "<tr>";
+            echo "<th>ID PEDIDO</th>";
+            echo "<th>BARTENDER</th>";
+            echo "<th>CERVECERO</th>";
+            echo "<th>COCINERO</th>";
+            echo "<th>PASTELERO</th>";
+            echo "<th>ESTADO</th>";                          
+            echo "</thead>";
+            echo "</tr>";
+            echo "<tbody>";
+    
+            foreach ($pedidos as $key => $value) {
+    
+                echo "<tr>";
+                echo "<td >".$value->getidcomanda()."</td>";
+                echo "<td >".$value->getpbtv()."</td>";
+                echo "<td >".$value->getpbcca()."</td>";
+                echo "<td >".$value->getppc()."</td>";
+                echo "<td >".$value->getpbd()."</td>";
+                echo "<td >".$value->getestado()."</td>";
+                echo "</tr>";
+            }                    
+    
+    
+            echo "</tbody>";
+            echo "</table>";
+    }
+    
     // si lo nesito, ver lamedia
    // public function TraerUno($request, $response, $args){}
 
