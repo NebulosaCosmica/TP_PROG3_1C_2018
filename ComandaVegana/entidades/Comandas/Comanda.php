@@ -361,9 +361,12 @@ class Comanda implements IApiUsable{
            return $consulta->execute();
     }    
 
+    // mostrar la foto OK
+    // ver index
+
     public static function MostrarComandas($comandas){
 
-        echo "<table border='2px' solid>";
+             echo "<table border='2px' solid>";
             echo "<caption>Resumen de Comandas, más que nada cerradas, Mozos vivos</caption>";
             echo "<thead>";
             echo "<tr>";
@@ -383,8 +386,8 @@ class Comanda implements IApiUsable{
                 echo "<tr>";
                 echo "<td >".$value->getIdComanda()."</td>";
                 echo "<td >".$value->getIdMozo()."</td>";
-                echo "<td >".$value->getNC()."</td>";
-                echo "<td >".$value->getFotoMesa()."</td>";
+                echo "<td >".$value->getNC()."</td>";                
+                echo "<td ><img src='fotos/mesacomanda/".$value->getFotoMesa()."'height=70px></td>";                
                 echo "<td >".$value->getHoraIni()."</td>";
                 echo "<td >".$value->getImporte()."</td>";
                 echo "<td >".$value->getHoraFin()."</td>";

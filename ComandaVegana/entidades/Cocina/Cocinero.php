@@ -95,6 +95,60 @@ public static function TraerTodosLosCocineros()
         
 }
 
+public static function TraerCocinero($id)
+{
+    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+    $consulta =$objetoAccesoDato->RetornarConsulta("select nombre as Nombre,pass as Contrasena,tipo as Tipo from cocineros where idcocinero = $id");
+    $consulta->execute();
+    $elcocinero= $consulta->fetchObject('Cocinero');
+        
+    $savior = Cocinero::OBJCocinero($elcocinero->Nombre,$elcocinero->Contrasena,$id);
+          
+             
+    if(isset($savior))
+    {
+       
+        return $savior;
+    }else{
+
+        return null;
+
+    }
+
+
+}
+
+public static function MostrarReporte($coci){
+
+
+    echo "<table border='2px' solid>";
+    echo "<caption>Resumen de Cantidad de operaciones por empleado, COCINEROS vivos</caption>";
+    echo "<thead>";
+    echo "<tr>";
+    echo "<th>FECHA</th>";
+    echo "<th>ID</th>";        
+    echo "<th>NOMBRE</th>";
+    echo "<th>OPERACIONES</th>";            
+    echo "</thead>";
+    echo "</tr>";
+    echo "<tbody>";   
+            
+    foreach ($coci as $key => $value) {
+        
+        echo "<tr>";
+        echo "<td>".$value['fecha']."</td>";            
+        echo "<td>".$value['id']."</td>";            
+        echo "<td>".$value['nombre']."</td>";            
+        echo "<td>".$value['cantidad']."</td>";                        
+        echo "</tr>";
+
+    }
+
+    echo "</tbody>";
+    echo "</table>";
+
+}
+
 public function Trabajo(){    
 
 

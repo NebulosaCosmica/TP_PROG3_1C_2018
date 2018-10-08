@@ -103,6 +103,29 @@ class Mozo implements IApiUsable
         
     }
 
+    public static function TraerMozo($id)
+	{
+        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+        $consulta =$objetoAccesoDato->RetornarConsulta("select nombre as Nombre,pass as Contrasena,tipo as Tipo from mozos where idmozo = $id");
+        $consulta->execute();
+        $elmozo= $consulta->fetchObject('Mozo');
+            
+        $savior = mozo::OBJMozo($elmozo->Nombre,$elmozo->Contrasena,$id);
+              
+                 
+        if(isset($savior))
+        {
+           
+            return $savior;
+        }else{
+
+            return null;
+
+        }
+
+
+    }
+
     public function BorrarUno($request, $response, $args){
 
         $ArrayDeParametros = $request->getParsedBody();
@@ -543,6 +566,38 @@ class Mozo implements IApiUsable
 //       echo "</pre>";
     }
 
+    public static function MostrarReporte($mozos){
+
+
+        echo "<table border='2px' solid>";
+        echo "<caption>Resumen de Cantidad de operaciones por empleado, MOZOS vivos</caption>";
+        echo "<thead>";
+        echo "<tr>";
+        echo "<th>FECHA</th>";
+        echo "<th>ID</th>";        
+        echo "<th>NOMBRE</th>";
+        echo "<th>OPERACIONES</th>";            
+        echo "</thead>";
+        echo "</tr>";
+        echo "<tbody>";   
+                
+        foreach ($mozos as $key => $value) {
+            
+            echo "<tr>";
+            echo "<td>".$value['fecha']."</td>";            
+            echo "<td>".$value['id']."</td>";            
+            echo "<td>".$value['nombre']."</td>";            
+            echo "<td>".$value['cantidad']."</td>";                        
+            echo "</tr>";
+
+        }
+
+
+
+        echo "</tbody>";
+        echo "</table>";
+
+    }
     
 
      

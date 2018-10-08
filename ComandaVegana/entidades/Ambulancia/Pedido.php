@@ -137,7 +137,7 @@ class Pedido
 			$consulta->execute();
             $elpedido= $consulta->fetchObject('Pedido');
             
-            var_dump($elpedido);
+         //   var_dump($elpedido);
                 
             $savior = Pedido::OBJPedido($elpedido->idpedido,$elpedido->Bartenders,$elpedido->Cerveceros,$elpedido->Cocineros,$elpedido->Pasteleros, $elpedido->Estado);
                   
@@ -181,9 +181,7 @@ class Pedido
 
         $dido->setestado("Cerrado");
 
-        $dido->ModificarPedidoUnoParametros();
-
-       //var_dump($dido);
+        $dido->ModificarPedidoUnoParametros();      
 
         return $dido;
     }

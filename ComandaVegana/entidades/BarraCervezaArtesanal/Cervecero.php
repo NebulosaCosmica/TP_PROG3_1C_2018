@@ -95,6 +95,29 @@ public static function TraerTodosLosCerveceros()
         
 }
 
+public static function TraerCervecero($id)
+{
+    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+    $consulta =$objetoAccesoDato->RetornarConsulta("select nombre as Nombre,pass as Contrasena,tipo as Tipo from cerveceros where idcervecero = $id");
+    $consulta->execute();
+    $elcervecero= $consulta->fetchObject('cervecero');
+        
+    $savior = cervecero::OBJcervecero($elcervecero->Nombre,$elcervecero->Contrasena,$id);
+          
+             
+    if(isset($savior))
+    {
+       
+        return $savior;
+    }else{
+
+        return null;
+
+    }
+
+
+}
+
 public function Trabajo(){
     
 
@@ -391,6 +414,39 @@ public function ModificarCerveceroParametros()
      
         return $consulta->execute();
  }
+
+ public static function MostrarReporte($cerv){
+
+
+    echo "<table border='2px' solid>";
+    echo "<caption>Resumen de Cantidad de operaciones por empleado, CERVECEROS vivos</caption>";
+    echo "<thead>";
+    echo "<tr>";
+    echo "<th>FECHA</th>";
+    echo "<th>ID</th>";        
+    echo "<th>NOMBRE</th>";
+    echo "<th>OPERACIONES</th>";            
+    echo "</thead>";
+    echo "</tr>";
+    echo "<tbody>";   
+            
+    foreach ($cerv as $key => $value) {
+        
+        echo "<tr>";
+        echo "<td>".$value['fecha']."</td>";            
+        echo "<td>".$value['id']."</td>";            
+        echo "<td>".$value['nombre']."</td>";            
+        echo "<td>".$value['cantidad']."</td>";                        
+        echo "</tr>";
+
+    }
+
+
+
+    echo "</tbody>";
+    echo "</table>";
+
+}
 
 //public function TraerUno($request, $response, $args){}
 

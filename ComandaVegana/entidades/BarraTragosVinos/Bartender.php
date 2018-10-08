@@ -95,6 +95,60 @@ public static function TraerTodosLosBartenders()
         
 }
 
+public static function TraerBartender($id)
+{
+    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+    $consulta =$objetoAccesoDato->RetornarConsulta("select nombre as Nombre,pass as Contrasena,tipo as Tipo from bartenders where idbartender = $id");
+    $consulta->execute();
+    $elbartender= $consulta->fetchObject('Bartender');
+        
+    $savior = Bartender::OBJBartender($elbartender->Nombre,$elbartender->Contrasena,$id);
+          
+             
+    if(isset($savior))
+    {
+       
+        return $savior;
+    }else{
+
+        return null;
+
+    }
+
+
+}
+
+public static function MostrarReporte($bart){
+
+
+    echo "<table border='2px' solid>";
+    echo "<caption>Resumen de Cantidad de operaciones por empleado, BARTENDERS vivos</caption>";
+    echo "<thead>";
+    echo "<tr>";
+    echo "<th>FECHA</th>";
+    echo "<th>ID</th>";        
+    echo "<th>NOMBRE</th>";
+    echo "<th>OPERACIONES</th>";            
+    echo "</thead>";
+    echo "</tr>";
+    echo "<tbody>";   
+            
+    foreach ($bart as $key => $value) {
+        
+        echo "<tr>";
+        echo "<td>".$value['fecha']."</td>";            
+        echo "<td>".$value['id']."</td>";            
+        echo "<td>".$value['nombre']."</td>";            
+        echo "<td>".$value['cantidad']."</td>";                        
+        echo "</tr>";
+
+    }
+
+    echo "</tbody>";
+    echo "</table>";
+
+}
+
 public function Trabajo(){
     
     $laburo = Pendiente::TraerTodosLosPendientes();

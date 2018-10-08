@@ -52,11 +52,6 @@ class Operacion
 
         // si no es un socio OK
         
-        // pa que queria el ingreso? pa mostrare algo
-        $targ = Ingreso::TraerIngreso($idingreso);
-
-        
-        
         
         $change = self::TraerOperacion($idingreso);
         
@@ -72,6 +67,26 @@ class Operacion
 
         // o tener en cuenta solamente el primer logueo
 
+    }
+
+    public static function TraerTodasLasOperaciones()
+	{
+        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();             
+        $consulta =$objetoAccesoDato->RetornarConsulta("select idoperacion, idingreso as IdIngreso,cantidad as Cantidad from operaciones");
+        $consulta->execute();
+            
+        $salenoperaciones = $consulta->fetchAll(PDO::FETCH_CLASS, "Operacion");                     
+        foreach ($salenoperaciones as $key => $value) {
+                
+        $savior[] = Operacion::OBJOperacion($value->IdIngreso,$value->Cantidad,$value->idoperacion);
+          
+        }      
+       
+        if(isset($savior))
+            return $savior;
+
+        return null;
+        
     }
 
     //TIRA ERROR DE NO OBJETO, es un notice, asi que lo dejo para despues... .

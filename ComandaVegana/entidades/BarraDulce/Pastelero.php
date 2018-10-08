@@ -94,6 +94,55 @@ public static function TraerTodosLosPasteleros()
         
 }
 
+public static function TraerPastelero($id)
+{
+    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+    $consulta =$objetoAccesoDato->RetornarConsulta("select nombre as Nombre,pass as Contrasena,tipo as Tipo from pasteleros where idpastelero = $id");
+    $consulta->execute();
+    $elpastelero= $consulta->fetchObject('Pastelero');
+        
+    $savior = Pastelero::OBJPastelero($elpastelero->Nombre,$elpastelero->Contrasena,$id);
+                       
+    if(isset($savior))
+    {
+       
+        return $savior;
+    }else{
+
+        return null;
+
+    }
+}
+
+public static function MostrarReporte($past){
+
+    echo "<table border='2px' solid>";
+    echo "<caption>Resumen de Cantidad de operaciones por empleado, PASTELEROS vivos</caption>";
+    echo "<thead>";
+    echo "<tr>";
+    echo "<th>FECHA</th>";
+    echo "<th>ID</th>";        
+    echo "<th>NOMBRE</th>";
+    echo "<th>OPERACIONES</th>";            
+    echo "</thead>";
+    echo "</tr>";
+    echo "<tbody>";   
+            
+    foreach ($past as $key => $value) {
+        
+        echo "<tr>";
+        echo "<td>".$value['fecha']."</td>";            
+        echo "<td>".$value['id']."</td>";            
+        echo "<td>".$value['nombre']."</td>";            
+        echo "<td>".$value['cantidad']."</td>";                        
+        echo "</tr>";
+
+    }
+    echo "</tbody>";
+    echo "</table>";
+
+}
+
 
 
 public function Trabajo(){

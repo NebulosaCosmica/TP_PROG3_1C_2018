@@ -26,10 +26,7 @@ class MWparaAutentificar
 		date_default_timezone_set("America/Argentina/Buenos_Aires");
          
 		$reloje = date("d/m/Y");    
-
-		//guardar fecha en la tabla ingresos de la BD
-
-
+		
 		// todes
 
 		$lossocios = Socio::TraerTodosLosSocios();
@@ -113,14 +110,12 @@ class MWparaAutentificar
 				$newResponse = $next($request, $newResponse);
 
 				// atualizar deces
-				echo "<pre>";
+				/*echo "<pre>";
 				echo "<body style='background: palegoldenrod;'>";
 				echo "<h1>Ver el gestor de comandas del Restó Vegano edición on line</h1>";
 				echo "<h2>Alta calidad</h2>";
 				echo "<br><br>";
-				//echo " Clientes /clientes/";
-				//echo "<br><br>";
-				//echo "usuario: Código de mesa. contrasena: Código de pedido";
+				
 			   	echo "<br><br>";
 				echo " Mozos /mozos/";
 			   	echo "<br><br>";
@@ -137,12 +132,13 @@ class MWparaAutentificar
 				echo " Pasteleros/pasteleros/";
 				echo "<br><br>";
 				echo "</pre>";
+				*/
 
 				return $newResponse;
 			}
 		}
 
-		// necesité otro foreach, que no andaba bien la balidaziom
+		// necesité otro foreach, que no andaba bien la balidaziom 
 		//var_dump($params['usuario']);
 		//var_dump($value->getnombre());
 		foreach ($graciastotales as $key => $value) {

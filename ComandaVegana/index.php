@@ -1,7 +1,69 @@
 <?php
 
-
 /*
+
+pedidos y FECHAS
+
+08/10/2018 el local de comidas arranca a operar
+
+faltan las estadisticas de ventas, por eso arrancan a laburar
+
+tener cuidado de ingresar una vez a cada uno (login), los socios no cuentan
+
+//SEGUIR
+
+// ingresar varios pedidos hoy OK
+
+// repetir comidas (SEITAN,LENTEJAS,GREEN ROLL,FAINA,VEGETALES SALTEADOS) OK
+
+// hacer trabajar al personal OK
+
+// REPORTAR
+
+//REPORTAR PEDIDOS SOCIOS
+
+//¿como se de que fecha es el pedido cerrado?
+
+    // ver de poner la fecha con el pedido cerrado y fue
+
+    // agrego comanda fecha o pedido fecha? retoco todos los metodos
+
+    // o puedo tomar la fecha de algun token???
+
+// el pedido que mas salio
+
+// el que menos salio
+
+// la comanda con mayor importe y... .
+
+// con menor importe
+
+// listar pedidos por dia
+
+// promedio de ingreso por comanda del dia
+
+
+por fecha
+
+pedidos (estandarizar entrada de pedidos)
+
+lo mas vendido (tipo de comida, cocinero) 
+
+lo menos vendido (tipo de comida, cocinero)
+
+mayor facturacion (importe)
+
+menor facturacion (importe)
+
+listado de los pedidos (traer todas las comandas)
+
+promedio del dia 
+
+
+
+
+
+// OBJOperacion, o algo asi , que da un notice, ver
 
 mozo/cierre sin mucho manejo de errores
 
@@ -10,12 +72,6 @@ Notices con la clase Operacion, detalle para mas adelante
 el sistema todavía no contempla muchos errores y variaciones
 
 Me gustaria que la tabla ingreso y operacion no tuviera duplicados innecesarios LATER
-
-suponiendo una comodidad, el token lleva fecha?!
-
-cuando el empleado se loguea, creo la fila de operaciones y que empiece en 0
-
-+ otro metodo para despues que incremente en 1 la cantidad de operaciones
 
 (revisar esto)
 
@@ -26,31 +82,16 @@ cuando el empleado se loguea, creo la fila de operaciones y que empiece en 0
 
  La ruta de comandas es utilizada por el mozo. Que el token, etc... .
 
-La app empieza cerca de la línea 260
-
 CONTINUAR CON
-
-//mostrar cantidad de operaciones totales por sector
-
-//mostrar un reporte
-
-// Socio  Operaciones fecha y Mostrar operaciones
-
-// y seguir AGREGAR FECHAS A TODO EL SISTEMA
 
 estadisticas
 de una fecha
 
-cantidad de operaciones totales por sector
+cantidad de operaciones totales por sector OK
 
-y por empleado
+y por empleado, por sector OK
 
-y por empleado, por sector
-
-
-
-
-abm de empleados (ok, solo alta)
+((abm de empleados (ok, solo alta) ))
 
 pedidos
 
@@ -335,8 +376,7 @@ require_once "entidades/BarraCervezaArtesanal/Cervecero.php";
 require_once "entidades/Cocina/Cocinero.php";
 require_once "entidades/BarraDulce/Pastelero.php";
 
-//prueba
-require_once "entidades/Administra/Socio.php";
+require_once "entidades/Administra/Operacion.php";
 
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
@@ -448,7 +488,13 @@ $app->group('/socios',function(){
 
     $this->post('/cocineros/operaciones/',\Cocinero::class.':Proceso');
     
-    $this->post('/reportes/',\Socio::class.':OperacionesFecha');
+    $this->post('/reportes/sectores/',\Socio::class.':OperacionesFecha');
+
+    $this->post('/reportes/empleados/',\Socio::class.':OperacionesFechaEmp');
+
+    $this->post('/reportes/pedidos/',\Socio::class.':ReportarPedidos');
+
+
 
 })->add(\MWparaAutentificar::class.':ValidarSocio')
 ->add(\MWparaAutentificar::class.':ValidarToc');
@@ -475,9 +521,13 @@ $app->any('[/]',function($req,$resp){
     echo "<br><br>";
     echo "¿Quién sos? (tokenresto) /login/"; 
     echo "<br><br>";
-    echo "Los clientes pueden revisar su pedido /clientes/";
+   /* echo "Los clientes pueden revisar su pedido /clientes/";
 	echo "<br><br>";
-	echo "codigomesa: Código de mesa <br>codigopedido: Código de pedido";  
+    echo "codigomesa: Código de mesa <br>codigopedido: Código de pedido"; */ 
+    
+    //echo "<img src='fotos/mesacomanda/Marcos.jpg'>";
+
+    echo "<td ><img src='fotos/mesacomanda/Franco.jpg' height=200px></td>";
     echo "</pre>"; 
     
     
