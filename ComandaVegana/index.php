@@ -2,7 +2,11 @@
 
 /*
 
-pedidos y FECHAS
+pedidos y FECHAS 
+
+a partir del 09/10/2018 
+
+las comandas tienen fecha, pa las estadisticas
 
 08/10/2018 el local de comidas arranca a operar
 
@@ -10,37 +14,44 @@ faltan las estadisticas de ventas, por eso arrancan a laburar
 
 tener cuidado de ingresar una vez a cada uno (login), los socios no cuentan
 
-//SEGUIR
 
 // ingresar varios pedidos hoy OK
 
-// repetir comidas (SEITAN,LENTEJAS,GREEN ROLL,FAINA,VEGETALES SALTEADOS) OK
+// repetir comidas (SEITAN,LENTEJAS,ROLL,FAINA,SALTEADOS) OK
 
 // hacer trabajar al personal OK
 
-// REPORTAR
-
 //REPORTAR PEDIDOS SOCIOS
 
-//¿como se de que fecha es el pedido cerrado?
+// campo fecha en la comanda OK
 
-    // ver de poner la fecha con el pedido cerrado y fue
+// reflejar en todo el sistema PROBAR OK
 
-    // agrego comanda fecha o pedido fecha? retoco todos los metodos
 
-    // o puedo tomar la fecha de algun token???
 
-// el pedido que mas salio
+//SEGUIR
 
-// el que menos salio
+// ver sin tablas, suena logico OK
 
-// la comanda con mayor importe y... .
+// las tablas parecen al pedo OK
 
-// con menor importe
+ 
+// el pedido que mas salio OK
 
-// listar pedidos por dia
+// el que menos salio OK
+
+
+// la comanda con mayor importe y... . 
+
+// con menor importe 
 
 // promedio de ingreso por comanda del dia
+
+// listar pedidos por dia (cierre de mozo/socio) OK
+
+
+// ver listado de empleados (cantidad de operaciones) OK
+
 
 
 por fecha
@@ -73,14 +84,6 @@ el sistema todavía no contempla muchos errores y variaciones
 
 Me gustaria que la tabla ingreso y operacion no tuviera duplicados innecesarios LATER
 
-(revisar esto)
-
- CUANDO EL MOZO TIENE UN PEDIDO LISTO PARA SERVIR, 
- ACTUALIZAR LA TABLA EN LA BASE DE DATOS,
- SI NO, NO DETECTA EL CAMBIO DE ESTADO
- EN MI MÁQUINA LOCAL // ver de volver a pedir la lista de la base de datos
-
- La ruta de comandas es utilizada por el mozo. Que el token, etc... .
 
 CONTINUAR CON
 
@@ -511,9 +514,7 @@ $app->any('[/]',function($req,$resp){
     $reloje = date("d/m/Y");          
     
     
-    echo "<pre>";    
-    //Operacion::TraerOperacion(3);
-    //Pedido::TraerPedido(2);
+    echo "<pre>";  
     echo $reloje;
     echo "<body style='background: palegoldenrod'>";
     echo "<h1>Ver el gestor de comandas del Restó Vegano edición on line</h1>";
@@ -521,13 +522,16 @@ $app->any('[/]',function($req,$resp){
     echo "<br><br>";
     echo "¿Quién sos? (tokenresto) /login/"; 
     echo "<br><br>";
-   /* echo "Los clientes pueden revisar su pedido /clientes/";
+    /* echo "Los clientes pueden revisar su pedido /clientes/";
 	echo "<br><br>";
     echo "codigomesa: Código de mesa <br>codigopedido: Código de pedido"; */ 
     
     //echo "<img src='fotos/mesacomanda/Marcos.jpg'>";
-
+    
+    
     echo "<td ><img src='fotos/mesacomanda/Franco.jpg' height=200px></td>";
+    $pruebacom = Comanda::TraerTodasLasComandas(); 
+    Comanda::MostrarComandas($pruebacom);
     echo "</pre>"; 
     
     
@@ -539,4 +543,3 @@ $app->any('[/]',function($req,$resp){
 $app->run();
 
 ?>
-

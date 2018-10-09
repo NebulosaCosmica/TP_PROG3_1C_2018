@@ -32,13 +32,16 @@ class Comanda implements IApiUsable{
     // numero de pedido, no? (igual a idcomanda)
     private $ElPedido;   
 
+    // agregado para las estadisticas finales
+    private $fecha;
+
 
     public function __construct(){}
 
 
     // uso el objcomanda cuando ingreso la comanda 
     // y cuando traigo todas las comandas
-    public static function OBJComanda($idmozo,$nombrecliente,$elpedido,$importe = 0,$horaini="",$horafin="",$fotomesa="",$id= -1){
+    public static function OBJComanda($idmozo,$nombrecliente,$elpedido,$importe = 0,$horaini="",$horafin="",$fotomesa="",$fecha ="",$id= -1){
         
         $lacomanda = new Comanda();        
             
@@ -60,10 +63,14 @@ class Comanda implements IApiUsable{
 
         if($fotomesa != ""){ $lacomanda->setFotoMesa($fotomesa);}
 
+        if($fecha != ""){ $lacomanda->setFecha($fecha);}
+            
+
         if($id != -1){ $lacomanda->setIdComanda($id); }
 
         return $lacomanda;
     }
+    
 
     public function getNC(){return $this->NombreCliente;}
 
@@ -93,6 +100,10 @@ class Comanda implements IApiUsable{
 
     public function setFotoMesa($fotomesa){$this->FotoMesa = $fotomesa;}
 
+    public function getFecha(){return $this->fecha;}
+
+    public function setFecha($fecha){$this->fecha = $fecha;}
+
     public function getIdComanda(){return $this->IdComanda;}
 
     public function setIdComanda($IdComanda){$this->IdComanda = $IdComanda;}
@@ -118,15 +129,15 @@ class Comanda implements IApiUsable{
     // TODOS LOS METODOS FUNCIONALES TIENEN QUE TENER FORMA DE MW
     public function CargarUno($request, $response, $args){
 
-    // ver los datos del empleado que cargó la comanda
-    $elt = $request->getHeaderLine('tokenresto');
-
-    // tengo el data, mejor que el payload
-    //pispear el metodo AutentificadorJWT::ObtenerData( 
+        
+    // le pongo la fecha en el alta y a cagar.. .
+        
+        
+        // ver los datos del empleado que cargó la comanda
+        $elt = $request->getHeaderLine('tokenresto');
         
     // con esto genero la Operacion
-   
-    
+       
     $responsable = AutentificadorJWT::ObtenerData($elt)->id;
 
     $fetchr = AutentificadorJWT::ObtenerData($elt)->fecha;
@@ -138,6 +149,8 @@ class Comanda implements IApiUsable{
     Operacion::SumarOperacion($filla);
 
     // con lo anterior generé la Operacion
+
+
 
     $params = $request->getParsedBody();    
         
@@ -195,7 +208,9 @@ class Comanda implements IApiUsable{
 
         // inserto el pedido
 
-        $altaComanda = Comanda::OBJComanda($responsable,$params['nombrecliente'],$unpedido->InsertarElPedidoParametros(),0,"","",$ruta);
+        //REVISAR TEST
+
+        $altaComanda = Comanda::OBJComanda($responsable,$params['nombrecliente'],$unpedido->InsertarElPedidoParametros(),0,"","",$ruta,$fetchr);
      $elnumerofavorito =  $altaComanda->InsertarLaComandaParametros();   
         
         
@@ -237,7 +252,7 @@ class Comanda implements IApiUsable{
     }else {
         if(empty($unpedido)== false){
 
-        $altaComanda = Comanda::OBJComanda($responsable,$params['nombrecliente'],$unpedido);
+        $altaComanda = Comanda::OBJComanda($responsable,$params['nombrecliente'],$unpedido->InsertarElPedidoParametros(),0,"","","",$fetchr);
         $altaComanda->InsertarLaComandaParametros();
     echo "Comanda puesta en escena<br><br>";
     $newResponse = $response->withJson($altaComanda, 200);  
@@ -255,7 +270,7 @@ class Comanda implements IApiUsable{
     {        
         
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-        $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into comandas (idmozo,nombrecliente,idpedido,fotomesa,horaini,importe,horafin)values(:idmozo,:nombre,:idpedido,:foto,:horaini,:importe,:horafin)");
+        $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into comandas (idmozo,nombrecliente,idpedido,fotomesa,horaini,importe,horafin,fecha)values(:idmozo,:nombre,:idpedido,:foto,:horaini,:importe,:horafin,:fecha)");
 
         $consulta->bindValue(':idmozo',$this->IdMozo, PDO::PARAM_INT);
         $consulta->bindValue(':nombre',$this->NombreCliente, PDO::PARAM_STR);
@@ -269,6 +284,8 @@ class Comanda implements IApiUsable{
         }else{ $consulta->bindValue(':importe', 0, PDO::PARAM_INT);}
 
         if(isset($this->HoraFin)){$consulta->bindValue(':horafin', $this->HoraFin, PDO::PARAM_STR); }else{ $consulta->bindValue(':horafin', "", PDO::PARAM_STR);}
+
+        if(isset($this->fecha)){$consulta->bindValue(':fecha', $this->fecha, PDO::PARAM_STR); }else{ $consulta->bindValue(':fecha', "", PDO::PARAM_STR);}
 
         $consulta->execute();		
         return $objetoAccesoDato->RetornarUltimoIdInsertado();
@@ -285,48 +302,30 @@ class Comanda implements IApiUsable{
     public static function TraerTodasLasComandas()
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-            $consulta =$objetoAccesoDato->RetornarConsulta("select idcomanda,idmozo as Mozo, nombrecliente as Nombre, idpedido as Pedido, fotomesa as Foto, horaini as Inicio, importe as Importe, horafin as Fin from comandas");
+            $consulta =$objetoAccesoDato->RetornarConsulta("select idcomanda,idmozo as Mozo, nombrecliente as Nombre, idpedido as Pedido, fotomesa as Foto, horaini as Inicio, importe as Importe, horafin as Fin,fecha as Fecha from comandas");
 			$consulta->execute();			
             // transformar a objeto a uno que sirva ACÁ
             // si no, da todo null en los atributos            
             $salencomandas = $consulta->fetchAll(PDO::FETCH_CLASS, "Comanda");           
 
         foreach ($salencomandas as $key => $value) {
-            
-          // Pedido::TraerPedido($value->Pedido)
-          // para que se vea el pedido, y no solo el id
 
-            $savior[] = Comanda::OBJComanda($value->Mozo,$value->Nombre,Pedido::TraerPedido($value->Pedido),$value->Importe,$value->Inicio,$value->Fin,$value->Foto,$value->idcomanda);
+            $savior[] = Comanda::OBJComanda($value->Mozo,$value->Nombre,Pedido::TraerPedido($value->Pedido),$value->Importe,$value->Inicio,$value->Fin,$value->Foto,$value->Fecha,$value->idcomanda);
 
         }      
        
             return $savior;
-    }
-
-    // hay un problema con el select idcomanda 
-
-    // revisar la construccion del objeto OBJComanda
+    }    
     
-    //public static function OBJComanda($idmozo,$nombrecliente,$elpedido,$importe = 0,$horaini="",$horafin="",$fotomesa="",$id= -1)
-
-    //falta traer la foto de la mesa, el importe
     public static function TraerComanda($id){
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select idcomanda,idmozo as Mozo,nombrecliente as Nombre,fotomesa as Foto, horaini as Inicio,importe as Importe, horafin as Fin from comandas where idpedido = $id");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select idcomanda,idmozo as Mozo,nombrecliente as Nombre,fotomesa as Foto, horaini as Inicio,importe as Importe, horafin as Fin, fecha as Fecha from comandas where idpedido = $id");
 			$consulta->execute();
-            $lacomanda= $consulta->fetchObject('Comanda');           
+            $lacomanda= $consulta->fetchObject('Comanda');    
             
-            
-            echo "<pre>";
-            
-            //ok
-            // var_dump($lacomanda);
-            //var_dump($lacomanda->Importe);
-            
-            //var_dump($lacomanda->idcomanda);
-            echo "</pre>";
+           //var_dump($lacomanda);
 
-            $savior = Comanda::OBJComanda($lacomanda->Mozo,$lacomanda->Nombre,$lacomanda->idcomanda,$lacomanda->Importe,$lacomanda->Inicio,$lacomanda->Fin,$lacomanda->Foto,$id);
+            $savior = Comanda::OBJComanda($lacomanda->Mozo,$lacomanda->Nombre,$lacomanda->idcomanda,$lacomanda->Importe,$lacomanda->Inicio,$lacomanda->Fin,$lacomanda->Foto,$lacomanda->Fecha,$lacomanda->idcomanda);
                   
                      
             if(isset($savior))
@@ -338,8 +337,7 @@ class Comanda implements IApiUsable{
                 return null;
 
             }
-    
-       
+          
 			
     }
 
@@ -351,25 +349,27 @@ class Comanda implements IApiUsable{
         
             set importe=:importe,
 
-            horafin = :horafin
+            horafin = :horafin,
+
+            fecha = :fecha
                         
             WHERE idcomanda=:id");
            $consulta->bindValue(':id',$this->IdComanda, PDO::PARAM_INT);
            $consulta->bindValue(':importe',$this->Importe, PDO::PARAM_INT);            
            $consulta->bindValue(':horafin',$this->HoraFin, PDO::PARAM_STR);            
+           $consulta->bindValue(':fecha',$this->fecha, PDO::PARAM_STR);            
            
            return $consulta->execute();
-    }    
-
-    // mostrar la foto OK
-    // ver index
+    }        
 
     public static function MostrarComandas($comandas){
 
+           
              echo "<table border='2px' solid>";
             echo "<caption>Resumen de Comandas, más que nada cerradas, Mozos vivos</caption>";
             echo "<thead>";
             echo "<tr>";
+            echo "<th>FECHA</th>";
             echo "<th>ID COMANDA</th>";
             echo "<th>CÓDIGO DEL MOZO</th>";
             echo "<th>CLIENTE</th>";
@@ -377,17 +377,20 @@ class Comanda implements IApiUsable{
             echo "<th>HORA DEL INICIO</th>";
             echo "<th>IMPORTE</th>";                          
             echo "<th>HORA DEL FIN</th>";                          
+
             echo "</thead>";
             echo "</tr>";
-            echo "<tbody>";
-    
+            echo "<tbody>";    
+            
             foreach ($comandas as $key => $value) {
-    
+                  
+           
                 echo "<tr>";
+                echo "<td >".$value->getFecha()."</td>";                
                 echo "<td >".$value->getIdComanda()."</td>";
                 echo "<td >".$value->getIdMozo()."</td>";
                 echo "<td >".$value->getNC()."</td>";                
-                echo "<td ><img src='fotos/mesacomanda/".$value->getFotoMesa()."'height=70px></td>";                
+                echo "<td ><img src='fotos/mesacomanda/".$value->getFotoMesa()."'height=70px width=90px></td>";                
                 echo "<td >".$value->getHoraIni()."</td>";
                 echo "<td >".$value->getImporte()."</td>";
                 echo "<td >".$value->getHoraFin()."</td>";

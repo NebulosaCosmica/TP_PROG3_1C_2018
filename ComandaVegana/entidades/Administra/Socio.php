@@ -168,7 +168,8 @@ class Socio implements IApiUsable
      public function Cierre($request, $response, $args){
 
 
-         echo "Acá el Socio pone fin a una comanda con la hora<br>";
+
+         echo "Acá el Socio pone fin a una comanda con la hora <br>";
  
          echo "Muestra las mesas cerradas <br>";
  
@@ -181,16 +182,12 @@ class Socio implements IApiUsable
          
          $reloje = date("H:i:s");   
          
-       //var_dump($reloje);
-                 
-         
         $comand = Comanda::TraerComanda($manda);
          
-         $comand->setHoraFin($reloje);
-         // var_dump($comand);
+        $comand->setHoraFin($reloje);    
 
-         $comand->ModificarComandaUnoParametros();
-         
+        $comand->ModificarComandaUnoParametros();
+        
                  
         $lamanada = Comanda::TraerTodasLasComandas();
          
@@ -779,38 +776,203 @@ public static function MostrarOperacionesPorSector($datos){
          echo "</table>";
  }
 
- public function ReportarPedidos(){
+ //el pedido que mas salió en una fecha
+ public function ReportarPedidos($request,$response,$args){
 
-    $cerrados = Pedido::TraerTodosLosPedidos();
 
+    //la fecha del param
+    $params = $request->getParsedBody(); 
+
+        //repeticion del pedido
+
+    // + salio, - salio
+
+    $seitan = 0;
+
+    $lentejas = 0;
+
+    $roll = 0;
+
+    $faina = 0;
+
+    $salteados = 0;
     
-    $pcerrados = array_filter($cerrados,function($elemento){
+
+    //comandas de la fecha
+    $andas= Comanda::TraerTodasLasComandas();
+    
+    $hoycom = array_filter($andas,function($elemento)use($params){
         
-        return $elemento->getestado() == "Cerrado";
+        return $elemento->getFecha() == $params['fecha'];
     });
+    //var_dump($hoycom);    
     
-    echo "<pre>";
-    var_dump($pcerrados);
-    echo "</pre>";
-
-    // filtrar por fecha
-
-    // combinar con el idcomanda
-
-    // saco el mozo responsable
-
-    // y combino con el idingreso del mozo
-
-    //¿como se de que fecha es el pedido cerrado?
-
-    // ver de poner la fecha con el pedido cerrado y fue
-
-    // agrego comanda fecha o pedido fecha? retoco todos los metodos
-
-    // o puedo tomar la fecha de algun token???
- }
     
-    // si lo nesito, ver lamedia
+
+    // asociar a pedidos, para ver el pedido del cocinero
+
+    // ya lo tengo conectado por el getElPedido();
+
+    // GRANDE ariel de antes
+
+    // no hace falta maniobrar
+
+  
+// o calculo todo en el momento, ahora +++++++
+
+
+
+    /*foreach ($hoycom as $key => $value) {
+
+        echo "<pre>";
+        var_dump($value->getElPedido()->getppc());    
+        echo"</pre>";
+    
+
+    }*/
+
+    //los pedidos a tener en cuenta
+    //var_dump($value->getElPedido()->getppc());    
+
+    // no hace falta, son tre linia de cofdigo
+    //return $hoycom;
+
+
+foreach ($hoycom as $key => $value) {
+    
+    switch ($value->getElPedido()->getppc()) {
+        case 'Seitan':
+            
+            $seitan ++;
+            break;
+
+        case 'Lentejas':
+            
+            $lentejas++;
+            break;
+
+            case 'Roll':
+            
+            $roll ++;
+            break;
+
+            case 'Faina':
+            
+            $faina ++;
+            break;
+
+            case 'Salteados':
+            
+            $salteados ++;
+            break;
+        
+        default:
+                echo "agregar ".$value->getElPedido()->getppc()." al menú disponible paestadisticas";
+    
+        break;
+            
+            
+    }
+}
+
+    $caja = ["Seitan"=>$seitan,"Lentejas"=>$lentejas,"Roll"=>$roll,"Faina"=>$faina,"Salteados"=>$salteados];
+
+   arsort($caja);
+
+   //todo bonito, pero quiero el mayor
+   //var_dump($caja);
+
+   // MANEJO ARRAYS
+
+   //asort($caja);
+
+   //$winer = array_pop($caja);
+
+   //var_dump($winer);
+
+
+   $winer = array_filter($caja,function($elemento)use($caja){
+
+    return $elemento == max($caja);
+
+   });
+
+   // el mayor indiscutido
+
+   //var_dump($winer);
+   
+   Pedido::MostrarSuperventa($winer,$params['fecha']);
+  
+   // menore
+
+   $loser = array_filter($caja,function($elemento)use($caja){
+
+    return $elemento == 1;
+
+   });
+
+   Pedido::MostrarPocaventa($loser,$params['fecha']);
+
+
+
+
+
+
+
+   // + importe, - importe y promedio del día
+
+
+     
+
+
+
+
+foreach ($hoycom as $key => $value) {
+
+    $imps[] = $value->getImporte();
+}
+
+$mayoguita = array_filter($hoycom,function($elemento)use($imps){
+
+    return $elemento->getImporte() == max($imps);
+});
+
+//var_dump($mayoguita);
+ 
+echo "<br><br><br>LA COMANDA DE MAYOR IMPORTE<br><br>";
+Comanda::MostrarComandas($mayoguita);
+
+$menoguita = array_filter($hoycom,function($elemento)use($imps){
+
+    return $elemento->getImporte() == min($imps);
+});
+
+echo "<br><br><br>LA COMANDA DE MENOR IMPORTE<br><br>";
+
+Comanda::MostrarComandas($menoguita);
+
+echo "<br><br><br>EL PROMEDIO DEL DÍA DE IMPORTE POR COMANDA<br><br>";
+
+$count = count($imps);
+$medio = array_reduce($imps,function($ant,$act){
+  
+    return $ant + $act;
+});
+
+//var_dump($medio);
+
+//var_dump($count);
+
+$outs =  $medio / $count;
+
+
+echo number_format($outs,2);
+
+}
+
+
+    
+
    // public function TraerUno($request, $response, $args){}
 
 }// Socio

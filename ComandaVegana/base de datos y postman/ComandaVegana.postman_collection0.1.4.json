@@ -1,0 +1,1148 @@
+{
+	"info": {
+		"_postman_id": "e9d1e62b-2b58-4440-a3a6-827f0b80c9a1",
+		"name": "ComandaVegana",
+		"description": "TP FINAL PROG III 2018 UTN-FRA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost/prog/ComandaVegana/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						""
+					]
+				},
+				"description": "inicio de la api"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/login/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "usuario",
+							"value": "Jose",
+							"type": "text"
+						},
+						{
+							"key": "contrasena",
+							"value": "Jose",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/login/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/mozos/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzc0NjM5OTcsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.1e_xW30zVAAEvOX8kKFyEnAnEu6yoIIriFGtNGt6Kyo"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Alvaro",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "Alvaro",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/mozos/alta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"mozos",
+						"alta",
+						""
+					]
+				},
+				"description": "alta de mozos"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/comandas/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzg3Nzg3OTEsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJmZWNoYSI6IjA1XC8xMFwvMjAxOCIsInRpcG8iOiJNb3pvIiwiaWQiOjJ9LCJhcHAiOiJSZXN0XHUwMGYzIENvbWFuZGEgVmVnYW5hIn0.mqkmfqiLMlyfpC4dtZoKlQFJM3J23J_d1F28BjOI6yc"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombrecliente",
+							"value": "Martino",
+							"type": "text"
+						},
+						{
+							"key": "fotomesa",
+							"type": "file"
+						},
+						{
+							"key": "bartender",
+							"value": "Levite pera",
+							"type": "text"
+						},
+						{
+							"key": "cervecero",
+							"value": "Stout",
+							"type": "text"
+						},
+						{
+							"key": "cocinero",
+							"value": "Chorizaurio de Seitán",
+							"type": "text"
+						},
+						{
+							"key": "pastelero",
+							"value": "Alfajor Rincon Vegano",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/comandas/alta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"comandas",
+						"alta",
+						""
+					]
+				},
+				"description": "alta de comandas"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/bartenders/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzc0NjM5OTcsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.1e_xW30zVAAEvOX8kKFyEnAnEu6yoIIriFGtNGt6Kyo"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Luis",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "Luis",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/bartenders/alta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"bartenders",
+						"alta",
+						""
+					]
+				},
+				"description": "alta de bartenders"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/socios/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzc0NjM5OTcsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.1e_xW30zVAAEvOX8kKFyEnAnEu6yoIIriFGtNGt6Kyo"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Juanjo",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "Juanjo",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/socios/alta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"socios",
+						"alta",
+						""
+					]
+				},
+				"description": "alta de socios con token"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/cerveceros/pendientes/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzg3ODAwMTksImV4cCI6MS4yZSszMiwiZGF0YSI6eyJmZWNoYSI6IjA1XC8xMFwvMjAxOCIsInRpcG8iOiJDZXJ2ZWNlcm8iLCJpZCI6Mn0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.7LpsQEcLQ2KxBuG_DJYP-Jic4s90NB8rm58z8Xx8qMQ"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/cerveceros/pendientes/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"cerveceros",
+						"pendientes",
+						""
+					]
+				},
+				"description": "pendientes cerveceros"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/cerveceros/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzc0NjMwMTcsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.YzpX9pj3McEr7wVkAARSq8Zg3ZGmWR_04sQEEator5g"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Carlos",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "Carlos",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/cerveceros/alta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"cerveceros",
+						"alta",
+						""
+					]
+				},
+				"description": "cerveceros alta con token"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/cocineros/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzc0NjM5OTcsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.1e_xW30zVAAEvOX8kKFyEnAnEu6yoIIriFGtNGt6Kyo"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Mariana",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "Mariana",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/cocineros/alta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"cocineros",
+						"alta",
+						""
+					]
+				},
+				"description": "cocinero alta"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/pasteleros/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzc0NjM5OTcsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.1e_xW30zVAAEvOX8kKFyEnAnEu6yoIIriFGtNGt6Kyo"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "Aldo",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "Aldo",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/pasteleros/alta/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"pasteleros",
+						"alta",
+						""
+					]
+				},
+				"description": "pastelero alta"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/cocineros/pendientes/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzc0Njc2MDEsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiQ29jaW5lcm8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.hdKbm5lnSR77USSSL8SwKJILbz1eq2BzgRaLTEizMM0"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/cocineros/pendientes/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"cocineros",
+						"pendientes",
+						""
+					]
+				},
+				"description": "cocinero listado de pendientes"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/pasteleros/pendientes/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzE5NDc0MjcsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.mDbblPNCOxpn1ZfJz73pSzf5kE1MvLTWmdpKSZ5NH7Y"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/pasteleros/pendientes/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"pasteleros",
+						"pendientes",
+						""
+					]
+				},
+				"description": "pendiente pastelero"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/socios/baja/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzc0NjM5OTcsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.1e_xW30zVAAEvOX8kKFyEnAnEu6yoIIriFGtNGt6Kyo"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "3",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/socios/baja/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"socios",
+						"baja",
+						""
+					]
+				},
+				"description": "baja de socios, el delete no anda como debiera"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/socios/modifica/",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzc0NjM5OTcsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.1e_xW30zVAAEvOX8kKFyEnAnEu6yoIIriFGtNGt6Kyo"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "nombre",
+							"value": "Mauro",
+							"type": "text"
+						},
+						{
+							"key": "pass",
+							"value": "Mauro",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/socios/modifica/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"socios",
+						"modifica",
+						""
+					]
+				},
+				"description": "modifico socios"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/orde/localhost/ComandaVegana/clientes/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/clientes/?codigomesa=10004&codigopedido=8dg45",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"clientes",
+						""
+					],
+					"query": [
+						{
+							"key": "codigomesa",
+							"value": "10004"
+						},
+						{
+							"key": "codigopedido",
+							"value": "8dg45"
+						}
+					]
+				},
+				"description": "control de los pedidos por parte de los clientes"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/orde/localhost/ComandaVegana/cerveceros/operaciones/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzg3ODAwMTksImV4cCI6MS4yZSszMiwiZGF0YSI6eyJmZWNoYSI6IjA1XC8xMFwvMjAxOCIsInRpcG8iOiJDZXJ2ZWNlcm8iLCJpZCI6Mn0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.7LpsQEcLQ2KxBuG_DJYP-Jic4s90NB8rm58z8Xx8qMQ"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/cerveceros/operaciones/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"cerveceros",
+						"operaciones",
+						""
+					]
+				},
+				"description": "cambia el pendiente a en proceso, asigna tiempo y responsable"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/orde/localhost/ComandaVegana/socios/cerveceros/operaciones/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzM4NTkyNzMsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.JsTneF96RdhJC8I6iYOV-wCFCbHVgRCWK0Pk_exog_E"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/socios/cerveceros/operaciones/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"socios",
+						"cerveceros",
+						"operaciones",
+						""
+					]
+				},
+				"description": "socio gran hermano"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/orde/localhost/ComandaVegana/socios/comandas/operaciones/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzM4NTkyNzMsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.JsTneF96RdhJC8I6iYOV-wCFCbHVgRCWK0Pk_exog_E"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/socios/comandas/operaciones/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"socios",
+						"comandas",
+						"operaciones",
+						""
+					]
+				},
+				"description": "acceso socio al control de mozos, Alpha"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/socios/cerveceros/pendientes/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzc0NjU3MjMsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiU29jaW8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.e3NBsoFEb1eZMZ72GkGVPHyyIbS4oBEbtaXc8TLUhF4"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/socios/cerveceros/pendientes/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"socios",
+						"cerveceros",
+						"pendientes",
+						""
+					]
+				},
+				"description": "inspeccion del socio a los pendientes del cervecero"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/cocineros/operaciones/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzc2NTgwNDgsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiQ29jaW5lcm8iLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.XxxlpBSitYinLK075jl9brIBF4pP6KUfcr51h8_TzKE"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "tokenresto",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/cocineros/operaciones/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"cocineros",
+						"operaciones",
+						""
+					]
+				},
+				"description": "cocinero opera como cervecero"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/pasteleros/pendientes/ Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzc0Njk4NDksImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiUGFzdGVsZXJvIiwiaWQiOjJ9LCJhcHAiOiJSZXN0XHUwMGYzIENvbWFuZGEgVmVnYW5hIn0.oYL4o13kwFkcLs3l4XYuFelA6cdonQukYpRcF6tlm0M"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/bartenders/pendientes/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"bartenders",
+						"pendientes",
+						""
+					]
+				},
+				"description": "pastelero pendientes"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/pasteleros/operaciones/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzg3ODAzMjUsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJmZWNoYSI6IjA1XC8xMFwvMjAxOCIsInRpcG8iOiJQYXN0ZWxlcm8iLCJpZCI6Mn0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.l3U9s3qxQsWE51qNK092fFmpQoZYHOzWn4kYe4wNGP4"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/pasteleros/operaciones/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"pasteleros",
+						"operaciones",
+						""
+					]
+				},
+				"description": "pastelero operaciones"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/bartenders/operaciones/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzg3ODAyMzEsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJmZWNoYSI6IjA1XC8xMFwvMjAxOCIsInRpcG8iOiJCYXJ0ZW5kZXIiLCJpZCI6MX0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.GryrSnelxxCoZhNlH_Rc2FKPrMmFT9R-2RPbLPela_o"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/bartenders/operaciones/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"bartenders",
+						"operaciones",
+						""
+					]
+				},
+				"description": "pastelero operaciones"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/mozos/operaciones/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzc3MjEyMjMsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiTW96byIsImlkIjoxfSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.yICsSVRZKyXrX5vhE-J54irorM2mOyacz80nHKp3Ao0"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/comandas/operaciones/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"comandas",
+						"operaciones",
+						""
+					]
+				},
+				"description": "pastelero operaciones"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/comandas/pendientes/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzc2NTA0MzUsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiTW96byIsImlkIjoxfSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.I49O6gQzKzAKZGdCvpH8jUpI2Lk7Tewk9o4YUeahp2o"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/comandas/pendientes/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"comandas",
+						"pendientes",
+						""
+					]
+				},
+				"description": "el mozo tiene pedidos pendientes para llevar a la mesa"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/comandas/cierres/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzg3ODE0MDIsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJmZWNoYSI6IjA1XC8xMFwvMjAxOCIsInRpcG8iOiJNb3pvIiwiaWQiOjF9LCJhcHAiOiJSZXN0XHUwMGYzIENvbWFuZGEgVmVnYW5hIn0.DBiGn6fFWYzfxvlmpSzEH3b3gL0qDnP0GBGaBIOeZlY"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "idcomanda",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "importe",
+							"value": "1400",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/comandas/cierres/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"comandas",
+						"cierres",
+						""
+					]
+				},
+				"description": "el mozo pone el importe y cierra  la mesa"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/comandas/cierres/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzgwMDMzMzcsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJ0aXBvIjoiTW96byIsImlkIjoxfSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.p92yAIcJGAjdo8goDG4EOVqwumosdr0y9bgc_QXIZeE"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "idcomanda",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "importe",
+							"value": "1500",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/socios/comandas/cierres/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"socios",
+						"comandas",
+						"cierres",
+						""
+					]
+				},
+				"description": "el mozo pone el importe y cierra  la mesa"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/socios/reportes/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkwMTA2NjQsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJmZWNoYSI6IjA4XC8xMFwvMjAxOCIsInRpcG8iOiJTb2NpbyIsImlkIjo2fSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.hOO1G3Bqs04wSovjjlvouUZtJ_g0IddUu3YMss12ptI"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fecha",
+							"value": "05/10/2018",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/socios/reportes/sectores/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"socios",
+						"reportes",
+						"sectores",
+						""
+					]
+				},
+				"description": "el socio verá algun reporter"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/socios/reportes/empleados/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkwMTA2NjQsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJmZWNoYSI6IjA4XC8xMFwvMjAxOCIsInRpcG8iOiJTb2NpbyIsImlkIjo2fSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.hOO1G3Bqs04wSovjjlvouUZtJ_g0IddUu3YMss12ptI"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fecha",
+							"value": "05/10/2018",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/socios/reportes/empleados/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"socios",
+						"reportes",
+						"empleados",
+						""
+					]
+				},
+				"description": "el socio verá algun reporter"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost/prog/ComandaVegana/socios/reportes/pedidos/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkwMTA2NjQsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJmZWNoYSI6IjA4XC8xMFwvMjAxOCIsInRpcG8iOiJTb2NpbyIsImlkIjo2fSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.hOO1G3Bqs04wSovjjlvouUZtJ_g0IddUu3YMss12ptI"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fecha",
+							"value": "05/10/2018",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/prog/ComandaVegana/socios/reportes/empleados/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"prog",
+						"ComandaVegana",
+						"socios",
+						"reportes",
+						"empleados",
+						""
+					]
+				},
+				"description": "el socio verá algun reporter"
+			},
+			"response": []
+		}
+	]
+}

@@ -186,6 +186,74 @@ class Pedido
         return $dido;
     }
 
+    public static function MostrarSuperventa($comida,$fecha){
+
+
+        //var_dump($comida);
+
+        
+        echo "<table border='2px' solid>";
+        echo "<caption>Resumen de Pedidos, cocinados más salidos, Comandas vivas de una fecha</caption>";
+        echo "<thead>";
+        echo "<tr>";
+        echo "<th>FECHA</th>";                
+        echo "<th>PEDIDO</th>";        
+        echo "<th>CANTIDAD</th>";       
+
+        echo "</thead>";
+        echo "</tr>";
+        echo "<tbody>";    
+        
+        foreach ($comida as $key => $value) {
+              
+       
+            echo "<tr>";
+            
+            echo "<td >".$fecha."</td>";
+            echo "<td >$key</td>";
+            echo "<td >$value</td>";                
+            
+            echo "</tr>";
+        }                    
+
+
+        echo "</tbody>";
+        echo "</table>";
+
+    }
+
+    public static function MostrarPocaventa($comida,$fecha){    
+        
+        echo "<table border='2px' solid>";
+        echo "<caption>Resumen de Pedidos, cocinados que no salieron mucho, Comandas vivas de una fecha</caption>";
+        echo "<thead>";
+        echo "<tr>";
+        echo "<th>FECHA</th>";                
+        echo "<th>PEDIDO</th>";        
+        echo "<th>CANTIDAD</th>";       
+
+        echo "</thead>";
+        echo "</tr>";
+        echo "<tbody>";    
+        
+        foreach ($comida as $key => $value) {
+              
+       
+            echo "<tr>";
+            
+            echo "<td >".$fecha."</td>";
+            echo "<td >$key</td>";
+            echo "<td >$value</td>";                
+            
+            echo "</tr>";
+        }                    
+
+
+        echo "</tbody>";
+        echo "</table>";
+
+    }
+
     
 }// Pedido
 ?>

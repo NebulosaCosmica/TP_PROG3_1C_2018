@@ -198,16 +198,21 @@ class Mozo implements IApiUsable
 			return $consulta->execute();
      }
 
+     // el último pedido parece qe no es detectado LPS
+
+     // queda afuera del for, que empieza en 1
+
      public function Trabajo(){    
-       
+
+        
         $laburo = Pendiente::TraerTodosLosPendientes();  
 
         $pedios = Pedido::TraerTodosLosPedidos();  
 
         $last = array_pop($laburo);       
-
         
-        for ($i=1; $i < $last->getidpedido(); $i++) { 
+        //var_dump($last->getidpedido());
+        for ($i=1; $i < ($last->getidpedido()+1); $i++) { 
             
         $banda = 0;  
       
@@ -216,7 +221,12 @@ class Mozo implements IApiUsable
                 return $elemento->getidpedido() == $i;
             
                });  
-               
+
+               // todos los pendientes por idpedido
+     //          echo "<pre>";
+       // var_dump($elpe);
+       // echo "</pre>";       
+
         foreach ($elpe as $key => $value) {
             
             if($value->getestado() === "Listo Para Servir"){
@@ -248,6 +258,8 @@ class Mozo implements IApiUsable
         
         } // for  recorre todos los pedidos
 
+        //faltaba esto para que no pinche, actualizar la lista de pedidos
+        $pedios = Pedido::TraerTodosLosPedidos();  
         Mozo::MostrarPedidos(array_filter($pedios,function($elemento){
     
             return $elemento->getestado() === "Listo Para Servir";
@@ -497,6 +509,10 @@ class Mozo implements IApiUsable
     }
 
 
+    // el cierre necesita el idpedido de operaciones
+
+    // agregarle el importe (mozo)
+
     // falta el dueño gran hermano
     public function Cierre($request, $response, $args){
 
@@ -540,6 +556,7 @@ class Mozo implements IApiUsable
       //  $reloje = date("H:i:s");   
         
       //var_dump($reloje);
+      
                 
         
         $comand = Comanda::TraerComanda($manda);
