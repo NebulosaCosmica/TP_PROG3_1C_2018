@@ -232,9 +232,9 @@ class Comanda implements IApiUsable{
 
         $mesacon = GesCliente::ProximaMesa();
         
-        echo "Comanda puesta en escena<br><br>";
-        echo "Código de mesa: $mesacon <br><br>";
-        echo "Código del pedido: $string";
+        echo "Comanda puesta en escena";
+        //echo "Código de mesa: $mesacon <br><br>";
+        //echo "Código del pedido: $string";
 
         $control = GesCliente::OBJGesCliente($mesacon,$string,$elnumerofavorito);
 
@@ -376,7 +376,12 @@ class Comanda implements IApiUsable{
             echo "<th>FOTO</th>";
             echo "<th>HORA DEL INICIO</th>";
             echo "<th>IMPORTE</th>";                          
-            echo "<th>HORA DEL FIN</th>";                          
+            echo "<th>HORA DEL FIN</th>";  
+            echo "<th>BARTENDER</th>";
+            echo "<th>CERVECERO</th>";
+            echo "<th>COCINERO</th>";                          
+            echo "<th>PASTELERO</th>";  
+
 
             echo "</thead>";
             echo "</tr>";
@@ -394,6 +399,12 @@ class Comanda implements IApiUsable{
                 echo "<td >".$value->getHoraIni()."</td>";
                 echo "<td >".$value->getImporte()."</td>";
                 echo "<td >".$value->getHoraFin()."</td>";
+
+                echo "<td >".$value->getElPedido()->getpbtv()."</td>";
+                echo "<td >".$value->getElPedido()->getpbcca()."</td>";
+                echo "<td >".$value->getElPedido()->getppc()."</td>";
+                echo "<td >".$value->getElPedido()->getpbd()."</td>";
+                
                 echo "</tr>";
             }                    
     

@@ -529,9 +529,9 @@ $app->any('[/]',function($req,$resp){
     //echo "<img src='fotos/mesacomanda/Marcos.jpg'>";
     
     
-    echo "<td ><img src='fotos/mesacomanda/Franco.jpg' height=200px></td>";
-    $pruebacom = Comanda::TraerTodasLasComandas(); 
-    Comanda::MostrarComandas($pruebacom);
+   // echo "<td ><img src='fotos/mesacomanda/Franco.jpg' height=200px></td>";
+   // $pruebacom = Comanda::TraerTodasLasComandas(); 
+   // Comanda::MostrarComandas($pruebacom);
     echo "</pre>"; 
     
     
