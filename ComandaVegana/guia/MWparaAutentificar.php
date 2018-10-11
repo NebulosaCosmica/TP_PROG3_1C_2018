@@ -108,32 +108,7 @@ class MWparaAutentificar
 
 				$newResponse = $response->withJson($token,200);  
 				$newResponse = $next($request, $newResponse);
-
-				// atualizar deces
-				/*echo "<pre>";
-				echo "<body style='background: palegoldenrod;'>";
-				echo "<h1>Ver el gestor de comandas del Restó Vegano edición on line</h1>";
-				echo "<h2>Alta calidad</h2>";
-				echo "<br><br>";
-				
-			   	echo "<br><br>";
-				echo " Mozos /mozos/";
-			   	echo "<br><br>";
-				echo " Comandas /comandas/";
-				echo "<br><br>";
-				echo " Socios /socios/";
-			   	echo "<br><br>";
-				echo " Bartenders/bartenders/";
-				echo "<br><br>";
-				echo " Cerveceros/cerveceros/";
-				echo "<br><br>";
-				echo " Cocineros/cocineros/";
-				echo "<br><br>";
-				echo " Pasteleros/pasteleros/";
-				echo "<br><br>";
-				echo "</pre>";
-				*/
-
+			
 				return $newResponse;
 			}
 		}
@@ -156,6 +131,7 @@ class MWparaAutentificar
 		
 	}//verificar usuario	
 		
+	// las excepciones
 	public function ValidarToc($request, $response, $next) {
 
 		
@@ -165,19 +141,17 @@ class MWparaAutentificar
 
 			AutentificadorJWT::verificarToken($elt);
 
-			//var_dump(AutentificadorJWT::ObtenerPayLoad($elt));
-		
-			// el token
-			//var_dump($elt);
 			$esValido=true;      
 			}
 			catch (Exception $e) {      
 				//guardar en un log
-				echo $e;
+				//echo $e;
+
+				$esValido = false;
 			}
 			if( $esValido)
 			{					 
-					echo "ok<br>";
+					echo "ok";
 					$response = $next($request, $response);   					
 			}
 
@@ -214,7 +188,7 @@ class MWparaAutentificar
 
 		if($profile->data->tipo == "Mozo")
 		{
-			echo "El Mozo puede<br><br>";
+			echo "El Mozo puede";
 			$response = $next($request, $response); 
 			Operacion::SumarOperacion(1);
 		}else{

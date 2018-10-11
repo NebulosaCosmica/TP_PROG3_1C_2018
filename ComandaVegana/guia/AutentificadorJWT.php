@@ -7,7 +7,7 @@ class AutentificadorJWT
     
     private static $claveSecreta = "tokenresto";
     private static $tipoEncriptacion = ['HS256'];
-   // private static $aud = null;
+    private static $aud = null;
     
     public static function CrearToken($datos)
     {
@@ -19,8 +19,8 @@ class AutentificadorJWT
         */
         $payload = array(
         	'iat'=>$ahora,
-            'exp' => $ahora + (120000000000000000000000000000000),
-            //'aud' => self::Aud(),
+            'exp' => $ahora + (72000), // 20 horas
+            'aud' => self::Aud(),
             'data' => $datos,
             'app'=> "Restó Comanda Vegana",
 
@@ -29,30 +29,57 @@ class AutentificadorJWT
         return JWT::encode($payload, self::$claveSecreta);
     }
     
+    // viendo de manejar excepciones
     public static function VerificarToken($token)
     {
+        // en retoque, todavia tocando de oido sordo
+        
         if(empty($token))
-        {
-            throw new Exception("El token esta vacio.");
-        } 
+                {
+                    try{
+
+                        throw new Exception("El token esta vacio.");
+                     }
+    
+                    catch (\Exception $e){
+                          
+
+                          echo "Token vacío <br><br>";
+                          
+                        // que hago con estas excepciones?
+
+                        //   echo $e.msgfmt_get_error_message();
+                         throw $e;                         
+                    }               
+                    
+                    
+                }        
+        
+        
         // las siguientes lineas lanzan una excepcion, de no ser correcto o de haberse terminado el tiempo       
       
+        // parece que esto anda, voy a ver el otro metodo
       try {
             $decodificado = JWT::decode(
             $token,
             self::$claveSecreta,
             self::$tipoEncriptacion
         );
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
+                
+            // Wrong Number of Segments
+            echo "Cantidad de segmentos equivocado o Caracteres mal formados<br><br>";
+
+
              //echo $e.msgfmt_get_error_message();
           //  throw $e;
         } 
         
         // si no da error,  verifico los datos de AUD que uso para saber de que lugar viene  
-       /* if($decodificado->aud !== self::Aud())
+        if($decodificado->aud !== self::Aud())
         {
             throw new Exception("No es el usuario valido");
-        }*/
+        }
     }
     
    
