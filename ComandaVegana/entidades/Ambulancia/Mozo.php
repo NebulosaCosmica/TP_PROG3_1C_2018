@@ -362,7 +362,7 @@ class Mozo implements IApiUsable
             // en operaciones
 
             /*echo "<pre>";
-            var_dump($elpe);
+            var_dump($listo);
             echo "</pre>";*/
 
      
@@ -550,18 +550,17 @@ class Mozo implements IApiUsable
         //var_dump($porte);
         
         
-        // SOCIO
-      //  date_default_timezone_set("America/Argentina/Buenos_Aires");
+        // Hora cierre del mozo
+        date_default_timezone_set("America/Argentina/Buenos_Aires");
         
-      //  $reloje = date("H:i:s");   
-        
-      //var_dump($reloje);
-      
+       $reloje = date("H:i:s");   
                 
         
         $comand = Comanda::TraerComanda($manda);
         
         $comand->setImporte($porte);
+
+        $comand->setHoraFin($reloje);
         
         $comand->ModificarComandaUnoParametros();
 

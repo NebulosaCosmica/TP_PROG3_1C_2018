@@ -416,10 +416,14 @@ class Comanda implements IApiUsable{
 
 
     
-  //  public function TraerUno($request, $response, $args){}
-    public function BorrarUno($request, $response, $args){}
-    public function ModificarUno($request, $response, $args){}
+    public function ModificarUno($request, $response, $args){
+        echo "Modificar comanda antes de ser operada";
+    }
     
+    // no parece operativo
+    public function BorrarUno($request, $response, $args){}
+        
+        //  public function TraerUno($request, $response, $args){}
 }// clase Comanda
 
 ?>

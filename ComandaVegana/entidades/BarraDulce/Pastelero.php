@@ -184,7 +184,7 @@ public static function MostrarPendientes($pedidos){
         echo "</table>";
 }
 
-public function Proceso($request, $response, $args){
+public function ProcesoPendiente($request, $response, $args){
 
     // que el socio sea gran hermano
     $elt = $request->getHeaderLine('tokenresto');
@@ -214,65 +214,8 @@ public function Proceso($request, $response, $args){
         return $request;
     }
 
-    // verifico la lista de pedidos en proceso, y si alguno supera la hora de finalizacion, lo cambio a "listo para servir"
-
-    // muestro en la misma tabla los listo para servir?!
-
-    // por ahora si
-
-// pendientes genericos
-// arriba
-//$laburo = Pendiente::TraerTodosLosPendientes();
-
-
-$listo = array_filter($laburo,function($elemento){
-
-    return $elemento->getestado() === "En Proceso" && $elemento->gettipoempleado() === "Pastelero";
-
-   });
-    /*echo "<pre>";
-   var_dump($listo);
-   echo "</pre>";*/
-
-    $reloje = date("H:i:s");    
-
-    if(empty($listo) == false){
-
-   foreach ($listo as $key => $value) {
-       
-    //if()
     
-
-    if($reloje >$value->gethorafin()){
-        // FUNCA!!
-        //var_dump($value->gethorafin());
-
-        // cambio el estado en la base de datos
-
-   // todo lo que necesito cambiar es el estado
-
-   $value->setestado("Listo Para Servir");  
-
-   $value->ModificarPendienteUnoParametros();
-
-
-        
-    }
-    
-   }
-
-}else{
-    echo "no hay en proceso que estén listopara servir";
-}
-
-Pastelero::MostrarProceso(array_filter($laburo,function($elemento){
-
-    return $elemento->getestado() === "Listo Para Servir" && $elemento->gettipoempleado() === "Pastelero";
-
-   }));
-
-
-$cerveza = array_filter($laburo,function($elemento){
+    $cerveza = array_filter($laburo,function($elemento){
 
     return $elemento->getestado() === "Pendiente" && $elemento->gettipoempleado() === "Pastelero";
 
@@ -313,7 +256,7 @@ $cerveza = array_filter($laburo,function($elemento){
    
    $cerveza[0]->sethorainicio($ahoras);
 
-  $nuevafecha = strtotime ( '+5 minute' , strtotime ( $ahoras ) ) ;
+  $nuevafecha = strtotime ( '+10 minute' , strtotime ( $ahoras ) ) ;
 
   $finale = date("H:i:s",$nuevafecha);   
 
@@ -336,6 +279,102 @@ $cerveza = array_filter($laburo,function($elemento){
 
    }));
 }
+
+public function ProcesoProceso($request, $response, $args){
+    
+        // que el socio sea gran hermano
+        $elt = $request->getHeaderLine('tokenresto');
+        $profile = AutentificadorJWT::ObtenerPayLoad($elt);	
+    
+        date_default_timezone_set("America/Argentina/Buenos_Aires");
+        
+        $laburo = Pendiente::TraerTodosLosPendientes();
+    
+        if($profile->data->tipo === "Socio"){
+    
+            Pastelero::MostrarProceso(array_filter($laburo,function($elemento){
+    
+                return $elemento->getestado() === "Listo Para Servir" && $elemento->gettipoempleado() === "Pastelero";
+            
+               }));
+    
+    
+            Pastelero::MostrarProceso(array_filter($laburo,function($elemento){
+    
+                return $elemento->getestado() === "En Proceso" && $elemento->gettipoempleado() === "Pastelero";
+            
+               }));   
+            
+    
+    
+            return $request;
+        }
+    
+        
+    
+    
+    $listo = array_filter($laburo,function($elemento){
+    
+        return $elemento->getestado() === "En Proceso" && $elemento->gettipoempleado() === "Pastelero";
+    
+       });
+        
+       sort($listo);
+       
+          // cambio el estado en la base de datos
+       
+          // todo lo que necesito cambiar
+       
+          // id empleado, hora inicio, hora fin, estado
+       
+         // var_dump($listo);
+       
+          if(empty($listo) == false){
+       
+            // con esto genero la Operacion
+                 
+            $responsable = AutentificadorJWT::ObtenerData($elt)->id;
+       
+            $fetchr = AutentificadorJWT::ObtenerData($elt)->fecha;
+        
+            $typen = AutentificadorJWT::ObtenerData($elt)->tipo;
+              
+            $filla = Ingreso::TraerIdIngreso($fetchr,$typen,$responsable);
+        
+            Operacion::SumarOperacion($filla);
+        
+            // con lo anterior generé la Operacion
+          
+          $listo[0]->setestado("Listo Para Servir");  
+         
+          $ahoras = date("H:i:s");    
+              
+            if(empty($listo) == false){
+        
+          
+           $listo[0]->setestado("Listo Para Servir"); 
+           
+           $listo[0]->sethorafin($ahoras);
+    
+           $listo[0]->setidempleado($profile->data->id);
+        
+           $listo[0]->ModificarPendienteUnoParametros();
+           
+                
+            }
+            
+        
+        }else{
+            echo "no hay en proceso que estén listopara servir";
+        }
+    
+    Pastelero::MostrarProceso(array_filter($laburo,function($elemento){
+    
+        return $elemento->getestado() === "Listo Para Servir" && $elemento->gettipoempleado() === "Pastelero";
+    
+       }));
+    
+    }
 
 public static function MostrarProceso($pedidos){
 

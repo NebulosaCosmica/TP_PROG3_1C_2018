@@ -409,6 +409,11 @@ $app->post('/login/',function($request,$response,$args){
 
      $this->post('/cierres/',\Mozo::class.':Cierre');
 
+     //
+     $this->post('/canceladas/',\Pedido::class.':CancelarPedido');
+
+     $this->post('/modificar/',\Comanda::class.':ModificarUno');
+
 })->add(\MWparaAutentificar::class.':ValidarMozo')
 ->add(\MWparaAutentificar::class.':ValidarToc');
 
@@ -425,7 +430,9 @@ $app->group('/cerveceros',function(){
     $this->post('/pendientes/',\Cervecero::class.':Trabajo')
     ->add(\MWparaAutentificar::class.':ValidarCer');
 
-    $this->post('/operaciones/',\Cervecero::class.':Proceso')
+    $this->post('/operaciones/pendientes/',\Cervecero::class.':ProcesoPendiente')
+    ->add(\MWparaAutentificar::class.':ValidarCer');
+    $this->post('/operaciones/procesos/',\Cervecero::class.':ProcesoProceso')
     ->add(\MWparaAutentificar::class.':ValidarCer');
 
 })->add(\MWparaAutentificar::class.':ValidarToc');
@@ -435,7 +442,10 @@ $app->group('/bartenders',function(){
     ->add(\MWparaAutentificar::class.':ValidarSocio');
     $this->post('/pendientes/',\Bartender::class.':Trabajo')
     ->add(\MWparaAutentificar::class.':ValidarBart');
-    $this->post('/operaciones/',\Bartender::class.':Proceso')
+    $this->post('/operaciones/pendientes/',\Bartender::class.':ProcesoPendiente')
+    ->add(\MWparaAutentificar::class.':ValidarBart');
+
+    $this->post('/operaciones/procesos/',\Bartender::class.':ProcesoProceso')
     ->add(\MWparaAutentificar::class.':ValidarBart');
 
 })->add(\MWparaAutentificar::class.':ValidarToc');
@@ -445,17 +455,24 @@ $app->group('/cocineros',function(){
     ->add(\MWparaAutentificar::class.':ValidarSocio');
     $this->post('/pendientes/',\Cocinero::class.':Trabajo')
     ->add(\MWparaAutentificar::class.':ValidarCoci');
-    $this->post('/operaciones/',\Cocinero::class.':Proceso')
+    $this->post('/operaciones/pendientes/',\Cocinero::class.':ProcesoPendiente')
+    ->add(\MWparaAutentificar::class.':ValidarCoci');
+
+    $this->post('/operaciones/procesos/',\Cocinero::class.':ProcesoProceso')
     ->add(\MWparaAutentificar::class.':ValidarCoci');
 
 })->add(\MWparaAutentificar::class.':ValidarToc');
+
 
 $app->group('/pasteleros',function(){
     $this->post('/alta/',\Pastelero::class.':CargarUno')
     ->add(\MWparaAutentificar::class.':ValidarSocio');
     $this->post('/pendientes/',\Pastelero::class.':Trabajo')
     ->add(\MWparaAutentificar::class.':ValidarPast');
-    $this->post('/operaciones/',\Pastelero::class.':Proceso')
+    $this->post('/operaciones/pendientes/',\Pastelero::class.':ProcesoPendiente')
+    ->add(\MWparaAutentificar::class.':ValidarPast');
+
+    $this->post('/operaciones/procesos/',\Pastelero::class.':ProcesoProceso')
     ->add(\MWparaAutentificar::class.':ValidarPast');
 
 })->add(\MWparaAutentificar::class.':ValidarToc');
@@ -529,9 +546,9 @@ $app->any('[/]',function($req,$resp){
     //echo "<img src='fotos/mesacomanda/Marcos.jpg'>";
     
     
-   // echo "<td ><img src='fotos/mesacomanda/Franco.jpg' height=200px></td>";
-   // $pruebacom = Comanda::TraerTodasLasComandas(); 
-   // Comanda::MostrarComandas($pruebacom);
+    //echo "<td ><img src='fotos/mesacomanda/Franco.jpg' height=200px></td>";
+    //$pruebacom = Comanda::TraerTodasLasComandas(); 
+    //Comanda::MostrarComandas($pruebacom);
     echo "</pre>"; 
     
     
