@@ -128,6 +128,12 @@ public function Trabajo(){
     return $elemento->getestado() === "Pendiente" && $elemento->gettipoempleado() === "Cervecero";
 
    }));
+
+   //echo "<pre>";
+   //var_dump($laburo[59]->getidpedido());
+   //echo "</pre>";
+
+  // Pendiente::TraerPendienteOperacion($laburo[59]->getidpedido(),"Cervecero");
 }
 
 public static function MostrarPendientes($pedidos){
@@ -156,10 +162,17 @@ public static function MostrarPendientes($pedidos){
 
         echo "</tbody>";
         echo "</table>";
-}
+    }
+    
+    
+    // cambia de pendiente a en proceso
+    
+    // agregar idpendiente como input (+)
+    
+    // y si queres, tiempo de proceso como imput (-)
+    // jugar con la hora
 
-
-// cambia de pendiente a en proceso
+// ver las validaciones
 
 public function ProcesoPendiente($request, $response, $args){
 
@@ -170,6 +183,10 @@ public function ProcesoPendiente($request, $response, $args){
     date_default_timezone_set("America/Argentina/Buenos_Aires");
     
     $laburo = Pendiente::TraerTodosLosPendientes();
+
+    //inputes
+
+    $losins = $request->getParsedBody();
 
     if($profile->data->tipo === "Socio"){
 
@@ -191,28 +208,26 @@ public function ProcesoPendiente($request, $response, $args){
         return $request;
     }
 
+
     
-$cerveza = array_filter($laburo,function($elemento){
-
-    return $elemento->getestado() === "Pendiente" && $elemento->gettipoempleado() === "Cervecero";
-
-   });
-
-   // está desordenado
-
-   sort($cerveza);
-
-   // cambio el estado en la base de datos
-
-   // todo lo que necesito cambiar
-
-   // id empleado, hora inicio, hora fin, estado
-
-  // var_dump($cerveza);
+    
+    $cerveza = Pendiente::TraerPendienteOperacion($losins['idpedido'],"Cervecero");
+    
+    // cambio el estado en la base de datos
+    
+    // todo lo que necesito cambiar
+    
+    // id empleado, hora inicio, hora fin, estado  
+  
+   // Ahora cerveza es un oBJ pendiente
 
    if(empty($cerveza) == false){
 
      // con esto genero la Operacion
+
+     if($cerveza->getestado() == "Pendiente"){
+
+     
    
     
      $responsable = AutentificadorJWT::ObtenerData($elt)->id;
@@ -227,28 +242,39 @@ $cerveza = array_filter($laburo,function($elemento){
  
      // con lo anterior generé la Operacion
    
-   $cerveza[0]->setestado("En Proceso");  
+   $cerveza->setestado("En Proceso");  
   
    $ahoras = date("H:i:s");    
-   
-   $cerveza[0]->sethorainicio($ahoras);
+ 
+   $cerveza->sethorainicio($ahoras);
+
 
   $nuevafecha = strtotime ( '+10 minute' , strtotime ( $ahoras ) ) ;
 
   $finale = date("H:i:s",$nuevafecha);   
 
-   $cerveza[0]->sethorafin($finale);
+   $cerveza->sethorafin($finale);
 
    // está arriba
    //$elt = $request->getHeaderLine('tokenresto');
    //$profile = AutentificadorJWT::ObtenerPayLoad($elt);		
 
-   $cerveza[0]->setidempleado($profile->data->id);
+   $cerveza->setidempleado($profile->data->id);
 
-   $cerveza[0]->ModificarPendienteUnoParametros();
+   $cerveza->ModificarPendienteUnoParametros();
+
+     }else{
+         echo "El Pedido tiene un estado distinto al Pendiente";
+     }
+ 
    }else{
-       echo "Nada pendiente. Puede descansar un rato mirando su celular.<br><br>";
+
+       echo "El pendiente está fuera de la lista. Intente de nuevo<br><br>";
    }
+
+   // traer de nuevo todos los pendientes
+
+   $laburo = Pendiente::TraerTodosLosPendientes();
 
    Cervecero::MostrarProceso(array_filter($laburo,function($elemento){
 

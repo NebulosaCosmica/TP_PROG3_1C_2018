@@ -1,9 +1,5 @@
 <?php
 
-// mas adelante veremos si nesito el abm, el IapiUsable, etc.
-
-// refleja el funcionamiento de restoran
-
 class Pendiente 
 {   
 
@@ -20,6 +16,7 @@ class Pendiente
     // ver que pasa que no da de alta
 
     // no le gustan los valores null
+    
     public static function OBJPendiente($tipoempleado,$descripcion,$estado,$idpedido,$horainicio = "00:00",$horafin="00:00",$idempleado = 0,$id = 0){
 
         $elpendiente = new Pendiente();
@@ -138,24 +135,42 @@ class Pendiente
             $consulta->bindValue(':idempleado', $this->idempleado, PDO::PARAM_INT);            
 			return $consulta->execute();
 	 }
-      
-     // no anda, ver si hace falta
-    /*public static function TraerPendiente($id){
-        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select idpendiente,idempleado as IdEmpleado, idpedido as IdPedido, tipoempleado as TipoEmpleado, descripcion as Descripcion,  horainicio as Inicio, horafin as Fin, estado as Estado from pendientes where idpendiente = $id");
-			$consulta->execute();
-            $elpendiente= $consulta->fetchObject('pendiente');
-            
+    
+     public static function TraerPendienteOperacion($idpedido,$tipoempleado){
 
+        $todes = Pendiente::TraerTodosLosPendientes();
+
+        $elpendiente = array_filter($todes,function($elemento)use($idpedido,$tipoempleado){
+
+            return $elemento->getidpedido() == $idpedido && $elemento->gettipoempleado() == $tipoempleado;
+        });
+        
+        if(empty($elpendiente) == false){
+
+            $uno = array_pop($elpendiente);
+            return Pendiente::TraerPendiente($uno->getid());
+        }else{
+            echo "impozible conseguir pendiente";
+
+            return null;
+        }
+
+     }
+
+     // public static function OBJPendiente($tipoempleado,$descripcion,$estado,$idpedido,$horainicio = "00:00",$horafin="00:00",$idempleado = 0,$id = 0){
+     
+    public static function TraerPendiente($id){
+        $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+			$consulta =$objetoAccesoDato->RetornarConsulta("select idpendiente,idpedido as IdPedido,idempleado as IdEmpleado,tipoempleado as TipoEmpleado,descripcion as Descripcion,horainicio as Inicio, horafin as Fin, estado as Estado from pendientes where idpendiente = $id");
+			$consulta->execute();
+            $elpendiente= $consulta->fetchObject('Pendiente');
+            
                 
-         $savior = pendiente::OBJpendiente($elpendiente->idpendiente,$elpendiente->Bartenders,$elpendiente->Cerveceros,$elpendiente->Cocineros,$elpendiente->Pasteleros, $elpendiente->Estado);
+         $savior = Pendiente::OBJPendiente($elpendiente->TipoEmpleado,$elpendiente->Descripcion,$elpendiente->Estado,$elpendiente->IdPedido,$elpendiente->Inicio, $elpendiente->Fin,$elpendiente->IdEmpleado,$elpendiente->idpendiente);
                   
                      
             if(isset($savior))
-            {
-                echo "<pre>";
-                var_dump($savior);
-                echo "</pre>";
+            {                
 
                 return $savior;
             }else{
@@ -166,7 +181,7 @@ class Pendiente
     
        
 			
-    }*/
+    }
 
     
 }// pendiente
