@@ -225,10 +225,7 @@ public function ProcesoPendiente($request, $response, $args){
 
      // con esto genero la Operacion
 
-     if($cerveza->getestado() == "Pendiente"){
-
-     
-   
+     if($cerveza->getestado() == "Pendiente"){   
     
      $responsable = AutentificadorJWT::ObtenerData($elt)->id;
 

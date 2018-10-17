@@ -198,6 +198,8 @@ public function ProcesoPendiente($request, $response, $args){
     
     $laburo = Pendiente::TraerTodosLosPendientes();
 
+    $losins = $request->getParsedBody();
+
     if($profile->data->tipo === "Socio"){
 
         Bartender::MostrarProceso(array_filter($laburo,function($elemento){
@@ -218,15 +220,8 @@ public function ProcesoPendiente($request, $response, $args){
         return $request;
     }
 
-$cerveza = array_filter($laburo,function($elemento){
+    $cerveza = Pendiente::TraerPendienteOperacion($losins['idpedido'],"Bartender");
 
-    return $elemento->getestado() === "Pendiente" && $elemento->gettipoempleado() === "Bartender";
-
-   });
-
-   // está desordenado
-
-   sort($cerveza);
 
    // cambio el estado en la base de datos
 
@@ -239,7 +234,7 @@ $cerveza = array_filter($laburo,function($elemento){
    if(empty($cerveza) == false){
 
      // con esto genero la Operacion
-   
+     if($cerveza->getestado() == "Pendiente"){
     
      $responsable = AutentificadorJWT::ObtenerData($elt)->id;
 
@@ -253,28 +248,29 @@ $cerveza = array_filter($laburo,function($elemento){
  
      // con lo anterior generé la Operacion
    
-   $cerveza[0]->setestado("En Proceso");  
+   $cerveza->setestado("En Proceso");  
   
    $ahoras = date("H:i:s");    
    
-   $cerveza[0]->sethorainicio($ahoras);
+   $cerveza->sethorainicio($ahoras);
 
   $nuevafecha = strtotime ( '+10 minute' , strtotime ( $ahoras ) ) ;
 
   $finale = date("H:i:s",$nuevafecha);   
 
-   $cerveza[0]->sethorafin($finale);
+   $cerveza->sethorafin($finale);
 
-   // está arriba
-   //$elt = $request->getHeaderLine('tokenresto');
-   //$profile = AutentificadorJWT::ObtenerPayLoad($elt);		
+   $cerveza->setidempleado($profile->data->id);
 
-   $cerveza[0]->setidempleado($profile->data->id);
-
-   $cerveza[0]->ModificarPendienteUnoParametros();
+   $cerveza->ModificarPendienteUnoParametros();
+    }else{
+    echo "El Pedido tiene un estado distinto al Pendiente";
+    }
    }else{
        echo "Nada pendiente. Puede descansar un rato mirando su celular.<br><br>";
    }
+
+   $laburo = Pendiente::TraerTodosLosPendientes();
 
    Bartender::MostrarProceso(array_filter($laburo,function($elemento){
 

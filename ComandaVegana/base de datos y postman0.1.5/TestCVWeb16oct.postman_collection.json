@@ -1,0 +1,812 @@
+{
+	"info": {
+		"_postman_id": "a59cd68b-6aa6-43dd-b118-de43360ed83a",
+		"name": "TestCVWeb",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						""
+					]
+				},
+				"description": "inicio del sistema comanda vegana"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/login/",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "usuario",
+							"value": "Jose",
+							"type": "text"
+						},
+						{
+							"key": "contrasena",
+							"value": "Jose",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/login/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/comandas/alta/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzk2ODc1MzgsImV4cCI6MTUzOTc1OTUzOCwiYXVkIjoiZDU0NmNlMzUxNjEzODA3ZWNhMjlkMWQ0ZjlhOTZlOGE0ZGEzNTM5YSIsImRhdGEiOnsiZmVjaGEiOiIxNlwvMTBcLzIwMTgiLCJ0aXBvIjoiTW96byIsImlkIjoiMSJ9LCJhcHAiOiJSZXN0XHUwMGYzIENvbWFuZGEgVmVnYW5hIn0.2by7kukreQSSaqrWYPdXshVRgSrd0uGTb_fTherFsz8"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombrecliente",
+							"value": "Tete",
+							"type": "text"
+						},
+						{
+							"key": "fotomesa",
+							"type": "file",
+							"value": ""
+						},
+						{
+							"key": "bartender",
+							"value": "Sprite",
+							"type": "text"
+						},
+						{
+							"key": "cervecero",
+							"value": "Honey",
+							"type": "text"
+						},
+						{
+							"key": "cocinero",
+							"value": "Seitan",
+							"type": "text"
+						},
+						{
+							"key": "pastelero",
+							"value": "Helado de chocolate",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/comandas/alta/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"comandas",
+						"alta",
+						""
+					]
+				},
+				"description": "alta de comandas"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/cerveceros/pendientes/ Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzk2ODc3OTQsImV4cCI6MTUzOTc1OTc5NCwiYXVkIjoiZDU0NmNlMzUxNjEzODA3ZWNhMjlkMWQ0ZjlhOTZlOGE0ZGEzNTM5YSIsImRhdGEiOnsiZmVjaGEiOiIxNlwvMTBcLzIwMTgiLCJ0aXBvIjoiQ2VydmVjZXJvIiwiaWQiOiIxIn0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.ysFM8ZVgW81am-WTX98hGdtjgIKdf--WsoGSiW0NARc"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/cerveceros/pendientes/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"cerveceros",
+						"pendientes",
+						""
+					]
+				},
+				"description": "pendientes cerveceros"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/cocineros/pendientes/ Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkyOTY0NzQsImV4cCI6MTUzOTM2ODQ3NCwiYXVkIjoiYjU4NDNjMWM5MGZjZTU4YjlmN2FmMzUwYTNjZGM0ZTZmMzU2ODExMyIsImRhdGEiOnsiZmVjaGEiOiIxMVwvMTBcLzIwMTgiLCJ0aXBvIjoiQ29jaW5lcm8iLCJpZCI6IjIifSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.j4syo62wczzG15_Oy4zd5Wc8NDafriEe5WK0wbeu3jQ"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/cocineros/pendientes/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"cocineros",
+						"pendientes",
+						""
+					]
+				},
+				"description": "cocinero listado de pendientes"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/bartenders/pendientes/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkyOTY1NjgsImV4cCI6MTUzOTM2ODU2OCwiYXVkIjoiYjU4NDNjMWM5MGZjZTU4YjlmN2FmMzUwYTNjZGM0ZTZmMzU2ODExMyIsImRhdGEiOnsiZmVjaGEiOiIxMVwvMTBcLzIwMTgiLCJ0aXBvIjoiQmFydGVuZGVyIiwiaWQiOiIzIn0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.DaaL2ywBEmFYAAUbkelcJDG1UZx1OSMR9LuOkYnQw2o"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/bartenders/pendientes/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"bartenders",
+						"pendientes",
+						""
+					]
+				},
+				"description": "pastelero pendientes"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/pasteleros/pendientes/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkyOTY1OTksImV4cCI6MTUzOTM2ODU5OSwiYXVkIjoiYjU4NDNjMWM5MGZjZTU4YjlmN2FmMzUwYTNjZGM0ZTZmMzU2ODExMyIsImRhdGEiOnsiZmVjaGEiOiIxMVwvMTBcLzIwMTgiLCJ0aXBvIjoiUGFzdGVsZXJvIiwiaWQiOiIyIn0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.cqI119vp0CNY-HJzE635bsdFiBhR67eTVkHc87YLCzk"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/pasteleros/pendientes/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"pasteleros",
+						"pendientes",
+						""
+					]
+				},
+				"description": "pendiente pastelero"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/cerveceros/operaciones/ Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzk2ODc3OTQsImV4cCI6MTUzOTc1OTc5NCwiYXVkIjoiZDU0NmNlMzUxNjEzODA3ZWNhMjlkMWQ0ZjlhOTZlOGE0ZGEzNTM5YSIsImRhdGEiOnsiZmVjaGEiOiIxNlwvMTBcLzIwMTgiLCJ0aXBvIjoiQ2VydmVjZXJvIiwiaWQiOiIxIn0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.ysFM8ZVgW81am-WTX98hGdtjgIKdf--WsoGSiW0NARc"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "idpedido",
+							"value": "30",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/cerveceros/operaciones/pendientes/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"cerveceros",
+						"operaciones",
+						"pendientes",
+						""
+					]
+				},
+				"description": "cambia el pendiente a en proceso, asigna tiempo y responsable"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/cerveceros/operaciones/procesos/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Mzk2ODc3OTQsImV4cCI6MTUzOTc1OTc5NCwiYXVkIjoiZDU0NmNlMzUxNjEzODA3ZWNhMjlkMWQ0ZjlhOTZlOGE0ZGEzNTM5YSIsImRhdGEiOnsiZmVjaGEiOiIxNlwvMTBcLzIwMTgiLCJ0aXBvIjoiQ2VydmVjZXJvIiwiaWQiOiIxIn0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.ysFM8ZVgW81am-WTX98hGdtjgIKdf--WsoGSiW0NARc"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/cerveceros/operaciones/procesos/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"cerveceros",
+						"operaciones",
+						"procesos",
+						""
+					]
+				},
+				"description": "cambia el pendiente a en proceso, asigna tiempo y responsable"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/cocineros/operaciones/pendientes/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkyOTY0NzQsImV4cCI6MTUzOTM2ODQ3NCwiYXVkIjoiYjU4NDNjMWM5MGZjZTU4YjlmN2FmMzUwYTNjZGM0ZTZmMzU2ODExMyIsImRhdGEiOnsiZmVjaGEiOiIxMVwvMTBcLzIwMTgiLCJ0aXBvIjoiQ29jaW5lcm8iLCJpZCI6IjIifSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.j4syo62wczzG15_Oy4zd5Wc8NDafriEe5WK0wbeu3jQ"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/cocineros/operaciones/pendientes/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"cocineros",
+						"operaciones",
+						"pendientes",
+						""
+					]
+				},
+				"description": "cocinero opera como cervecero"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/cocineros/operaciones/procesos/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkyOTY0NzQsImV4cCI6MTUzOTM2ODQ3NCwiYXVkIjoiYjU4NDNjMWM5MGZjZTU4YjlmN2FmMzUwYTNjZGM0ZTZmMzU2ODExMyIsImRhdGEiOnsiZmVjaGEiOiIxMVwvMTBcLzIwMTgiLCJ0aXBvIjoiQ29jaW5lcm8iLCJpZCI6IjIifSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.j4syo62wczzG15_Oy4zd5Wc8NDafriEe5WK0wbeu3jQ"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/cocineros/operaciones/procesos/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"cocineros",
+						"operaciones",
+						"procesos",
+						""
+					]
+				},
+				"description": "cocinero opera como cervecero"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/bartenders/operaciones/pendientes/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkyOTY1NjgsImV4cCI6MTUzOTM2ODU2OCwiYXVkIjoiYjU4NDNjMWM5MGZjZTU4YjlmN2FmMzUwYTNjZGM0ZTZmMzU2ODExMyIsImRhdGEiOnsiZmVjaGEiOiIxMVwvMTBcLzIwMTgiLCJ0aXBvIjoiQmFydGVuZGVyIiwiaWQiOiIzIn0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.DaaL2ywBEmFYAAUbkelcJDG1UZx1OSMR9LuOkYnQw2o"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/bartenders/operaciones/pendientes/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"bartenders",
+						"operaciones",
+						"pendientes",
+						""
+					]
+				},
+				"description": "pastelero operaciones"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/bartenders/operaciones/procesos/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkyOTY1NjgsImV4cCI6MTUzOTM2ODU2OCwiYXVkIjoiYjU4NDNjMWM5MGZjZTU4YjlmN2FmMzUwYTNjZGM0ZTZmMzU2ODExMyIsImRhdGEiOnsiZmVjaGEiOiIxMVwvMTBcLzIwMTgiLCJ0aXBvIjoiQmFydGVuZGVyIiwiaWQiOiIzIn0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.DaaL2ywBEmFYAAUbkelcJDG1UZx1OSMR9LuOkYnQw2o"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/bartenders/operaciones/procesos/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"bartenders",
+						"operaciones",
+						"procesos",
+						""
+					]
+				},
+				"description": "pastelero operaciones"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/pasteleros/operaciones/pendientes/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkyOTY1OTksImV4cCI6MTUzOTM2ODU5OSwiYXVkIjoiYjU4NDNjMWM5MGZjZTU4YjlmN2FmMzUwYTNjZGM0ZTZmMzU2ODExMyIsImRhdGEiOnsiZmVjaGEiOiIxMVwvMTBcLzIwMTgiLCJ0aXBvIjoiUGFzdGVsZXJvIiwiaWQiOiIyIn0sImFwcCI6IlJlc3RcdTAwZjMgQ29tYW5kYSBWZWdhbmEifQ.cqI119vp0CNY-HJzE635bsdFiBhR67eTVkHc87YLCzk"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/pasteleros/operaciones/pendientes/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"pasteleros",
+						"operaciones",
+						"pendientes",
+						""
+					]
+				},
+				"description": "pastelero operaciones"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/pasteleros/operaciones/procesos/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkxNzMxNDIsImV4cCI6MS4yZSszMiwiZGF0YSI6eyJmZWNoYSI6IjEwXC8xMFwvMjAxOCIsInRpcG8iOiJQYXN0ZWxlcm8iLCJpZCI6IjIifSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.GjixlJ9_Kao1gIGaEazSfcESnHfZ5irwaopFnMQwoN8"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/pasteleros/operaciones/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"pasteleros",
+						"operaciones",
+						""
+					]
+				},
+				"description": "pastelero operaciones"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/comandas/pendientes/ Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkyOTU5NjYsImV4cCI6MTUzOTM2Nzk2NiwiYXVkIjoiYjU4NDNjMWM5MGZjZTU4YjlmN2FmMzUwYTNjZGM0ZTZmMzU2ODExMyIsImRhdGEiOnsiZmVjaGEiOiIxMVwvMTBcLzIwMTgiLCJ0aXBvIjoiTW96byIsImlkIjoiMiJ9LCJhcHAiOiJSZXN0XHUwMGYzIENvbWFuZGEgVmVnYW5hIn0.0Uq37cNqOCBmyh_iVMKyiMD2P6nhyfGyi9jPsknwEeA"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/comandas/pendientes/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"comandas",
+						"pendientes",
+						""
+					]
+				},
+				"description": "el mozo tiene pedidos pendientes para llevar a la mesa"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/mozos/operaciones/ Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkyOTU5NjYsImV4cCI6MTUzOTM2Nzk2NiwiYXVkIjoiYjU4NDNjMWM5MGZjZTU4YjlmN2FmMzUwYTNjZGM0ZTZmMzU2ODExMyIsImRhdGEiOnsiZmVjaGEiOiIxMVwvMTBcLzIwMTgiLCJ0aXBvIjoiTW96byIsImlkIjoiMiJ9LCJhcHAiOiJSZXN0XHUwMGYzIENvbWFuZGEgVmVnYW5hIn0.0Uq37cNqOCBmyh_iVMKyiMD2P6nhyfGyi9jPsknwEeA"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/comandas/operaciones/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"comandas",
+						"operaciones",
+						""
+					]
+				},
+				"description": "pastelero operaciones"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/comandas/cierres/ Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkyOTU5NjYsImV4cCI6MTUzOTM2Nzk2NiwiYXVkIjoiYjU4NDNjMWM5MGZjZTU4YjlmN2FmMzUwYTNjZGM0ZTZmMzU2ODExMyIsImRhdGEiOnsiZmVjaGEiOiIxMVwvMTBcLzIwMTgiLCJ0aXBvIjoiTW96byIsImlkIjoiMiJ9LCJhcHAiOiJSZXN0XHUwMGYzIENvbWFuZGEgVmVnYW5hIn0.0Uq37cNqOCBmyh_iVMKyiMD2P6nhyfGyi9jPsknwEeA"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "idcomanda",
+							"value": "20",
+							"type": "text"
+						},
+						{
+							"key": "importe",
+							"value": "1250",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/comandas/cierres/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"comandas",
+						"cierres",
+						""
+					]
+				},
+				"description": "el mozo pone el importe y cierra  la mesa"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/comandas/cierres/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkyOTgyMjgsImV4cCI6MTUzOTM3MDIyOCwiYXVkIjoiYjU4NDNjMWM5MGZjZTU4YjlmN2FmMzUwYTNjZGM0ZTZmMzU2ODExMyIsImRhdGEiOnsiZmVjaGEiOiIxMVwvMTBcLzIwMTgiLCJ0aXBvIjoiU29jaW8iLCJpZCI6IjYifSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.W5Lo_V53XdV6tcqNTkRSfjWIIIlg2aeGgEsMtwrpTNs"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "idcomanda",
+							"value": "20",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/socios/comandas/cierres/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"socios",
+						"comandas",
+						"cierres",
+						""
+					]
+				},
+				"description": "el mozo pone el importe y cierra  la mesa"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/socios/reportes/ Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkyOTgyMjgsImV4cCI6MTUzOTM3MDIyOCwiYXVkIjoiYjU4NDNjMWM5MGZjZTU4YjlmN2FmMzUwYTNjZGM0ZTZmMzU2ODExMyIsImRhdGEiOnsiZmVjaGEiOiIxMVwvMTBcLzIwMTgiLCJ0aXBvIjoiU29jaW8iLCJpZCI6IjYifSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.W5Lo_V53XdV6tcqNTkRSfjWIIIlg2aeGgEsMtwrpTNs"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fecha",
+							"value": "11/10/2018",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/socios/reportes/sectores/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"socios",
+						"reportes",
+						"sectores",
+						""
+					]
+				},
+				"description": "el socio verá algun reporter"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/socios/reportes/empleados/ Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkyOTgyMjgsImV4cCI6MTUzOTM3MDIyOCwiYXVkIjoiYjU4NDNjMWM5MGZjZTU4YjlmN2FmMzUwYTNjZGM0ZTZmMzU2ODExMyIsImRhdGEiOnsiZmVjaGEiOiIxMVwvMTBcLzIwMTgiLCJ0aXBvIjoiU29jaW8iLCJpZCI6IjYifSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.W5Lo_V53XdV6tcqNTkRSfjWIIIlg2aeGgEsMtwrpTNs"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fecha",
+							"value": "11/10/2018",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/socios/reportes/empleados/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"socios",
+						"reportes",
+						"empleados",
+						""
+					]
+				},
+				"description": "el socio verá algun reporter"
+			},
+			"response": []
+		},
+		{
+			"name": "www.conexioninternabipolar.16mb.com/ComandaVegana/socios/reportes/pedidos/ Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "tokenresto",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzkyOTgyMjgsImV4cCI6MTUzOTM3MDIyOCwiYXVkIjoiYjU4NDNjMWM5MGZjZTU4YjlmN2FmMzUwYTNjZGM0ZTZmMzU2ODExMyIsImRhdGEiOnsiZmVjaGEiOiIxMVwvMTBcLzIwMTgiLCJ0aXBvIjoiU29jaW8iLCJpZCI6IjYifSwiYXBwIjoiUmVzdFx1MDBmMyBDb21hbmRhIFZlZ2FuYSJ9.W5Lo_V53XdV6tcqNTkRSfjWIIIlg2aeGgEsMtwrpTNs"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "fecha",
+							"value": "11/10/2018",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "www.conexioninternabipolar.16mb.com/ComandaVegana/socios/reportes/pedidos/",
+					"host": [
+						"www",
+						"conexioninternabipolar",
+						"16mb",
+						"com"
+					],
+					"path": [
+						"ComandaVegana",
+						"socios",
+						"reportes",
+						"pedidos",
+						""
+					]
+				},
+				"description": "el socio verá algun reporter"
+			},
+			"response": []
+		}
+	]
+}

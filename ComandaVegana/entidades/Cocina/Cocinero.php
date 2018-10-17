@@ -198,6 +198,8 @@ public function ProcesoPendiente($request, $response, $args){
         date_default_timezone_set("America/Argentina/Buenos_Aires");
         
         $laburo = Pendiente::TraerTodosLosPendientes();
+
+        $losins = $request->getParsedBody();
     
         if($profile->data->tipo === "Socio"){
     
@@ -217,18 +219,10 @@ public function ProcesoPendiente($request, $response, $args){
     
     
             return $request;
-        }
+        }        
     
+        $cerveza = Pendiente::TraerPendienteOperacion($losins['idpedido'],"Cocinero");
 
-        $cerveza = array_filter($laburo,function($elemento){
-    
-        return $elemento->getestado() === "Pendiente" && $elemento->gettipoempleado() === "Cocinero";
-    
-       });
-    
-       // está desordenado
-    
-       sort($cerveza);
     
        // cambio el estado en la base de datos
     
@@ -242,6 +236,7 @@ public function ProcesoPendiente($request, $response, $args){
     
          // con esto genero la Operacion
        
+         if($cerveza->getestado() == "Pendiente"){
         
          $responsable = AutentificadorJWT::ObtenerData($elt)->id;
     
@@ -255,28 +250,29 @@ public function ProcesoPendiente($request, $response, $args){
      
          // con lo anterior generé la Operacion
        
-       $cerveza[0]->setestado("En Proceso");  
+       $cerveza->setestado("En Proceso");  
       
        $ahoras = date("H:i:s");    
        
-       $cerveza[0]->sethorainicio($ahoras);
+       $cerveza->sethorainicio($ahoras);
     
       $nuevafecha = strtotime ( '+10 minute' , strtotime ( $ahoras ) ) ;
     
       $finale = date("H:i:s",$nuevafecha);   
     
-       $cerveza[0]->sethorafin($finale);
+       $cerveza->sethorafin($finale);	
     
-       // está arriba
-       //$elt = $request->getHeaderLine('tokenresto');
-       //$profile = AutentificadorJWT::ObtenerPayLoad($elt);		
+       $cerveza->setidempleado($profile->data->id);
     
-       $cerveza[0]->setidempleado($profile->data->id);
-    
-       $cerveza[0]->ModificarPendienteUnoParametros();
+       $cerveza->ModificarPendienteUnoParametros();
+        }else{
+        echo "El Pedido tiene un estado distinto al Pendiente";
+    }
        }else{
            echo "Nada pendiente. Puede descansar un rato mirando su celular.<br><br>";
        }
+
+       $laburo = Pendiente::TraerTodosLosPendientes();
     
        Cocinero::MostrarProceso(array_filter($laburo,function($elemento){
     

@@ -172,6 +172,8 @@ class Socio implements IApiUsable
          echo "Acá el Socio pone fin a una comanda con la hora <br>";
  
          echo "Muestra las mesas cerradas <br>";
+
+         
  
          $algo = $request->getParsedBody();
  
@@ -181,6 +183,9 @@ class Socio implements IApiUsable
          date_default_timezone_set("America/Argentina/Buenos_Aires");
          
          $reloje = date("H:i:s");   
+       
+         if(empty($manda)== false){
+
          
         $comand = Comanda::TraerComanda($manda);
          
@@ -188,7 +193,8 @@ class Socio implements IApiUsable
 
         $comand->ModificarComandaUnoParametros();
         
-                 
+         }
+
         $lamanada = Comanda::TraerTodasLasComandas();
          
         $losed = array_filter($lamanada,function($elemento){
